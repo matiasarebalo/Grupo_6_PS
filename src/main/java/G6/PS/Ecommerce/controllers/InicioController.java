@@ -19,4 +19,9 @@ public class InicioController {
 	public String index() {
 		return "home/index";
 	}
+	
+	@GetMapping("pag_institucional")
+	public String pag_institucional() {
+		return "home/pagina_institucional";
+	}
 }
