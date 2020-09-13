@@ -1,6 +1,10 @@
 <!DOCTYPE html>
 <html lang="en">
 
+<!-- con esto no tira advertencias de th: -->
+<th:block xmlns:th="http://www.thymeleaf.org">
+	
+
 <head>
 
 <meta charset="utf-8">
@@ -18,94 +22,22 @@
 <link href="css/shop-homepage.css" rel="stylesheet">
 
 
-<!-- Login -->
-<link href='https://fonts.googleapis.com/css?family=Open+Sans:400,700'
-	rel='stylesheet' type='text/css'>
-<link rel="stylesheet"
-	href="//maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css">
-<link rel="stylesheet"
-	href="https://cdnjs.cloudflare.com/ajax/libs/normalize/5.0.0/normalize.min.css">
-<link rel="stylesheet" href="/css/login.css">
-<script
-	src="https://cdnjs.cloudflare.com/ajax/libs/prefixfree/1.0.7/prefixfree.min.js"></script>
-
+<
 
 
 
 </head>
 
 <body>
-
-	<!-- Navigation -->
-	<nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top">
-		<div class="container">
-			<a class="navbar-brand" href="#">El deporte On-line</a>
-			<button class="navbar-toggler" type="button" data-toggle="collapse"
-				data-target="#navbarResponsive" aria-controls="navbarResponsive"
-				aria-expanded="false" aria-label="Toggle navigation">
-				<span class="navbar-toggler-icon"></span>
-			</button>
-			<div class="collapse navbar-collapse" id="navbarResponsive">
-				<ul class="navbar-nav ml-auto">
-					<li class="nav-item active"><a class="nav-link" href="#">Inicio
-							<span class="sr-only">(current)</span>
-					</a></li>
-					<li class="nav-item"><a class="nav-link" href="#">Institucional</a>
-					</li>
-					<li class="nav-item"><a class="nav-link" href="#">Contacto</a>
-					</li>
-					<li class="nav-item"><a class="nav-link" onclick="openForm()">
-							Login </a></li>
-					<li class="nav-item"><a class="nav-link" th:href="@{/logout}">
-							Logout </a></li>
-				</ul>
-			</div>
-		</div>
-	</nav>
+	<!-- Navigation  user o admin segun corresponda-->
+			<nav th:if="${admin!=false}" class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top"
+				 th:include="nav_admin :: div"></nav>
+			
+			<nav th:if="${admin ==false}" class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top"
+				 th:include="nav_user :: div"></nav>
+	
 
 
-	<!--  Login oculto -->
-
-
-	<div class="wrapper" id="myForm">
-		<form class="login" th:action="@{/loginprocess}" method="post"
-			role="form">
-			<p class="title">Log in</p>
-			<input type="text" placeholder="Enter Email" name="email" required>
-			<i class="fa fa-user"></i> <input type="password"
-				placeholder="Enter Password" name="psw" required> <i
-				class="fa fa-key"></i> <a href="#">Forgot your password?</a> <a
-				class="state" onclick="closeForm()">Close</a>
-
-			<button>
-				<i class="spinner"></i> <span class="state">Log in</span>
-			</button>
-
-		</form>
-		<footer>
-			<a target="blank" href="http://boudra.me/">boudra.me</a>
-		</footer>
-
-	</div>
-
-
-<script type="text/javascript" th:inline="javascript">
-                /*<![CDATA[*/
-                var all =  /*[[ ${error} ]]*/
-                console.log(all)
-                /*]]>*/
-                if(all!=null)toastr.error('Este producto tiene lotes o remitos no se puede eliminar');
-            </script>
-
-
-
-
-
-	<!-- login sucess -->
-
-
-
-	<!--  login sucess -->
 	<!-- Page Content -->
 	<div class="container">
 
@@ -303,42 +235,10 @@
 
 
 
-	<!-- login -->
-	<script
-		src='https://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.min.js'></script>
-	<script src="/js/login.js"></script>
-	<!-- Sweet Alert V8.13.0 JS file-->
-<script src="/js/sweetalert2.min.js"></script>
-	<script>
-
-function openForm() {
-  document.getElementById("myForm").style.display = "flex";
-}
-
-function closeForm() {
-  document.getElementById("myForm").style.display = "none";
-}
-
-
-
-		function openForm() {
-			document.getElementById("sucess").style.display = "flex";
-		}
-
-		function closeForm() {
-			document.getElementById("sucess").style.display = "none";
-		}
-
-		function openForm() {
-			document.getElementById("error").style.display = "flex";
-		}
-
-		function closeForm() {
-			document.getElementById("error").style.display = "none";
-		}
-	</script>
 
 
 </body>
-
+</th:block>
 </html>
+
+

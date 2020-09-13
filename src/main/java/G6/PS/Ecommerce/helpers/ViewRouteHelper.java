@@ -2,7 +2,7 @@ package G6.PS.Ecommerce.helpers;
 
 public class ViewRouteHelper {
 
-	public final static String INDEX = "index";
+	public final static String INDEX = "home/index";
 
 	public final static String login = "user/login";
 

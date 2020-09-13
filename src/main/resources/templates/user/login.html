@@ -1,113 +1,43 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
-<meta charset="utf-8">
-<meta content="width=device-width, initial-scale=1.0" name="viewport">
+<meta charset="utf-8" />
+<title>Administracion</title>
+<!-- Bootstrap core CSS -->
 
-<title>Ingreso</title>
-<meta content="" name="descriptison">
-<meta content="" name="keywords">
+<link href="/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet" />
+<link href="/css/nuevo.css" rel="stylesheet" />
 
-<!-- Google Fonts -->
-<link
-	href="https://fonts.googleapis.com/css?family=Open+Sans:300,300i,400,400i,600,600i,700,700i|Raleway:300,300i,400,400i,500,500i,600,600i,700,700i|Poppins:300,300i,400,400i,500,500i,600,600i,700,700i"
-	rel="stylesheet">
-
-<!-- Vendor CSS Files -->
-
-<!-- Template Main CSS File -->
-
-<!-- =======================================================
-  * Template Name: iPortfolio - v1.2.1
-  * Template URL: https://bootstrapmade.com/iportfolio-bootstrap-portfolio-websites-template/
-  * Author: BootstrapMade.com
-  * License: https://bootstrapmade.com/license/
-  ======================================================== -->
 </head>
-
 <body>
 
-	<!-- ======= Mobile nav toggle button ======= -->
-	<button type="button" class="mobile-nav-toggle d-xl-none">
-		<i class="icofont-navigation-menu"></i>
-	</button>
+	<div class="login">
+		<h1>Login</h1>
 
-	<!-- ======= Header ======= -->
-	<header id="header">
-		<div class="d-flex flex-column">
+		<form th:action="@{/loginprocess}" method="post">
+			<input type="text" name="username" id="username"
+				placeholder="Username" required="required" /> <input
+				type="password" name="password" id="password" placeholder="Password"
+				required="required" />
+			<button type="submit" class="btn btn-primary btn-block btn-large">Log
+				In.</button>
+		</form>
+		<div th:if="${error != null}" class="alert alert-danger"
+			style="text-align: center">Usuario o contraseña invalido.</div>
 
-			</nav>
-			<!-- .nav-menu -->
-			<button type="button" class="mobile-nav-toggle d-xl-none">
-				<i class="icofont-navigation-menu"></i>
-			</button>
-
-		</div>
-	</header>
-	<!-- End Header -->
-
-	
-	<!-- End Hero -->
-
-	<main id="main">
-
-
-
-		<!-- ======= Login Section ======= -->
-		<section id="contact" class="contact">
-			<div class="container">
-
-				<div class="section-title">
-					<h2>Ingreso</h2>
-				</div>
-
-			
-				<div class="row" data-aos="fade-in">
-					<div class="col-lg-7 mt-5 mt-lg-0 d-flex align-items-stretch">
-						<form th:action="@{/loginprocess}" method="post" role="form"
-							class="php-email-form2" name="formIngreso" id="formIngreso">
-							<div class="form-row">
-								<div class="form-group col-md-6">
-									<label for="name">Usuario</label> <input type="text"
-										name="username" class="form-control" id="username"
-										data-rule="minlen:4" data-msg="Ingrese al menos 4 characteres" />
-
-									<div class="validate"></div>
-								</div>
-								<div class="form-group col-md-6">
-									<label for="name">Password</label> <input type="password"
-										name="password" class="form-control" id="password" />
-
-									<div class="validate"></div>
-								</div>
-							</div>
-							<div class="text-left">
-								<button type="submit">Ingresar</button>
-							</div>
-						</form>
-
-						<div th:if="${error != null}" class="alert alert-danger">
-							Usuario y password Inválido</div>
-					</div>
-				</div>
-			</div>
-		</section>
-		<!-- End Login Section -->
-		</main>
-	<!-- End #main -->
-		
-
-	<!-- ======= Footer ======= -->
-			 
-
-	<!-- End  Footer -->
-
-	<a href="#" class="back-to-top"><i class="icofont-simple-up"></i></a>
-
-	<!-- Vendor JS Files -->
-
-	<!-- Template Main JS File -->
+	</div>
 </body>
+<div>
+
+	<footer class="footer" style="text-align: center; margin-top: 44%;">
+		<a target="blank"
+			href=""
+			style="color: #67a8dc">Grupo_6</a>
+		<h6 style="color: #FFFFFF">Integrantes: Elian Gonzalez, Matias
+			Arebalo, Fernando, Nicolas.</h6>
+	</footer>
+
+</div>
 
 </html>
+

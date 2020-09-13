@@ -7,6 +7,7 @@ $('.login').on('submit', function(e) {
     $state = $this.find('button > .state');
   $this.addClass('loading');
   $state.html('Authenticating');
+ 
   setTimeout(function() {
     $this.addClass('ok');
     $state.html('Welcome back!');

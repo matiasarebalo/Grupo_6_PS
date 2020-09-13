@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import G6.PS.Ecommerce.helpers.ViewRouteHelper;
 
@@ -23,15 +24,16 @@ public class LoginController {
     @GetMapping("/login")
 	public String login(Model model,
 						@RequestParam(name="error",required=false) String error,
-						@RequestParam(name="logout", required=false) String logout) {
-		model.addAttribute("error", error);
+						@RequestParam(name="logout", required=false) String logout,
+						RedirectAttributes redirect) {
+		model.addAttribute("error", "error");
 		model.addAttribute("logout", logout);
-		return "/";		
+		return "/user/login";
     }
     
     @GetMapping("/logout")
 	public String logout(Model model) {
-		return "/";
+		return "/home/index";
     }
 	
 	@PostMapping("/loginsuccess")
@@ -51,23 +53,19 @@ public class LoginController {
 	}
 
     public ModelAndView loginCheckBase() {
-		ModelAndView mav 	= new ModelAndView(ViewRouteHelper.login_ok);		
-		String username 	= SecurityContextHolder.getContext().getAuthentication().getName();		
-		String roleString = SecurityContextHolder.getContext().getAuthentication().getAuthorities().toString();		
+ModelAndView mAV = new ModelAndView(ViewRouteHelper.INDEX);
 		
-		switch(roleString)				{ 				  
-		   case "[ROLE_ADMIN]":				      
-			   System.out.println("cosas de admin");
-			   break;
-		   case "[ROLE_VENDEDOR]" :
-			   System.out.println("cosas de vendedor");
-			   break;
-		   case "[ROLE_GERENTE]" :					       
-               System.out.println("cosas de gerente");
-			   break;
-		   default : 		
-		}
+		//compruebo si se logueo el admin y en tal caso muestro el menu correspondiente, el resto de la pagina permanece igual
+		String roleString = SecurityContextHolder.getContext().getAuthentication().getAuthorities().toString();
+        System.out.println(roleString);
 
-		return mav ;
+		boolean admin = false;
+		if(roleString =="[ROLE_ADMIN]") {admin=true;}
+        System.out.println(admin);
+
+		mAV.addObject("admin", admin);
+
+
+		return mAV;
 	}
 }
