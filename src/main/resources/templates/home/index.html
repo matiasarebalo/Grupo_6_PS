@@ -30,10 +30,10 @@
 
 <body>
 	<!-- Navigation  user o admin segun corresponda-->
-			<nav th:if="${admin!=false}" class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top"
+			<nav th:if="${admin==true}" class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top"
 				 th:include="nav_admin :: div"></nav>
 			
-			<nav th:if="${admin ==false}" class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top"
+			<nav th:if="${admin==false}" class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top"
 				 th:include="nav_user :: div"></nav>
 	
 
@@ -67,15 +67,15 @@
 					</ol>
 					<div class="carousel-inner" role="listbox">
 						<div class="carousel-item active">
-							<img class="d-block img-fluid" src="http://placehold.it/900x350"
+							<img class="d-block img-fluid" src="../img/adidas.jpg"
 								alt="First slide">
 						</div>
 						<div class="carousel-item">
-							<img class="d-block img-fluid" src="http://placehold.it/900x350"
+							<img class="d-block img-fluid" src="../img/puma.jpg"
 								alt="Second slide">
 						</div>
 						<div class="carousel-item">
-							<img class="d-block img-fluid" src="http://placehold.it/900x350"
+							<img class="d-block img-fluid" src="../img/skate.jpg"
 								alt="Third slide">
 						</div>
 					</div>

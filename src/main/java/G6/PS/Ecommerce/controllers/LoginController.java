@@ -27,7 +27,8 @@ public class LoginController {
     
     @GetMapping("/logout")
 	public String logout(Model model) {
-		return "/home/index";
+		SecurityContextHolder.clearContext();
+		return "/user/logout";
     }
 	
 	@PostMapping("/loginsuccess")
@@ -47,15 +48,19 @@ public class LoginController {
 	}
 
     public ModelAndView loginCheckBase() {
-ModelAndView mAV = new ModelAndView(ViewRouteHelper.INDEX);
+		ModelAndView mAV = new ModelAndView(ViewRouteHelper.INDEX);
 		
 		//compruebo si se logueo el admin y en tal caso muestro el menu correspondiente, el resto de la pagina permanece igual
 		String roleString = SecurityContextHolder.getContext().getAuthentication().getAuthorities().toString();
         System.out.println(roleString);
 
 		boolean admin = false;
-		if(roleString !="ROLE_ANONYMOUS") {admin=true;}
-        System.out.println(admin);
+		switch(roleString){ 				  
+			case "[ROLE_ADMIN]":				      
+				System.out.println("cosas de admin");
+				admin = true;
+				break;
+		}
 
 		mAV.addObject("admin", admin);
 

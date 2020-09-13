@@ -14,6 +14,7 @@ import G6.PS.Ecommerce.helpers.ViewRouteHelper;
 
 public class InicioController {
 
+	
 	@GetMapping("")
 	public ModelAndView index() {
 		ModelAndView mAV = new ModelAndView(ViewRouteHelper.INDEX);
@@ -22,8 +23,8 @@ public class InicioController {
 		String roleString = SecurityContextHolder.getContext().getAuthentication().getAuthorities().toString();
         System.out.println(roleString);
 
-		boolean admin = true;
-		if(roleString.equals("[ROLE_ANONYMOUS]")) {admin=false;}
+		boolean admin = false;
+		if(roleString.equals("[ROLE_ADMIN]")) {admin=true;}
 		mAV.addObject("admin", admin);
 
 
@@ -38,8 +39,8 @@ public class InicioController {
 		String roleString = SecurityContextHolder.getContext().getAuthentication().getAuthorities().toString();
         System.out.println(roleString);
 
-		boolean admin = true;
-		if(roleString.equals("[ROLE_ANONYMOUS]")) {admin=false;}
+		boolean admin = false;
+		if(roleString.equals("[ROLE_ADMIN]")) {admin=true;}
 		mAV.addObject("admin", admin);
 
 

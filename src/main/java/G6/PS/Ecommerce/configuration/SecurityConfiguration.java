@@ -40,7 +40,7 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 				.usernameParameter("username").passwordParameter("password")
 				.successForwardUrl("/loginsuccess").permitAll()
 			.and()
-			.logout().logoutRequestMatcher(new AntPathRequestMatcher("/logout")).logoutSuccessUrl("/");
+				.logout().logoutUrl("/logout").logoutSuccessUrl("/logout").permitAll();
 	}
 	
 	public BCryptPasswordEncoder passwordEncoder() {
