@@ -10,5 +10,8 @@ public class ViewRouteHelper {
 
 	public final static String login_ok = "/home/index"; 
 
+	public final static String INSTITUCIONAL = "home/pagina_institucional"; 
+
+	
 
 }

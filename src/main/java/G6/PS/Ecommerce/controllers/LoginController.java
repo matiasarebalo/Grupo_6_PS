@@ -1,12 +1,6 @@
 package G6.PS.Ecommerce.controllers;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
 
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -26,7 +20,7 @@ public class LoginController {
 						@RequestParam(name="error",required=false) String error,
 						@RequestParam(name="logout", required=false) String logout,
 						RedirectAttributes redirect) {
-		model.addAttribute("error", "error");
+		model.addAttribute("error", error);
 		model.addAttribute("logout", logout);
 		return "/user/login";
     }
@@ -60,7 +54,7 @@ ModelAndView mAV = new ModelAndView(ViewRouteHelper.INDEX);
         System.out.println(roleString);
 
 		boolean admin = false;
-		if(roleString =="[ROLE_ADMIN]") {admin=true;}
+		if(roleString !="ROLE_ANONYMOUS") {admin=true;}
         System.out.println(admin);
 
 		mAV.addObject("admin", admin);
