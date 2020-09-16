@@ -20,7 +20,7 @@ public class SubCategoriaService implements ISubCategoriaService{
 	private ISubCategoriaRepository subCategoriaRepository;
 
 	@Autowired
-	@Qualifier("categoriaConverter")
+	@Qualifier("subCategoriaConverter")
 	private SubCategoriaConverter subCategoriaConverter;
 	
 	@Override

@@ -14,13 +14,13 @@ public class ProductoConverter {
 	@Qualifier("subCategoriaConverter")
 	private SubCategoriaConverter subCategoriaConverter;
 	
-	ProductoModel entityToModel (Producto producto) {
+	public ProductoModel entityToModel (Producto producto) {
 		return new ProductoModel(producto.getId(), producto.getDescripcionCorta(), producto.getDescripcionLarga(),
 				producto.getTalle(), producto.getColor(), subCategoriaConverter.entityToModel(producto.getSubCategoria()),
 				producto.getSku(), producto.getUrlImagen(), producto.getPrecio(), producto.getValoracion());
 	}
 	
-	Producto modelToEntity (ProductoModel model) {
+	public Producto modelToEntity (ProductoModel model) {
 		return new Producto(model.getId(), model.getDescripcionCorta(), model.getDescripcionLarga(),
 				model.getTalle(), model.getColor(), subCategoriaConverter.modelToEntity(model.getSubCategoriaModel()),
 				model.getSku(), model.getUrlImagen(), model.getPrecio(), model.getValoracion());

@@ -23,7 +23,7 @@ public class SubCategoria {
 	private int id;
 	private String subCategoria;
 	@JsonBackReference
-	@OneToMany(fetch = FetchType.LAZY, mappedBy = "subcategoria")
+	@OneToMany(fetch = FetchType.LAZY, mappedBy = "subCategoria")
 	private List<Producto> producto;
 	@ManyToOne(cascade = CascadeType.MERGE, fetch = FetchType.LAZY)
 	private Categoria categoria;
