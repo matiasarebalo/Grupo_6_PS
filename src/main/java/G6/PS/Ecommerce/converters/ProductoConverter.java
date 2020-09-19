@@ -17,13 +17,12 @@ public class ProductoConverter {
 	public ProductoModel entityToModel (Producto producto) {
 		return new ProductoModel(producto.getId(), producto.getDescripcionCorta(), producto.getDescripcionLarga(),
 				producto.getTalle(), producto.getColor(), subCategoriaConverter.entityToModel(producto.getSubCategoria()),
-				producto.getSku(), producto.getUrlImagen(), producto.getPrecio(), producto.getValoracion());
+				producto.getSku(), producto.getUrlImagen(), producto.getPrecio(), producto.getDestacado());
 	}
 	
 	public Producto modelToEntity (ProductoModel model) {
 		return new Producto(model.getId(), model.getDescripcionCorta(), model.getDescripcionLarga(),
 				model.getTalle(), model.getColor(), subCategoriaConverter.modelToEntity(model.getSubCategoriaModel()),
-				model.getSku(), model.getUrlImagen(), model.getPrecio(), model.getValoracion());
+				model.getSku(), model.getUrlImagen(), model.getPrecio(), model.getDestacado());
 	}
-
 }

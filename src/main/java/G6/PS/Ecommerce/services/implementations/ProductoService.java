@@ -1,5 +1,6 @@
 package G6.PS.Ecommerce.services.implementations;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -42,5 +43,14 @@ public class ProductoService implements IProductoService {
 	public String delete(int id) {
 		productoRepository.deleteById(id);
 		return "producto Eliminado";
+	}
+	
+	public List<ProductoModel> findDestacados(){
+		List<Producto> productos = productoRepository.findDestacados();
+		List<ProductoModel> pM = new ArrayList<ProductoModel>();
+		for (Producto p : productos) {
+			pM.add(productoConverter.entityToModel(p));
+		}
+		return pM;
 	}
 }

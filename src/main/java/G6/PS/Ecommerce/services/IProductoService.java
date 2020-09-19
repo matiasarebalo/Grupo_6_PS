@@ -16,4 +16,6 @@ public interface IProductoService {
 	public ProductoModel ListarId(int id);
 
 	public String delete(int id);
+	
+	public List<ProductoModel> findDestacados();
 }

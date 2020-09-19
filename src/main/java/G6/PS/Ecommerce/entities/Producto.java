@@ -23,26 +23,26 @@ public class Producto {
 	private String descripcionCorta;
 	@Column(name = "descripcionLarga", nullable = false, length = 40)
 	private String descripcionLarga;
-	@Column(name = "talle", nullable = false)
+	@Column(name = "talle")
 	private String talle;
-	@Column(name = "color", nullable = false)
+	@Column(name = "color")
 	private String color;
 	@JsonManagedReference
 	@ManyToOne(cascade = CascadeType.MERGE, fetch = FetchType.LAZY)
 	private SubCategoria subCategoria;
-	@Column(name = "sku", nullable = false)
+	@Column(name = "sku")
 	private String sku;
 	@Column(name = "urlImagen", nullable = false)
 	private String urlImagen;
 	@Column(name = "precio", nullable = false)
 	private float precio;
-	@Column(name = "valoracion")
-	private int valoracion;
+	@Column(name = "destacado")
+	private String destacado;
 	
 	public Producto() {}
 
 	public Producto(int id, String descripcionCorta, String descripcionLarga, String talle, String color,
-			SubCategoria subCategoria, String sku, String urlImagen, float precio, int valoracion) {
+			SubCategoria subCategoria, String sku, String urlImagen, float precio, String destacado) {
 		super();
 		this.id = id;
 		this.descripcionCorta = descripcionCorta;
@@ -53,7 +53,7 @@ public class Producto {
 		this.sku = sku;
 		this.urlImagen = urlImagen;
 		this.precio = precio;
-		this.valoracion = valoracion;
+		this.destacado = destacado;
 	}
 
 	public int getId() {
@@ -128,11 +128,11 @@ public class Producto {
 		this.precio = precio;
 	}
 
-	public int getValoracion() {
-		return valoracion;
+	public String getDestacado() {
+		return destacado;
 	}
 
-	public void setValoracion(int valoracion) {
-		this.valoracion = valoracion;
+	public void setDestacado(String destacado) {
+		this.destacado = destacado;
 	}
 }

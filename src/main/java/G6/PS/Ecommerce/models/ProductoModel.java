@@ -11,13 +11,13 @@ public class ProductoModel {
 	private String sku;
 	private String urlImagen;
 	private float precio;
-	private int valoracion;
+	private String destacado;
 	//private List<String> comentarios; VALIDAR BIEN
 	
 	public ProductoModel() {}
 
 	public ProductoModel(int id, String descripcionCorta, String descripcionLarga, String talle, String color,
-			SubCategoriaModel subCategoriaModel, String sku, String urlImagen, float precio, int valoracion) {
+			SubCategoriaModel subCategoriaModel, String sku, String urlImagen, float precio, String destacado) {
 		super();
 		this.id = id;
 		this.descripcionCorta = descripcionCorta;
@@ -28,7 +28,7 @@ public class ProductoModel {
 		this.sku = sku;
 		this.urlImagen = urlImagen;
 		this.precio = precio;
-		this.valoracion = valoracion;
+		this.destacado = destacado;
 	}
 
 	public int getId() {
@@ -103,11 +103,11 @@ public class ProductoModel {
 		this.precio = precio;
 	}
 
-	public int getValoracion() {
-		return valoracion;
+	public String getDestacado() {
+		return destacado;
 	}
 
-	public void setValoracion(int valoracion) {
-		this.valoracion = valoracion;
+	public void setDestacado(String destacado) {
+		this.destacado = destacado;
 	}
 }
