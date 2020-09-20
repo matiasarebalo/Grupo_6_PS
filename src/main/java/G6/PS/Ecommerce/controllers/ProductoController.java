@@ -68,43 +68,47 @@ public class ProductoController {
 		List<SubCategoriaModel> subCategorias=  subCategoriaService.getAll();
 		mAV.addObject("subCategorias", subCategorias);
 		
+		mAV.addObject("categoria", new CategoriaModel());
 
+		mAV.addObject("subCategoria", new SubCategoriaModel());
+
+		mAV.addObject("producto", new ProductoModel());
 
 		return mAV;
 	}
 	
 	
 	
-//	@PostMapping("/saveCategoria")
-//	public String saveCategoria(@Valid @ModelAttribute("categoria") CategoriaModel categoriaModel, BindingResult result,RedirectAttributes redirect) {
-//		if (result.hasErrors()) {
-//			return ViewRouteHelper.FORM;
-//
-//		}
-//		categoriaService.insertOrUpdate(categoriaModel);
-//		return "redirect:/productos/";
-//
-//	}
-//
-//	@PostMapping("/saveSubCategoria")
-//	public String saveSubCategoria(@Valid @ModelAttribute("producto") SubCategoriaModel subCategoriaModel, BindingResult result,RedirectAttributes redirect) {
-//		if (result.hasErrors()) {
-//			return ViewRouteHelper.FORM;
-//
-//		}
-//		subCategoriaService.insertOrUpdate(subCategoriaModel);
-//		return "redirect:/productos/";
-//
-//	}
-//	
-//	@PostMapping("/saveProducto")
-//	public String save(@Valid @ModelAttribute("producto") ProductoModel productoModel, BindingResult result,RedirectAttributes redirect) {
-//		if (result.hasErrors()) {
-//			return ViewRouteHelper.FORM;
-//
-//		}
-//		productoService.insertOrUpdate(productoModel);
-//		return "redirect:/productos/";
-//
-//	}
+	@PostMapping("/saveCategoria")
+	public String saveCategoria(@Valid @ModelAttribute("categoria") CategoriaModel categoriaModel, BindingResult result,RedirectAttributes redirect) {
+		if (result.hasErrors()) {
+			return ViewRouteHelper.FORM;
+
+		}
+		categoriaService.insertOrUpdate(categoriaModel);
+		return ViewRouteHelper.FORM;
+
+	}
+
+	@PostMapping("/saveSubCategoria")
+	public String saveSubCategoria(@Valid @ModelAttribute("subCategoria") SubCategoriaModel subCategoriaModel, BindingResult result,RedirectAttributes redirect) {
+		if (result.hasErrors()) {
+			return ViewRouteHelper.FORM;
+
+		}
+		subCategoriaService.insertOrUpdate(subCategoriaModel);
+		return ViewRouteHelper.FORM;
+
+	}
+	
+	@PostMapping("/saveProducto")
+	public String save(@Valid @ModelAttribute("producto") ProductoModel productoModel, BindingResult result,RedirectAttributes redirect) {
+		if (result.hasErrors()) {
+			return ViewRouteHelper.FORM;
+
+		}
+		productoService.insertOrUpdate(productoModel);
+		return ViewRouteHelper.FORM;
+
+	}
 }
