@@ -1,5 +1,8 @@
 package G6.PS.Ecommerce.controllers;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -10,10 +13,13 @@ import org.springframework.web.servlet.ModelAndView;
 
 import G6.PS.Ecommerce.entities.Producto;
 import G6.PS.Ecommerce.helpers.ViewRouteHelper;
+import G6.PS.Ecommerce.models.AtributoValorModel;
+import G6.PS.Ecommerce.models.AtributosModel;
+import G6.PS.Ecommerce.models.CategoriaModel;
 import G6.PS.Ecommerce.models.ProductoModel;
+import G6.PS.Ecommerce.models.SubCategoriaModel;
 import G6.PS.Ecommerce.repositories.IProductoRepository;
 import G6.PS.Ecommerce.services.IProductoService;
-import antlr.collections.List;
 
 @Controller
 @RequestMapping("/")
@@ -26,7 +32,7 @@ public class InicioController {
 	
 	@GetMapping("")
 	public ModelAndView index() {
-		ModelAndView mAV = new ModelAndView(ViewRouteHelper.INDEX);
+		ModelAndView mAV = new ModelAndView("vendedor/crud-producto");
 		
 		//compruebo si se logueo el admin y en tal caso muestro el menu correspondiente, el resto de la pagina permanece igual
 		String roleString = SecurityContextHolder.getContext().getAuthentication().getAuthorities().toString();
@@ -35,8 +41,23 @@ public class InicioController {
 		boolean admin = false;
 		if(roleString.equals("[ROLE_ADMIN]")) {admin=true;}
 		mAV.addObject("admin", admin);
-		//List<ProductoModel> productos =  productoService.findDestacados();
-		//mAV.addObject("productos",productos);
+
+		
+		
+		CategoriaModel categoriaModel = new CategoriaModel(1, "Hombres");
+		SubCategoriaModel subCategoriaModel = new SubCategoriaModel(1, "Remera", categoriaModel);
+
+		AtributoValorModel atributoValorModel = new AtributoValorModel(1, "XL");
+		AtributoValorModel atributoValorModel2 = new AtributoValorModel(2, "S");
+
+		List<AtributosModel> atributos = new ArrayList<AtributosModel>();
+		AtributosModel atributo = new AtributosModel(1, "Talle", atributoValorModel);
+		atributos.add(atributo);
+
+		ProductoModel productos = new ProductoModel(1, "descripcionCorta", "descripcionLarga",
+		subCategoriaModel, "urlImagen", "sku", 1200, true, atributos);
+		
+		mAV.addObject("productos",productos);
 		return mAV;
 	}
 	

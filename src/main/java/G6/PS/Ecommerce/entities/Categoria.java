@@ -19,7 +19,9 @@ public class Categoria {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private int id;
+	
 	private String categoria;
+
 	@JsonBackReference
 	@OneToMany(fetch = FetchType.LAZY, mappedBy = "categoria")
 	private List<SubCategoria> subCategorias;
@@ -31,15 +33,8 @@ public class Categoria {
 		super();
 		this.id = id;
 		this.categoria = categoria;
-
 	}
 	
-	public Categoria(int id, String categoria, List<SubCategoria> subCategorias) {
-		super();
-		this.id = id;
-		this.categoria = categoria;
-		this.subCategorias = subCategorias;
-	}
 	public int getId() {
 		return id;
 	}

@@ -38,7 +38,7 @@ public class CategoriaService implements ICategoriaService{
 	}
 
 	@Override
-	public CategoriaModel ListarId(int id) {
+	public CategoriaModel listarId(int id) {
 		return	categoriaConverter.entityToModel(categoriaRepository.findById(id));
 		
 	}

@@ -13,7 +13,7 @@ public interface ISubCategoriaService {
 
 	public SubCategoriaModel insertOrUpdate(SubCategoriaModel subCategoriaModel);
 
-	public SubCategoriaModel ListarId(int id);
+	public SubCategoriaModel listarId(int id);
 
 	public String delete(int id);
 

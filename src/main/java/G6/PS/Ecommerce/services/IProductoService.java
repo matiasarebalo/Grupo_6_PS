@@ -13,7 +13,7 @@ public interface IProductoService {
 
 	public ProductoModel insertOrUpdate(ProductoModel productoModel);
 
-	public ProductoModel ListarId(int id);
+	public ProductoModel listarId(int id);
 
 	public String delete(int id);
 	

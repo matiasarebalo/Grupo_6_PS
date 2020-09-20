@@ -7,22 +7,15 @@ public class SubCategoriaModel {
 	private int id;
 	private String subCategoria;
 	private List<ProductoModel> productoModel;
-	
+	private CategoriaModel categoria;
 
 	public SubCategoriaModel() {}
 	
-	public SubCategoriaModel(int id, String subCategoria) {
+	public SubCategoriaModel(int id, String subCategoria, CategoriaModel categoria) {
 		super();
 		this.id = id;
 		this.subCategoria = subCategoria;
-	}
-	
-	
-	public SubCategoriaModel(int id, String subCategoria, List<ProductoModel> productoModel) {
-		super();
-		this.id = id;
-		this.subCategoria = subCategoria;
-		this.productoModel = productoModel;
+		this.categoria = categoria;
 	}
 
 	public int getId() {
@@ -47,6 +40,14 @@ public class SubCategoriaModel {
 
 	public void setProductoModel(List<ProductoModel> productoModel) {
 		this.productoModel = productoModel;
+	}
+
+	public CategoriaModel getCategoria() {
+		return categoria;
+	}
+
+	public void setCategoria(CategoriaModel categoria) {
+		this.categoria = categoria;
 	}
 	
 	

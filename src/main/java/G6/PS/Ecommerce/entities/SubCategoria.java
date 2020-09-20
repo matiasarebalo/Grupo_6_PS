@@ -1,5 +1,6 @@
 package G6.PS.Ecommerce.entities;
 
+import java.util.HashSet;
 import java.util.List;
 
 import javax.persistence.CascadeType;
@@ -8,6 +9,7 @@ import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
@@ -21,21 +23,25 @@ public class SubCategoria {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private int id;
+
 	private String subCategoria;
+
 	@JsonBackReference
 	@OneToMany(fetch = FetchType.LAZY, mappedBy = "subCategoria")
 	private List<Producto> producto;
-	@ManyToOne(cascade = CascadeType.MERGE, fetch = FetchType.LAZY)
+	
+	@ManyToOne(fetch = FetchType.LAZY)
+	@JoinColumn(nullable=false)
 	private Categoria categoria;
 	
 	public SubCategoria() {	}
 	
 	
-	public SubCategoria(int id, String subCategoria, List<Producto> producto) {
+	public SubCategoria(int id, String subCategoria, Categoria categoria) {
 		super();
 		this.id = id;
 		this.subCategoria = subCategoria;
-		this.producto = producto;
+		this.categoria = categoria;
 	}
 	public int getId() {
 		return id;
@@ -55,5 +61,14 @@ public class SubCategoria {
 	public void setProducto(List<Producto> producto) {
 		this.producto = producto;
 	}
+
+	public Categoria getCategoria() {
+		return categoria;
+	}
+
+	public void setCategoria(Categoria categoria) {
+		this.categoria = categoria;
+	}
+	
 
 }

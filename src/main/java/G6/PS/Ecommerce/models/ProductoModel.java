@@ -1,34 +1,33 @@
 package G6.PS.Ecommerce.models;
 
+import java.util.List;
+
 public class ProductoModel {
 	
 	private int id;
 	private String descripcionCorta;
 	private String descripcionLarga;
-	private String talle;
-	private String color;
-	private SubCategoriaModel subCategoriaModel;
+	private SubCategoriaModel subCategoria;
 	private String sku;
 	private String urlImagen;
 	private float precio;
-	private String destacado;
-	//private List<String> comentarios; VALIDAR BIEN
+	private boolean destacado;
+	private List<AtributosModel> prodAtributos;
 	
 	public ProductoModel() {}
 
-	public ProductoModel(int id, String descripcionCorta, String descripcionLarga, String talle, String color,
-			SubCategoriaModel subCategoriaModel, String sku, String urlImagen, float precio, String destacado) {
+	public ProductoModel(int id, String descripcionCorta, String descripcionLarga, SubCategoriaModel subCategoria, String urlImagen, String sku,
+					float precio, boolean destacado, List<AtributosModel> prodAtributos) {
 		super();
 		this.id = id;
 		this.descripcionCorta = descripcionCorta;
 		this.descripcionLarga = descripcionLarga;
-		this.talle = talle;
-		this.color = color;
-		this.subCategoriaModel = subCategoriaModel;
+		this.subCategoria = subCategoria;
 		this.sku = sku;
 		this.urlImagen = urlImagen;
 		this.precio = precio;
 		this.destacado = destacado;
+		this.prodAtributos = prodAtributos;
 	}
 
 	public int getId() {
@@ -54,29 +53,12 @@ public class ProductoModel {
 	public void setDescripcionLarga(String descripcionLarga) {
 		this.descripcionLarga = descripcionLarga;
 	}
-
-	public String getTalle() {
-		return talle;
-	}
-
-	public void setTalle(String talle) {
-		this.talle = talle;
-	}
-
-	public String getColor() {
-		return color;
-	}
-
-	public void setColor(String color) {
-		this.color = color;
-	}
-
 	public SubCategoriaModel getSubCategoriaModel() {
-		return subCategoriaModel;
+		return subCategoria;
 	}
 
-	public void setSubCategoriaModel(SubCategoriaModel subCategoriaModel) {
-		this.subCategoriaModel = subCategoriaModel;
+	public void setSubCategoriaModel(SubCategoriaModel subCategoria) {
+		this.subCategoria = subCategoria;
 	}
 
 	public String getSku() {
@@ -103,11 +85,29 @@ public class ProductoModel {
 		this.precio = precio;
 	}
 
-	public String getDestacado() {
+	public boolean getDestacado() {
 		return destacado;
 	}
 
-	public void setDestacado(String destacado) {
+	public void setDestacado(boolean destacado) {
 		this.destacado = destacado;
 	}
+
+	public SubCategoriaModel getSubCategoria() {
+		return subCategoria;
+	}
+
+	public void setSubCategoria(SubCategoriaModel subCategoria) {
+		this.subCategoria = subCategoria;
+	}
+
+	public List<AtributosModel> getProdAtributos() {
+		return prodAtributos;
+	}
+
+	public void setProdAtributos(List<AtributosModel> prodAtributos) {
+		this.prodAtributos = prodAtributos;
+	}
+
+	
 }

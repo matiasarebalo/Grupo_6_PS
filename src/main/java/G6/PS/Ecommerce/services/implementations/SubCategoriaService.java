@@ -36,7 +36,7 @@ public class SubCategoriaService implements ISubCategoriaService{
 	}
 
 	@Override
-	public SubCategoriaModel ListarId(int id) {
+	public SubCategoriaModel listarId(int id) {
 		return	subCategoriaConverter.entityToModel(subCategoriaRepository.findById(id));
 	
 	}

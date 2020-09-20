@@ -11,7 +11,7 @@ public interface ICategoriaService  {
 
 	public CategoriaModel insertOrUpdate(CategoriaModel categoriaModel);
 
-	public CategoriaModel ListarId(int id);
+	public CategoriaModel listarId(int id);
 
 	public String delete(int id);
 

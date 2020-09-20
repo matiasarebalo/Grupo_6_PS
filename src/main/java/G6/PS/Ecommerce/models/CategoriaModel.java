@@ -17,13 +17,6 @@ public class CategoriaModel {
 		this.categoria = categoria;
 	}
 	
-	public CategoriaModel(int id, String categoria, List<SubCategoriaModel> subcategoria) {
-		super();
-		this.id = id;
-		this.categoria = categoria;
-		this.subcategoria = subcategoria;
-	}
-	
 	public int getId() {
 		return id;
 	}
