@@ -3,7 +3,6 @@ package G6.PS.Ecommerce.controllers;
 import java.util.ArrayList;
 import java.util.List;
 
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -11,6 +10,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
@@ -60,6 +60,24 @@ public class ProductoController {
 		}
 		mAV.addObject("admin", admin);
 
+		return mAV;
+	}
+	
+	@GetMapping("/lista")
+	public ModelAndView grillaProductos() {
+		ModelAndView mAV = new ModelAndView(ViewRouteHelper.GRILLA);
+
+		// compruebo si se logueo el admin y en tal caso muestro el menu
+		// correspondiente, el resto de la pagina permanece igual
+		String roleString = SecurityContextHolder.getContext().getAuthentication().getAuthorities().toString();
+		System.out.println(roleString);
+
+		boolean admin = false;
+		if (roleString.equals("[ROLE_ADMIN]")) {
+			admin = true;
+		}
+		mAV.addObject("admin", admin);
+
 		CategoriaModel categoriaModel = new CategoriaModel(1, "Hombres");
 		SubCategoriaModel subCategoriaModel = new SubCategoriaModel(1, "Remera", categoriaModel);
 
@@ -70,15 +88,15 @@ public class ProductoController {
 		AtributosModel atributo = new AtributosModel(1, "Talle", atributoValorModel);
 		atributos.add(atributo);
 
-		ProductoModel productos = new ProductoModel(1, "descripcionCorta", "descripcionLarga", subCategoriaModel,
-				"urlImagen", "sku", 1200, true, atributos);
+		ProductoModel producto = new ProductoModel(1, "Lisa 2020", "descripcionLarga", subCategoriaModel,"urlImagen", "sku", 1200, true, atributos);
+
+		List<ProductoModel> productos = new ArrayList<ProductoModel>();
+		productos.add(producto);
 
 		mAV.addObject("productos", productos);
 
 		return mAV;
 	}
-	
-	
 	
 	@PostMapping("/saveCategoria")
 	public String saveCategoria(@Valid @ModelAttribute("producto") CategoriaModel categoriaModel, BindingResult result,RedirectAttributes redirect) {
@@ -111,5 +129,11 @@ public class ProductoController {
 		productoService.insertOrUpdate(productoModel);
 		return "redirect:/productos/";
 
+	}
+
+	@PostMapping("/eliminar/{id}")
+	public String delete(@PathVariable("id") int id) {
+		productoService.delete(id);
+		return "redirect:/productos/lista";
 	}
 }
