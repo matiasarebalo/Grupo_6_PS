@@ -32,7 +32,7 @@ public class InicioController {
 	
 	@GetMapping("")
 	public ModelAndView index() {
-		ModelAndView mAV = new ModelAndView("vendedor/crud-producto");
+		ModelAndView mAV = new ModelAndView(ViewRouteHelper.INDEX);
 		
 		//compruebo si se logueo el admin y en tal caso muestro el menu correspondiente, el resto de la pagina permanece igual
 		String roleString = SecurityContextHolder.getContext().getAuthentication().getAuthorities().toString();
@@ -41,24 +41,7 @@ public class InicioController {
 		boolean admin = false;
 		if(roleString.equals("[ROLE_ADMIN]")) {admin=true;}
 		mAV.addObject("admin", admin);
-
-		
-		
-		CategoriaModel categoriaModel = new CategoriaModel(1, "Hombres");
-		SubCategoriaModel subCategoriaModel = new SubCategoriaModel(1, "Remera", categoriaModel);
-
-		AtributoValorModel atributoValorModel = new AtributoValorModel(1, "XL");
-		AtributoValorModel atributoValorModel2 = new AtributoValorModel(2, "S");
-
-		List<AtributosModel> atributos = new ArrayList<AtributosModel>();
-		AtributosModel atributo = new AtributosModel(1, "Talle", atributoValorModel);
-		atributos.add(atributo);
-
-		ProductoModel productos = new ProductoModel(1, "descripcionCorta", "descripcionLarga",
-		subCategoriaModel, "urlImagen", "sku", 1200, true, atributos);
-		
-		mAV.addObject("productos",productos);
-		return mAV;
+			return mAV;
 	}
 	
 	@GetMapping("institucional")
