@@ -7,7 +7,7 @@ import G6.PS.Ecommerce.models.CategoriaModel;
 
 public interface ICategoriaService  {
 
-	public List<Categoria> getAll();
+	public List<CategoriaModel> getAll();
 
 	public CategoriaModel insertOrUpdate(CategoriaModel categoriaModel);
 

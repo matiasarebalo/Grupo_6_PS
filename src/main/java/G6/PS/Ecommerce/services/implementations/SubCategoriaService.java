@@ -1,5 +1,6 @@
 package G6.PS.Ecommerce.services.implementations;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -7,7 +8,9 @@ import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
 
 import G6.PS.Ecommerce.converters.SubCategoriaConverter;
+import G6.PS.Ecommerce.entities.Categoria;
 import G6.PS.Ecommerce.entities.SubCategoria;
+import G6.PS.Ecommerce.models.CategoriaModel;
 import G6.PS.Ecommerce.models.SubCategoriaModel;
 import G6.PS.Ecommerce.repositories.ISubCategoriaRepository;
 import G6.PS.Ecommerce.services.ISubCategoriaService;
@@ -24,10 +27,14 @@ public class SubCategoriaService implements ISubCategoriaService{
 	private SubCategoriaConverter subCategoriaConverter;
 	
 	@Override
-	public List<SubCategoria> getAll() {
-		// TODO Auto-generated method stub
-		return subCategoriaRepository.findAll();
-	}
+	public List<SubCategoriaModel> getAll() {
+		List<SubCategoriaModel> subCategorias= new ArrayList<SubCategoriaModel>();
+		List<SubCategoria> sC= subCategoriaRepository.findAll();
+		for(SubCategoria s: sC) {
+			subCategorias.add(subCategoriaConverter.entityToModel(s));
+		}
+		return subCategorias;
+	}	
 
 	@Override
 	public SubCategoriaModel insertOrUpdate(SubCategoriaModel model) {

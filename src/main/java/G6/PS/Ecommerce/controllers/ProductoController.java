@@ -27,6 +27,7 @@ import G6.PS.Ecommerce.models.SubCategoriaModel;
 import G6.PS.Ecommerce.services.ICategoriaService;
 import G6.PS.Ecommerce.services.IProductoService;
 import G6.PS.Ecommerce.services.ISubCategoriaService;
+import G6.PS.Ecommerce.converters.CategoriaConverter;
 import G6.PS.Ecommerce.helpers.ViewRouteHelper;
 
 @Controller
@@ -45,6 +46,7 @@ public class ProductoController {
 	@Qualifier("subCategoriaService")
 	private ISubCategoriaService subCategoriaService;
 
+	@SuppressWarnings("null")
 	@GetMapping("/new")
 	public ModelAndView index() {
 		ModelAndView mAV = new ModelAndView(ViewRouteHelper.FORM);
@@ -59,57 +61,50 @@ public class ProductoController {
 			admin = true;
 		}
 		mAV.addObject("admin", admin);
+		
+		List<CategoriaModel> categorias=  categoriaService.getAll();
+		mAV.addObject("categorias", categorias);
 
-		CategoriaModel categoriaModel = new CategoriaModel(1, "Hombres");
-		SubCategoriaModel subCategoriaModel = new SubCategoriaModel(1, "Remera", categoriaModel);
+		List<SubCategoriaModel> subCategorias=  subCategoriaService.getAll();
+		mAV.addObject("subCategorias", subCategorias);
+		
 
-		AtributoValorModel atributoValorModel = new AtributoValorModel(1, "XL");
-		AtributoValorModel atributoValorModel2 = new AtributoValorModel(2, "S");
-
-		List<AtributosModel> atributos = new ArrayList<AtributosModel>();
-		AtributosModel atributo = new AtributosModel(1, "Talle", atributoValorModel);
-		atributos.add(atributo);
-
-		ProductoModel productos = new ProductoModel(1, "descripcionCorta", "descripcionLarga", subCategoriaModel,
-				"urlImagen", "sku", 1200, true, atributos);
-
-		mAV.addObject("productos", productos);
 
 		return mAV;
 	}
 	
 	
 	
-	@PostMapping("/saveCategoria")
-	public String saveCategoria(@Valid @ModelAttribute("producto") CategoriaModel categoriaModel, BindingResult result,RedirectAttributes redirect) {
-		if (result.hasErrors()) {
-			return ViewRouteHelper.FORM;
-
-		}
-		categoriaService.insertOrUpdate(categoriaModel);
-		return "redirect:/productos/";
-
-	}
-
-	@PostMapping("/saveSubCategoria")
-	public String saveSubCategoria(@Valid @ModelAttribute("producto") SubCategoriaModel subCategoriaModel, BindingResult result,RedirectAttributes redirect) {
-		if (result.hasErrors()) {
-			return ViewRouteHelper.FORM;
-
-		}
-		subCategoriaService.insertOrUpdate(subCategoriaModel);
-		return "redirect:/productos/";
-
-	}
-	
-	@PostMapping("/saveProducto")
-	public String save(@Valid @ModelAttribute("producto") ProductoModel productoModel, BindingResult result,RedirectAttributes redirect) {
-		if (result.hasErrors()) {
-			return ViewRouteHelper.FORM;
-
-		}
-		productoService.insertOrUpdate(productoModel);
-		return "redirect:/productos/";
-
-	}
+//	@PostMapping("/saveCategoria")
+//	public String saveCategoria(@Valid @ModelAttribute("categoria") CategoriaModel categoriaModel, BindingResult result,RedirectAttributes redirect) {
+//		if (result.hasErrors()) {
+//			return ViewRouteHelper.FORM;
+//
+//		}
+//		categoriaService.insertOrUpdate(categoriaModel);
+//		return "redirect:/productos/";
+//
+//	}
+//
+//	@PostMapping("/saveSubCategoria")
+//	public String saveSubCategoria(@Valid @ModelAttribute("producto") SubCategoriaModel subCategoriaModel, BindingResult result,RedirectAttributes redirect) {
+//		if (result.hasErrors()) {
+//			return ViewRouteHelper.FORM;
+//
+//		}
+//		subCategoriaService.insertOrUpdate(subCategoriaModel);
+//		return "redirect:/productos/";
+//
+//	}
+//	
+//	@PostMapping("/saveProducto")
+//	public String save(@Valid @ModelAttribute("producto") ProductoModel productoModel, BindingResult result,RedirectAttributes redirect) {
+//		if (result.hasErrors()) {
+//			return ViewRouteHelper.FORM;
+//
+//		}
+//		productoService.insertOrUpdate(productoModel);
+//		return "redirect:/productos/";
+//
+//	}
 }
