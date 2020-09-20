@@ -1,5 +1,6 @@
 package G6.PS.Ecommerce.services.implementations;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -25,9 +26,13 @@ public class CategoriaService implements ICategoriaService{
 	private CategoriaConverter categoriaConverter;
 	
 	@Override
-	public List<Categoria> getAll() {
-		// TODO Auto-generated method stub
-		return categoriaRepository.findAll();
+	public List<CategoriaModel> getAll() {
+		List<CategoriaModel> categorias= new ArrayList<CategoriaModel>();
+		List<Categoria> ct= categoriaRepository.findAll();
+		for(Categoria c: ct) {
+			categorias.add(categoriaConverter.entityToModel(c));
+		}
+		return categorias;
 	}
 
 	@Override

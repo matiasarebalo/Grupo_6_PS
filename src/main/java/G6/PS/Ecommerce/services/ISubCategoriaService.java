@@ -9,7 +9,7 @@ import G6.PS.Ecommerce.models.SubCategoriaModel;
 
 public interface ISubCategoriaService {
 
-	public List<SubCategoria> getAll();
+	public List<SubCategoriaModel> getAll();
 
 	public SubCategoriaModel insertOrUpdate(SubCategoriaModel subCategoriaModel);
 

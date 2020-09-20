@@ -27,6 +27,7 @@ import G6.PS.Ecommerce.models.SubCategoriaModel;
 import G6.PS.Ecommerce.services.ICategoriaService;
 import G6.PS.Ecommerce.services.IProductoService;
 import G6.PS.Ecommerce.services.ISubCategoriaService;
+import G6.PS.Ecommerce.converters.CategoriaConverter;
 import G6.PS.Ecommerce.helpers.ViewRouteHelper;
 
 @Controller
@@ -45,6 +46,7 @@ public class ProductoController {
 	@Qualifier("subCategoriaService")
 	private ISubCategoriaService subCategoriaService;
 
+	@SuppressWarnings("null")
 	@GetMapping("/new")
 	public ModelAndView index() {
 		ModelAndView mAV = new ModelAndView(ViewRouteHelper.FORM);
@@ -59,6 +61,20 @@ public class ProductoController {
 			admin = true;
 		}
 		mAV.addObject("admin", admin);
+		
+		List<CategoriaModel> categorias=  categoriaService.getAll();
+
+		mAV.addObject("categorias", categorias);
+
+		List<SubCategoriaModel> subCategorias=  subCategoriaService.getAll();
+
+		mAV.addObject("subCategorias", subCategorias);
+		
+		mAV.addObject("categoria", new CategoriaModel());
+
+		mAV.addObject("subCategoria", new SubCategoriaModel());
+
+		mAV.addObject("producto", new ProductoModel());
 
 		return mAV;
 	}
@@ -80,7 +96,6 @@ public class ProductoController {
 
 		CategoriaModel categoriaModel = new CategoriaModel(1, "Hombres");
 		SubCategoriaModel subCategoriaModel = new SubCategoriaModel(1, "Remera", categoriaModel);
-
 		AtributoValorModel atributoValorModel = new AtributoValorModel(1, "XL");
 		AtributoValorModel atributoValorModel2 = new AtributoValorModel(2, "S");
 
@@ -94,29 +109,30 @@ public class ProductoController {
 		productos.add(producto);
 
 		mAV.addObject("productos", productos);
+		mAV.addObject("producto", new ProductoModel());
 
 		return mAV;
 	}
 	
 	@PostMapping("/saveCategoria")
-	public String saveCategoria(@Valid @ModelAttribute("producto") CategoriaModel categoriaModel, BindingResult result,RedirectAttributes redirect) {
+	public String saveCategoria(@Valid @ModelAttribute("categoria") CategoriaModel categoriaModel, BindingResult result,RedirectAttributes redirect) {
 		if (result.hasErrors()) {
 			return ViewRouteHelper.FORM;
 
 		}
 		categoriaService.insertOrUpdate(categoriaModel);
-		return "redirect:/productos/";
+		return ViewRouteHelper.FORM;
 
 	}
 
 	@PostMapping("/saveSubCategoria")
-	public String saveSubCategoria(@Valid @ModelAttribute("producto") SubCategoriaModel subCategoriaModel, BindingResult result,RedirectAttributes redirect) {
+	public String saveSubCategoria(@Valid @ModelAttribute("subCategoria") SubCategoriaModel subCategoriaModel, BindingResult result,RedirectAttributes redirect) {
 		if (result.hasErrors()) {
 			return ViewRouteHelper.FORM;
 
 		}
 		subCategoriaService.insertOrUpdate(subCategoriaModel);
-		return "redirect:/productos/";
+		return ViewRouteHelper.FORM;
 
 	}
 	
@@ -127,7 +143,7 @@ public class ProductoController {
 
 		}
 		productoService.insertOrUpdate(productoModel);
-		return "redirect:/productos/";
+		return ViewRouteHelper.FORM;
 
 	}
 
