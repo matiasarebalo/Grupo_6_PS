@@ -41,7 +41,11 @@ public class InicioController {
 		boolean admin = false;
 		if(roleString.equals("[ROLE_ADMIN]")) {admin=true;}
 		mAV.addObject("admin", admin);
-			return mAV;
+		
+		List<ProductoModel> productos = productoService.findDestacados();
+		
+		mAV.addObject("productos", productos);
+		return mAV;
 	}
 	
 	@GetMapping("institucional")
