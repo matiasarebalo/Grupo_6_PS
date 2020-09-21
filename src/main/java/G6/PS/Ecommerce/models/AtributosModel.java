@@ -7,18 +7,19 @@ public class AtributosModel {
     private int id;
 
     private String atributo;
-
+    private ProductoModel producto;
     private AtributoValorModel atributoValor;
 
     public AtributosModel(){
         
     }
 
-    public AtributosModel(int id, String atributo, AtributoValorModel atributoValor) {
+    public AtributosModel(int id, String atributo, AtributoValorModel atributoValor, ProductoModel producto) {
         super();
         this.id = id;
         this.atributo = atributo;
         this.atributoValor = atributoValor;
+        this.setProducto(producto);
     }
 
     public int getId() {
@@ -44,5 +45,13 @@ public class AtributosModel {
     public void setAtributoValor(AtributoValorModel atributoValor) {
         this.atributoValor = atributoValor;
     }
+
+	public ProductoModel getProducto() {
+		return producto;
+	}
+
+	public void setProducto(ProductoModel producto) {
+		this.producto = producto;
+	}
     
 }

@@ -1,6 +1,5 @@
 package G6.PS.Ecommerce.entities;
 
-import java.util.List;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
@@ -10,10 +9,11 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
-import javax.persistence.ManyToMany;
-import javax.persistence.OneToMany;
+import javax.persistence.ManyToOne;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
+
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 
 @Entity
 @Table(name = "atributos")
@@ -26,8 +26,10 @@ public class Atributos {
     @Column(name = "atributo", nullable = false, length = 40)
     private String atributo;
 
-    @ManyToMany(mappedBy = "prodAtributos")
-    List<Producto> productos;
+    
+    @JsonManagedReference
+	@ManyToOne(cascade = CascadeType.MERGE, fetch = FetchType.LAZY)
+	private Producto producto;
     
     @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "atributoValor_id", referencedColumnName = "id")
@@ -37,11 +39,12 @@ public class Atributos {
         
     }
 
-    public Atributos(int id, String atributo, AtributoValor atributoValor) {
+    public Atributos(int id, String atributo, AtributoValor atributoValor,Producto producto) {
         super();
         this.id = id;
         this.atributo = atributo;
         this.atributoValor = atributoValor;
+        this.producto = producto;
     }
 
     public int getId() {
@@ -60,12 +63,12 @@ public class Atributos {
         this.atributo = atributo;
     }
 
-    public List<Producto> getProductos() {
-        return productos;
+    public Producto getProducto() {
+        return producto;
     }
 
-    public void setProductos(List<Producto> productos) {
-        this.productos = productos;
+    public void setProducto(Producto producto) {
+        this.producto = producto;
     }
 
     public AtributoValor getAtributoValor() {

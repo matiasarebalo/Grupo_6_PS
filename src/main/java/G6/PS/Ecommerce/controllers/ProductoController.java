@@ -24,6 +24,7 @@ import G6.PS.Ecommerce.models.AtributosModel;
 import G6.PS.Ecommerce.models.CategoriaModel;
 import G6.PS.Ecommerce.models.ProductoModel;
 import G6.PS.Ecommerce.models.SubCategoriaModel;
+import G6.PS.Ecommerce.services.IAtributosService;
 import G6.PS.Ecommerce.services.ICategoriaService;
 import G6.PS.Ecommerce.services.IProductoService;
 import G6.PS.Ecommerce.services.ISubCategoriaService;
@@ -46,110 +47,118 @@ public class ProductoController {
 	@Qualifier("subCategoriaService")
 	private ISubCategoriaService subCategoriaService;
 
-	@SuppressWarnings("null")
-	@GetMapping("/new")
-	public ModelAndView index() {
-		ModelAndView mAV = new ModelAndView(ViewRouteHelper.FORM);
-
+	@Autowired
+	@Qualifier("atributosService")
+	private IAtributosService atributosService;
+	
+	
+	@GetMapping("/newCategoria")
+	public ModelAndView newCategoria() {
+		ModelAndView mAV = new ModelAndView(ViewRouteHelper.FORM_CATEGORIA);
 		// compruebo si se logueo el admin y en tal caso muestro el menu
 		// correspondiente, el resto de la pagina permanece igual
 		String roleString = SecurityContextHolder.getContext().getAuthentication().getAuthorities().toString();
-		System.out.println(roleString);
-
 		boolean admin = false;
 		if (roleString.equals("[ROLE_ADMIN]")) {
 			admin = true;
 		}
 		mAV.addObject("admin", admin);
-		
-		List<CategoriaModel> categorias=  categoriaService.getAll();
-
+		List<CategoriaModel> categorias = categoriaService.getAll();
 		mAV.addObject("categorias", categorias);
-
-		List<SubCategoriaModel> subCategorias=  subCategoriaService.getAll();
-
-		mAV.addObject("subCategorias", subCategorias);
-		
-		mAV.addObject("categoria", new CategoriaModel());
-
-		mAV.addObject("subCategoria", new SubCategoriaModel());
-
-		mAV.addObject("producto", new ProductoModel());
-
 		return mAV;
 	}
-	
-	@GetMapping("/lista")
-	public ModelAndView grillaProductos() {
-		ModelAndView mAV = new ModelAndView(ViewRouteHelper.GRILLA);
 
+	@GetMapping("/newSubCategoria/{id}")
+	public ModelAndView newSubCategoria(@PathVariable("id") int id) {
+		ModelAndView mAV = new ModelAndView(ViewRouteHelper.FORM_SUBCATEGORIA);
 		// compruebo si se logueo el admin y en tal caso muestro el menu
 		// correspondiente, el resto de la pagina permanece igual
 		String roleString = SecurityContextHolder.getContext().getAuthentication().getAuthorities().toString();
-		System.out.println(roleString);
-
 		boolean admin = false;
 		if (roleString.equals("[ROLE_ADMIN]")) {
 			admin = true;
 		}
 		mAV.addObject("admin", admin);
-
-		CategoriaModel categoriaModel = new CategoriaModel(1, "Hombres");
-		SubCategoriaModel subCategoriaModel = new SubCategoriaModel(1, "Remera", categoriaModel);
-		AtributoValorModel atributoValorModel = new AtributoValorModel(1, "XL");
-		AtributoValorModel atributoValorModel2 = new AtributoValorModel(2, "S");
-
-		List<AtributosModel> atributos = new ArrayList<AtributosModel>();
-		AtributosModel atributo = new AtributosModel(1, "Talle", atributoValorModel);
-		atributos.add(atributo);
-
-		ProductoModel producto = new ProductoModel(1, "Lisa 2020", "descripcionLarga", subCategoriaModel,"urlImagen", "sku", 1200, true, atributos);
-
-		List<ProductoModel> productos = new ArrayList<ProductoModel>();
-		productos.add(producto);
-
-		mAV.addObject("productos", productos);
-		mAV.addObject("producto", new ProductoModel());
-
+		mAV.addObject("c_id", id);
+		List<SubCategoriaModel> subCategorias = subCategoriaService.getAll();
+		mAV.addObject("subCategorias", subCategorias);
 		return mAV;
 	}
 	
-	@PostMapping("/saveCategoria")
-	public String saveCategoria(@Valid @ModelAttribute("categoria") CategoriaModel categoriaModel, BindingResult result,RedirectAttributes redirect) {
-		if (result.hasErrors()) {
-			return ViewRouteHelper.FORM;
-
+	@GetMapping("/newProducto/{id}")
+	public ModelAndView newProducto(@PathVariable("id") int id) {
+		ModelAndView mAV = new ModelAndView(ViewRouteHelper.FORM_PRODUCTO);
+		String roleString = SecurityContextHolder.getContext().getAuthentication().getAuthorities().toString();
+		System.out.println(roleString);
+		boolean admin = false;
+		if (roleString.equals("[ROLE_ADMIN]")) {
+			admin = true;
 		}
-		categoriaService.insertOrUpdate(categoriaModel);
-		return ViewRouteHelper.FORM;
+		mAV.addObject("admin", admin);
+		mAV.addObject("sC_id", id);
+		return mAV;
+	}
 
+	
+	@GetMapping("/newAtributo/{id}")
+	public ModelAndView newAtributo(@PathVariable("id") int id) {
+		ModelAndView mAV = new ModelAndView(ViewRouteHelper.FORM_PRODUCTO);
+		String roleString = SecurityContextHolder.getContext().getAuthentication().getAuthorities().toString();
+		System.out.println(roleString);
+		boolean admin = false;
+		if (roleString.equals("[ROLE_ADMIN]")) {
+			admin = true;
+		}
+		mAV.addObject("admin", admin);
+		mAV.addObject("pId", id);
+		return mAV;
+	}
+
+	@PostMapping("/saveCategoria")
+	public String saveCategoria(@Valid @ModelAttribute("categoria") CategoriaModel categoriaModel, BindingResult result,
+			RedirectAttributes redirect) {
+		if (result.hasErrors()) {
+			return ViewRouteHelper.FORM_CATEGORIA;
+		}
+		CategoriaModel cM = categoriaService.insertOrUpdate(categoriaModel);
+		return "redirect:/productos/newSubCategoria/" + cM.getId();
 	}
 
 	@PostMapping("/saveSubCategoria")
-	public String saveSubCategoria(@Valid @ModelAttribute("subCategoria") SubCategoriaModel subCategoriaModel, BindingResult result,RedirectAttributes redirect) {
+	public String saveSubCategoria(@Valid @ModelAttribute("subCategoria") SubCategoriaModel subCategoriaModel,
+			BindingResult result, RedirectAttributes redirect,int c_id) {
 		if (result.hasErrors()) {
-			return ViewRouteHelper.FORM;
+			return ViewRouteHelper.FORM_SUBCATEGORIA;
 
 		}
-		subCategoriaService.insertOrUpdate(subCategoriaModel);
-		return ViewRouteHelper.FORM;
+		subCategoriaModel.setCategoria(categoriaService.listarId(c_id));
+		SubCategoriaModel sC =subCategoriaService.insertOrUpdate(subCategoriaModel);
+		return "redirect:/productos/newProducto/" + sC.getId();
 
+	}
+
+	@PostMapping("/saveProducto")
+	public String saveProducto(@Valid @ModelAttribute("producto") ProductoModel productoModel, BindingResult result,
+			RedirectAttributes redirect,int Sc_id) {
+		if (result.hasErrors()) {
+			return ViewRouteHelper.FORM_PRODUCTO;
+
+		}
+	productoModel.setSubCategoriaModel(subCategoriaService.listarId(Sc_id));	
+	ProductoModel pM=	productoService.insertOrUpdate(productoModel);
+		return "redirect:/productos/newAtributo/" + pM.getId();
 	}
 	
-	@PostMapping("/saveProducto")
-	public String save(@Valid @ModelAttribute("producto") ProductoModel productoModel, BindingResult result,RedirectAttributes redirect) {
+	@PostMapping("/saveAtributo")
+	public String saveAtributo(@Valid @ModelAttribute("producto") AtributosModel atributosModel, BindingResult result,
+			RedirectAttributes redirect,int pId) {
 		if (result.hasErrors()) {
-			return ViewRouteHelper.FORM;
+			return ViewRouteHelper.FORM_PRODUCTO;
 
 		}
-		productoService.insertOrUpdate(productoModel);
-		return ViewRouteHelper.FORM;
-
-	}
-
-	@PostMapping("/eliminar/{id}")
-	public String delete(@PathVariable("id") int id) {
-		productoService.delete(id);
-		return "redirect:/productos/lista";
-	}
+	atributosModel.setProducto(productoService.listarId(pId));
+		atributosService.insertOrUpdate(atributosModel);
+		return "redirect:/";
+	}	
+	
 }

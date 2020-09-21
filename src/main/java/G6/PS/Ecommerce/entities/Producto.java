@@ -47,6 +47,8 @@ public class Producto {
 	@Column(name = "destacado")
 	private boolean destacado;
 
+	
+	
 	@ManyToMany
 	@JoinTable(
 		name = "producto_atributo", 

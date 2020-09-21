@@ -14,11 +14,15 @@ public class AtributosConverter {
 	@Qualifier("atributoValorConverter")
 	private AtributoValorConverter atributoValorConverter;
 
+	
+	@Autowired
+	@Qualifier("productoConverter")
+	private ProductoConverter productoConverter;
 	public AtributosModel entityToModel (Atributos atributo) {
-		return new AtributosModel(atributo.getId(), atributo.getAtributo(), atributoValorConverter.entityToModel(atributo.getAtributoValor()));
+		return new AtributosModel(atributo.getId(), atributo.getAtributo(), atributoValorConverter.entityToModel(atributo.getAtributoValor()),productoConverter.entityToModel(atributo.getProducto()));
 	}
 
 	public Atributos modelToEntity(AtributosModel model) {
-		return new Atributos(model.getId(), model.getAtributo(), atributoValorConverter.modelToEntity(model.getAtributoValor()));
+		return new Atributos(model.getId(), model.getAtributo(), atributoValorConverter.modelToEntity(model.getAtributoValor()),productoConverter.modelToEntity(model.getProducto()));
 	}
 }
