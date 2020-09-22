@@ -65,6 +65,7 @@ public class ProductoController {
 		mAV.addObject("admin", admin);
 		List<CategoriaModel> categorias = categoriaService.getAll();
 		mAV.addObject("categorias", categorias);
+		mAV.addObject("categoria", new CategoriaModel() );
 		return mAV;
 	}
 
@@ -82,6 +83,7 @@ public class ProductoController {
 		mAV.addObject("c_id", id);
 		List<SubCategoriaModel> subCategorias = subCategoriaService.getAll();
 		mAV.addObject("subCategorias", subCategorias);
+		mAV.addObject("subCategoria", new SubCategoriaModel());
 		return mAV;
 	}
 	
@@ -96,6 +98,7 @@ public class ProductoController {
 		}
 		mAV.addObject("admin", admin);
 		mAV.addObject("sC_id", id);
+		mAV.addObject("producto", new ProductoModel());
 		return mAV;
 	}
 
@@ -111,6 +114,7 @@ public class ProductoController {
 		}
 		mAV.addObject("admin", admin);
 		mAV.addObject("pId", id);
+		mAV.addObject("atributos", new AtributosModel());
 		return mAV;
 	}
 
@@ -126,12 +130,12 @@ public class ProductoController {
 
 	@PostMapping("/saveSubCategoria")
 	public String saveSubCategoria(@Valid @ModelAttribute("subCategoria") SubCategoriaModel subCategoriaModel,
-			BindingResult result, RedirectAttributes redirect,int c_id) {
+			BindingResult result, RedirectAttributes redirect) {
 		if (result.hasErrors()) {
 			return ViewRouteHelper.FORM_SUBCATEGORIA;
 
 		}
-		subCategoriaModel.setCategoria(categoriaService.listarId(c_id));
+		subCategoriaModel.setCategoria(categoriaService.listarId(subCategoriaModel.getCategoria().getId()));
 		SubCategoriaModel sC =subCategoriaService.insertOrUpdate(subCategoriaModel);
 		return "redirect:/productos/newProducto/" + sC.getId();
 
@@ -139,24 +143,24 @@ public class ProductoController {
 
 	@PostMapping("/saveProducto")
 	public String saveProducto(@Valid @ModelAttribute("producto") ProductoModel productoModel, BindingResult result,
-			RedirectAttributes redirect,int Sc_id) {
+			RedirectAttributes redirect) {
 		if (result.hasErrors()) {
 			return ViewRouteHelper.FORM_PRODUCTO;
 
 		}
-	productoModel.setSubCategoriaModel(subCategoriaService.listarId(Sc_id));	
+	productoModel.setSubCategoriaModel(subCategoriaService.listarId(productoModel.getSubCategoria().getId()));	
 	ProductoModel pM=	productoService.insertOrUpdate(productoModel);
 		return "redirect:/productos/newAtributo/" + pM.getId();
 	}
 	
 	@PostMapping("/saveAtributo")
 	public String saveAtributo(@Valid @ModelAttribute("producto") AtributosModel atributosModel, BindingResult result,
-			RedirectAttributes redirect,int pId) {
+			RedirectAttributes redirect) {
 		if (result.hasErrors()) {
 			return ViewRouteHelper.FORM_PRODUCTO;
 
 		}
-	atributosModel.setProducto(productoService.listarId(pId));
+	atributosModel.setProducto(productoService.listarId(atributosModel.getProducto().getId()));
 		atributosService.insertOrUpdate(atributosModel);
 		return "redirect:/";
 	}	

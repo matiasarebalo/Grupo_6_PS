@@ -79,12 +79,12 @@
 								<div class="form">
 									<div class="input-group">
 										<input class="input--style-1" type="text" name="producto"
-											placeholder="*{producto.descripcionLarga}" required="required">
+											placeholder=descripcionLarga th:field="*{descripcionLarga}" required="required">
 										<input class="input--style-1" type="text" name="producto"
-											placeholder="*{producto.descripcionCorta}" required="required">
+											placeholder=descripcionCorta th:field="*{descripcionCorta}" required="required">
 										<input class="input--style-1" type="text" name="producto"
-											placeholder="*{producto.precio}" required="required">
-					
+											placeholder=precio th:field="*{precio}" required="required">
+										<input	th:field=*{subCategoria.id}=sC_id;>
 											
 										<a class="btn--next" href=" ">Agregar</a>
 										<input class="btn" type="submit" value="Submit">
