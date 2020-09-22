@@ -18,9 +18,9 @@ UNLOCK TABLES;
 insert into categoria values(12,"deporte");
 insert into subcategoria values (12,"zapatillas",12);
 insert into subcategoria values (10,"zapatillas",12);
-insert into producto values (100, "zapatillas Adidas", "Zapatillas Runfalcon adidas", false, 5299,"asd","../img/zapatillas2.jpg", 12);
-insert into producto values (1102, "zapatillas running", "Zapatillas Runfalcon Running De Hombre", true, 3749,"asd","../img/zapatillas1.jpg", 12);
-insert into producto values (321, "remera nike", "Remera Nike Breathe Ss Hyper Dry", true, 3999,"asd","../img/remera1.jpg", 10);
-insert into producto values (12354, "Zapatillas court", "ZAPATILLAS VL COURT 2.0", true, 6499,"asd","../img/zapatillas3.jpg", 12);
+insert into producto values (100, "zapatillas Adidas", "Zapatillas Runfalcon adidas", false, 5299,"asd","/img/zapatillas2.jpg", 12);
+insert into producto values (1102, "zapatillas running", "Zapatillas Runfalcon Running De Hombre", true, 3749,"asd","/img/zapatillas1.jpg", 12);
+insert into producto values (321, "remera nike", "Remera Nike Breathe Ss Hyper Dry", true, 3999,"asd","/img/remera1.jpg", 10);
+insert into producto values (12354, "Zapatillas court", "ZAPATILLAS VL COURT 2.0", true, 6499,"asd","/img/zapatillas3.jpg", 12);
 
 commit;

@@ -16,4 +16,6 @@ public class ViewRouteHelper {
 	public final static String FORM_SUBCATEGORIA = "vendedor/form_subCategoria";
 	public final static String FORM_PRODUCTO = "vendedor/form_producto";
 
+	public final static String ARTICULO_UNICO = "home/producto-unico"; 
+
 }

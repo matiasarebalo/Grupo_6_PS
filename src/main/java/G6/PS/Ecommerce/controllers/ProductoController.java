@@ -100,7 +100,7 @@ public class ProductoController {
 	}
 
 	
-	@GetMapping("/newAtributo/{id}")
+	@GetMapping("/newAtributo/{	}")
 	public ModelAndView newAtributo(@PathVariable("id") int id) {
 		ModelAndView mAV = new ModelAndView(ViewRouteHelper.FORM_PRODUCTO);
 		String roleString = SecurityContextHolder.getContext().getAuthentication().getAuthorities().toString();
@@ -144,21 +144,38 @@ public class ProductoController {
 			return ViewRouteHelper.FORM_PRODUCTO;
 
 		}
-	productoModel.setSubCategoriaModel(subCategoriaService.listarId(Sc_id));	
-	ProductoModel pM=	productoService.insertOrUpdate(productoModel);
+		productoModel.setSubCategoriaModel(subCategoriaService.listarId(Sc_id));	
+		ProductoModel pM=	productoService.insertOrUpdate(productoModel);
 		return "redirect:/productos/newAtributo/" + pM.getId();
 	}
 	
 	@PostMapping("/saveAtributo")
-	public String saveAtributo(@Valid @ModelAttribute("producto") AtributosModel atributosModel, BindingResult result,
-			RedirectAttributes redirect,int pId) {
+	public String saveAtributo(@Valid @ModelAttribute("producto") AtributosModel atributosModel, BindingResult result, RedirectAttributes redirect, int pId) {
 		if (result.hasErrors()) {
 			return ViewRouteHelper.FORM_PRODUCTO;
 
 		}
-	atributosModel.setProducto(productoService.listarId(pId));
+		atributosModel.setProducto(productoService.listarId(pId));
 		atributosService.insertOrUpdate(atributosModel);
 		return "redirect:/";
 	}	
+
+	@GetMapping("/articulo/{id}")
+	public ModelAndView productoUnico(@PathVariable("id") int id) {
+		ModelAndView mAV = new ModelAndView(ViewRouteHelper.ARTICULO_UNICO);
+		// compruebo si se logueo el admin y en tal caso muestro el menu
+		// correspondiente, el resto de la pagina permanece igual
+		String roleString = SecurityContextHolder.getContext().getAuthentication().getAuthorities().toString();
+		boolean admin = false;
+		if (roleString.equals("[ROLE_ADMIN]")) {
+			admin = true;
+		}
+		mAV.addObject("admin", admin);
+
+		ProductoModel articulo = productoService.listarId(id);
+		mAV.addObject("producto", articulo);
+
+		return mAV;
+	}
 	
 }
