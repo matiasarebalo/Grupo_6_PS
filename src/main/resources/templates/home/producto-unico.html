@@ -39,8 +39,9 @@
       <!-- /.col-lg-8 -->
       <div class="col-lg-5">
         <h1 class="font-weight-light" th:text="${producto.descripcionCorta}"></h1>
-        <p>This is a template that is great for small businesses. It doesn't have too much fancy flare to it, but it makes a great use of the standard Bootstrap core components. Feel free to use this template for any project you want!</p>
-        <a class="btn btn-primary" href="#">Call to Action!</a>
+        <p th:text="${producto.descripcionLarga}">This is a template that is great for small businesses. It doesn't have too much fancy flare to it, but it makes a great use of the standard Bootstrap core components. Feel free to use this template for any project you want!</p>
+        <p th:text="'$' + ${producto.precio}">Aca va el precio</p>
+        <a class="btn btn-primary" href="#">Comprar Ahora</a>
       </div>
       <!-- /.col-md-4 -->
     </div>
@@ -49,12 +50,31 @@
     <!-- Call to Action Well -->
     <div class="card text-white bg-secondary my-5 py-4 text-center">
       <div class="card-body">
-        <p class="text-white m-0">This call to action card is a great place to showcase some important information or display a clever tagline!</p>
+        <h3 class="text-white m-0">Otros articulos que pueden interesarte</h3>
       </div>
     </div>
-
+	
+	<div class="row">
+		<div th:each="producto : ${relacionados}" class="col-lg-4 col-md-6 mb-4">
+			<div class="card h-100">
+				<a th:href="@{/productos/articulo/{id}(id=${producto.id})}">
+					<img th:src="${producto.urlImagen}" class="card-img-top" alt=""></a>
+			<div class="card-body">
+				<h4 class="card-title">
+					<a th:text="${producto.descripcionCorta}" href="#"></a>
+				</h4>
+			<h5 th:text="${producto.precio}"></h5>
+				<p th:text="${producto.descripcionLarga}" class="card-text"></p>
+			</div>
+			<div class="card-footer">
+				<small class="text-muted">&#9733; &#9733; &#9733;
+					&#9733; &#9734;</small>
+			</div>
+			</div>
+		</div>
+	</div>
     <!-- Content Row -->
-    <div class="row">
+    <!--  div class="row">
       <div class="col-md-4 mb-5">
         <div class="card h-100">
           <div class="card-body">
@@ -66,7 +86,7 @@
           </div>
         </div>
       </div>
-      <!-- /.col-md-4 -->
+
       <div class="col-md-4 mb-5">
         <div class="card h-100">
           <div class="card-body">
@@ -78,7 +98,6 @@
           </div>
         </div>
       </div>
-      <!-- /.col-md-4 -->
       <div class="col-md-4 mb-5">
         <div class="card h-100">
           <div class="card-body">
@@ -89,8 +108,7 @@
             <a href="#" class="btn btn-primary btn-sm">More Info</a>
           </div>
         </div>
-      </div>
-      <!-- /.col-md-4 -->
+      </div> 
 
     </div>
     <!-- /.row -->

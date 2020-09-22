@@ -18,4 +18,8 @@ public interface IProductoService {
 	public String delete(int id);
 	
 	public List<ProductoModel> findDestacados();
+	
+	public List<ProductoModel> findBySubCategoria(int id);
+	
+	public List<ProductoModel> findRelacionados(int id_articulo,int id_sub);
 }

@@ -174,7 +174,11 @@ public class ProductoController {
 
 		ProductoModel articulo = productoService.listarId(id);
 		mAV.addObject("producto", articulo);
-
+		
+		//List<ProductoModel> relacionados = productoService.findBySubCategoria(articulo.getSubCategoriaModel().getId());
+		
+		List<ProductoModel> relacionados = productoService.findRelacionados(articulo.getId(),articulo.getSubCategoriaModel().getId());
+		mAV.addObject("relacionados", relacionados);
 		return mAV;
 	}
 	
