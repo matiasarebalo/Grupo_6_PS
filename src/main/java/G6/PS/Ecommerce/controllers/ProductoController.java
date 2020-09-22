@@ -24,6 +24,7 @@ import G6.PS.Ecommerce.models.AtributosModel;
 import G6.PS.Ecommerce.models.CategoriaModel;
 import G6.PS.Ecommerce.models.ProductoModel;
 import G6.PS.Ecommerce.models.SubCategoriaModel;
+import G6.PS.Ecommerce.services.IAtributoValorService;
 import G6.PS.Ecommerce.services.IAtributosService;
 import G6.PS.Ecommerce.services.ICategoriaService;
 import G6.PS.Ecommerce.services.IProductoService;
@@ -50,6 +51,10 @@ public class ProductoController {
 	@Autowired
 	@Qualifier("atributosService")
 	private IAtributosService atributosService;
+	
+	@Autowired
+	@Qualifier("atributoValorService")
+	private IAtributoValorService atributoValorService;
 	
 	
 	@GetMapping("/newCategoria")
@@ -112,7 +117,7 @@ public class ProductoController {
 		if (roleString.equals("[ROLE_ADMIN]")) {
 			admin = true;
 		}
-		mAV.addObject("admin", admin);
+		mAV.addObject("admin", admin); 
 		mAV.addObject("pId", id);
 		mAV.addObject("atributos", new AtributosModel());
 		return mAV;
@@ -161,7 +166,9 @@ public class ProductoController {
 
 		}
 	atributosModel.setProducto(productoService.listarId(atributosModel.getProducto().getId()));
-		atributosService.insertOrUpdate(atributosModel);
+		AtributosModel aT= atributosService.insertOrUpdate(atributosModel);
+		atributosModel.getAtributoValor().setAtributo(aT);
+		atributoValorService.insertOrUpdate(atributosModel.getAtributoValor());
 		return "redirect:/";
 	}	
 	

@@ -71,6 +71,20 @@ public class Producto {
 		this.destacado = destacado;
 		this.prodAtributos = prodAtributos;
 	}
+	
+	public Producto(int id, String descripcionCorta, String descripcionLarga, SubCategoria subCategoria, String urlImagen, String sku,
+			float precio, boolean destacado) {
+super();
+this.id = id;
+this.descripcionCorta = descripcionCorta;
+this.descripcionLarga = descripcionLarga;
+this.subCategoria = subCategoria;
+this.sku = sku;
+this.urlImagen = urlImagen;
+this.precio = precio;
+this.destacado = destacado;
+}
+
 
 	public int getId() {
 		return id;

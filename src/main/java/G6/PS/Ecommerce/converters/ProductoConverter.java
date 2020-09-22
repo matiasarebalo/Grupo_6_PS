@@ -23,18 +23,55 @@ public class ProductoConverter {
 	@Qualifier("atributosConverter")
 	private AtributosConverter atributosConverter;
 	
+	List<AtributosModel> aM = new ArrayList<AtributosModel>();
+	
+
+	List<Atributos> aE = new ArrayList<Atributos>();
+	
+	
+
+	
+	
 	public ProductoModel entityToModel (Producto producto) {
+		if(producto.getProdAtributos().isEmpty()) {
+			return new ProductoModel(producto.getId(), producto.getDescripcionCorta(), producto.getDescripcionLarga(), 
+					subCategoriaConverter.entityToModel(producto.getSubCategoria()), producto.getUrlImagen(),producto.getSku(),
+					producto.getPrecio(), producto.getDestacado(),aM);
+			
+		}else {
 		return new ProductoModel(producto.getId(), producto.getDescripcionCorta(), producto.getDescripcionLarga(), 
 				subCategoriaConverter.entityToModel(producto.getSubCategoria()), producto.getUrlImagen(),producto.getSku(),
-				producto.getPrecio(), producto.getDestacado(), this.entityToModels(producto.getProdAtributos()));
-	}
+				producto.getPrecio(), producto.getDestacado(),this.entityToModels(producto.getProdAtributos()));
+	}}
 
 	public Producto modelToEntity(ProductoModel model) {
+		if(model.getProdAtributos().isEmpty()) {
+			return new Producto(model.getId(), model.getDescripcionCorta(), model.getDescripcionLarga(), 
+					subCategoriaConverter.modelToEntity(model.getSubCategoriaModel()), model.getUrlImagen(), model.getSku(),
+					model.getPrecio(), model.getDestacado(), aE);
+			
+		}else {
 		return new Producto(model.getId(), model.getDescripcionCorta(), model.getDescripcionLarga(), 
 				subCategoriaConverter.modelToEntity(model.getSubCategoriaModel()), model.getUrlImagen(), model.getSku(),
 				model.getPrecio(), model.getDestacado(), this.modelsToEntity(model.getProdAtributos()));
-	}
+	}}
 
+	
+	
+//	public ProductoModel entityToModel1 (Producto producto) {
+//		
+//		return new ProductoModel(producto.getId(), producto.getDescripcionCorta(), producto.getDescripcionLarga(), 
+//				subCategoriaConverter.entityToModel(producto.getSubCategoria()), producto.getUrlImagen(),producto.getSku(),
+//				producto.getPrecio(), producto.getDestacado());
+//	}
+//
+//	public Producto modelToEntity1(ProductoModel model) {
+//		return new Producto(model.getId(), model.getDescripcionCorta(), model.getDescripcionLarga(), 
+//				subCategoriaConverter.modelToEntity(model.getSubCategoriaModel()), model.getUrlImagen(), model.getSku(),
+//				model.getPrecio(), model.getDestacado());
+//	
+	
+	
 	public List<Atributos> modelsToEntity(List<AtributosModel> lista) {
 		List<Atributos> atributos=new ArrayList<Atributos>();
 		for(AtributosModel s: lista) {

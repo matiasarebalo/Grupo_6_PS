@@ -30,7 +30,7 @@ public class ProductoService implements IProductoService {
 	
 	@Override
 	public ProductoModel insertOrUpdate(ProductoModel model) {
-		Producto p = productoConverter.modelToEntity(model);
+		Producto p = productoRepository.save(productoConverter.modelToEntity(model));
 		return productoConverter.entityToModel(p);
 	}
 	

@@ -83,7 +83,17 @@
 											 placeholder=subCategoria th:field="*{subCategoria}"
 											required="required"> <a class="btn--next" href="">Agregar</a>
 										<input class="btn" type="submit" value="Submit">
-									<input type="hidden" th:value="${subCategoria.categoria.id}" th:attr="name='c_id'" />
+									
+									<select th:field="*{categoria.id}"> <option th:value="${c_id}"></option>
+	   
+	</select>
+<!-- 	<select class="form-control"
+										placeholder="Local" th:field="*{local.id}">
+										<option th:value="${local.id}" th:text="${local.direccion}"></option>
+
+									</select>
+ -->									
+									
 									</div>
 									
 									<!-- 				

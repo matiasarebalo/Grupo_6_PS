@@ -29,7 +29,7 @@ public class AtributosService implements IAtributosService{
 
 	@Override
 	public AtributosModel insertOrUpdate(AtributosModel model) {
-		Atributos s= atributosConverter.modelToEntity(model);// TODO Auto-generated method stub
+		Atributos s= atributosRepository.save(atributosConverter.modelToEntity(model));// TODO Auto-generated method stub
 		return atributosConverter.entityToModel(s);
 	}
 

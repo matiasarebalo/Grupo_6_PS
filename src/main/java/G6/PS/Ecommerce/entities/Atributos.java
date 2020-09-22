@@ -23,7 +23,7 @@ public class Atributos {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
     
-    @Column(name = "atributo", nullable = false, length = 40)
+    @Column(name = "atributo", nullable = true, length = 40)
     private String atributo;
 
     

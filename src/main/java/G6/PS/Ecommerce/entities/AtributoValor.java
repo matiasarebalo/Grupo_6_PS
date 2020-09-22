@@ -19,7 +19,7 @@ public class AtributoValor {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
     
-    @Column(name = "valor", nullable = false, length = 40)
+    @Column(name = "valor", nullable = true, length = 40)
     private String valor;
 
     @OneToOne(mappedBy = "atributoValor")

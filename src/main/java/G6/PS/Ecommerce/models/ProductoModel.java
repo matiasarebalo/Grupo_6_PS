@@ -30,6 +30,18 @@ public class ProductoModel {
 		this.prodAtributos = prodAtributos;
 	}
 
+	public ProductoModel(int id, String descripcionCorta, String descripcionLarga, SubCategoriaModel subCategoria, String urlImagen, String sku,
+			float precio, boolean destacado) {
+super();
+this.id = id;
+this.descripcionCorta = descripcionCorta;
+this.descripcionLarga = descripcionLarga;
+this.subCategoria = subCategoria;
+this.sku = sku;
+this.urlImagen = urlImagen;
+this.precio = precio;
+this.destacado = destacado;
+}
 	public int getId() {
 		return id;
 	}

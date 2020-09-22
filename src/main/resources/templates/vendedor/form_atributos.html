@@ -51,7 +51,7 @@
 			<div class="card card-1">
 
 				<div class="card-body">
-					<form class="wizard-container" method="POST" th:object="${producto}" th:action="@{/productos/saveProducto}"
+					<form class="wizard-container" method="POST" th:object="${atributos}" th:action="@{/productos/saveProducto}"
 						id="js-wizard-form">
 						<ul class="tab-list">
 							<li class="tab-list__item "><a class="tab-list__link"
@@ -78,14 +78,14 @@
 							<div class="tab-pane active" id="tab3">
 								<div class="form">
 									<div class="input-group">
-										<input class="input--style-1" type="text" name="producto"
-											placeholder=descripcionLarga th:field="*{descripcionLarga}" required="required">
-										<input class="input--style-1" type="text" name="producto"
-											placeholder=descripcionCorta th:field="*{descripcionCorta}" required="required">
-										<input class="input--style-1" type="text" name="producto"
-											placeholder=precio th:field="*{precio}" required="required">
-										<input	th:field=*{subCategoria.id}=sC_id;>
-											
+										<input class="input--style-1" type="text" name="atributo"
+											placeholder=atributo th:field="*{atributo}" required="required">
+										<input class="input--style-1" type="text" name="atributo"
+											placeholder=valor th:field="*{atributoValor.valor}" required="required">
+																	
+									<select th:field="*{producto.id}"> <option th:value="${pId}"></option>
+	   
+	</select>									
 										<a class="btn--next" href=" ">Agregar</a>
 										<input class="btn" type="submit" value="Submit">
 									</div>
