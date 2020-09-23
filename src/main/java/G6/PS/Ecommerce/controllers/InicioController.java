@@ -35,9 +35,9 @@ public class InicioController {
 		if(roleString.equals("[ROLE_ADMIN]")) {admin=true;}
 		mAV.addObject("admin", admin);
 		
-		List<ProductoModel> productos = productoService.findDestacados();
+		// List<ProductoModel> productos = productoService.findDestacados();
 		
-		mAV.addObject("productos", productos);
+		// mAV.addObject("productos", productos);
 		return mAV;
 	}
 	

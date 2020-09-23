@@ -108,7 +108,7 @@ public class ProductoController {
 	}
 
 	
-	@GetMapping("/newAtributo/{	}")
+	@GetMapping("/newAtributo/{id}")
 	public ModelAndView newAtributo(@PathVariable("id") int id) {
 		ModelAndView mAV = new ModelAndView(ViewRouteHelper.FORM);
 		String roleString = SecurityContextHolder.getContext().getAuthentication().getAuthorities().toString();
@@ -170,12 +170,11 @@ public class ProductoController {
 	
 	
 	@PostMapping("/saveAtributo")
-	public String saveAtributo(@Valid @ModelAttribute("producto") AtributosModel atributosModel, BindingResult result, RedirectAttributes redirect, int pId) {
+	public String saveAtributo(@Valid @ModelAttribute("producto") AtributosModel atributosModel, BindingResult result, RedirectAttributes redirect) {
 		if (result.hasErrors()) {
 			return ViewRouteHelper.FORM_PRODUCTO;
 		}
 		atributosModel.setProducto(productoService.listarId(atributosModel.getProducto().getId()));
-		atributosModel.setProducto(productoService.listarId(pId));
 		atributosService.insertOrUpdate(atributosModel);
 		return "redirect:/";
 	}	
