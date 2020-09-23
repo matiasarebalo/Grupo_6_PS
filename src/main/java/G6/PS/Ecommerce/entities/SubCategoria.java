@@ -1,9 +1,7 @@
 package G6.PS.Ecommerce.entities;
 
-import java.util.HashSet;
 import java.util.List;
 
-import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;

@@ -1,6 +1,7 @@
 package G6.PS.Ecommerce.entities;
 
 
+
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -8,9 +9,7 @@ import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
-import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
 import com.fasterxml.jackson.annotation.JsonManagedReference;
@@ -26,24 +25,24 @@ public class Atributos {
     @Column(name = "atributo", nullable = false, length = 40)
     private String atributo;
 
+    @Column(name = "valor", nullable = false, length = 40)
+    private String valor;
     
     @JsonManagedReference
 	@ManyToOne(cascade = CascadeType.MERGE, fetch = FetchType.LAZY)
 	private Producto producto;
     
-    @OneToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name = "atributoValor_id", referencedColumnName = "id")
-    private AtributoValor  atributoValor;
+  
     
     public Atributos(){
         
     }
 
-    public Atributos(int id, String atributo, AtributoValor atributoValor,Producto producto) {
+    public Atributos(int id, String atributo, String valor,Producto producto) {
         super();
         this.id = id;
         this.atributo = atributo;
-        this.atributoValor = atributoValor;
+        this.valor = valor;
         this.producto = producto;
     }
 
@@ -71,12 +70,12 @@ public class Atributos {
         this.producto = producto;
     }
 
-    public AtributoValor getAtributoValor() {
-        return atributoValor;
+    public String getValor() {
+        return valor;
     }
 
-    public void setAtributoValor(AtributoValor atributoValor) {
-        this.atributoValor = atributoValor;
+    public void setValor(String valor) {
+        this.valor = valor;
     }
 
     

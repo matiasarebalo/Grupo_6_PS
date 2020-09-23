@@ -22,4 +22,9 @@ public interface IProductoRepository extends JpaRepository<Producto, Serializabl
 	
 	@Query(nativeQuery=true,value="Select * from producto where sub_categoria_id=(:id_sub) and id!=(:id_articulo)")
 	public List<Producto> findRelacionados(int id_articulo,int id_sub);
+	
+//agregar cuando tengamos pedidos para ver si el producto tiene un pedido en curso o ya realizado.	
+//	@Query(nativeQuery=true,value=" Select * from producto p inner join lote l on p.id=l.producto_id inner join pedido pe on pe.producto_id=p.id where l.producto_id=(:id) or pe.producto_id=(:id)")
+//	public List<Producto> findIfExist(int id);
+
 }

@@ -8,17 +8,21 @@ import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
 
 import G6.PS.Ecommerce.converters.SubCategoriaConverter;
-import G6.PS.Ecommerce.entities.Categoria;
 import G6.PS.Ecommerce.entities.SubCategoria;
-import G6.PS.Ecommerce.models.CategoriaModel;
 import G6.PS.Ecommerce.models.SubCategoriaModel;
 import G6.PS.Ecommerce.repositories.ISubCategoriaRepository;
+import G6.PS.Ecommerce.services.ICategoriaService;
 import G6.PS.Ecommerce.services.ISubCategoriaService;
 
 
 @Service("subCategoriaService")
 public class SubCategoriaService implements ISubCategoriaService{
 
+	@Autowired
+	@Qualifier("categoriaService")
+	private ICategoriaService categoriaService;
+
+	
 	@Autowired
 	private ISubCategoriaRepository subCategoriaRepository;
 
@@ -52,6 +56,18 @@ public class SubCategoriaService implements ISubCategoriaService{
 	public String delete(int id) {
 		subCategoriaRepository.deleteById(id);
 		return "subCategoria Eliminada";
+	}
+
+	@Override
+	public void deleteDependencies(int id) {
+		
+		if(this.listarId(id).getProductoModel().isEmpty()) {
+		int c=	this.listarId(id).getCategoria().getId();
+		this.delete(id);
+		categoriaService.deleteDependencies(c);
+		}
+		
+		
 	}
 	
 

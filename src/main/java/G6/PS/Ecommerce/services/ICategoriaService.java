@@ -15,5 +15,7 @@ public interface ICategoriaService  {
 
 	public String delete(int id);
 
+	public void deleteDependencies(int c);
+
 
 }

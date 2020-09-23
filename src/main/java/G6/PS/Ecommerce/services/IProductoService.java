@@ -22,4 +22,6 @@ public interface IProductoService {
 	public List<ProductoModel> findBySubCategoria(int id);
 	
 	public List<ProductoModel> findRelacionados(int id_articulo,int id_sub);
+
+	public List<ProductoModel> findDependency(int id);
 }

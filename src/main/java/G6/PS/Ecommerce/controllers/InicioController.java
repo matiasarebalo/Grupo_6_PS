@@ -1,6 +1,5 @@
 package G6.PS.Ecommerce.controllers;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,14 +10,8 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
 
-import G6.PS.Ecommerce.entities.Producto;
 import G6.PS.Ecommerce.helpers.ViewRouteHelper;
-import G6.PS.Ecommerce.models.AtributoValorModel;
-import G6.PS.Ecommerce.models.AtributosModel;
-import G6.PS.Ecommerce.models.CategoriaModel;
 import G6.PS.Ecommerce.models.ProductoModel;
-import G6.PS.Ecommerce.models.SubCategoriaModel;
-import G6.PS.Ecommerce.repositories.IProductoRepository;
 import G6.PS.Ecommerce.services.IProductoService;
 
 @Controller
