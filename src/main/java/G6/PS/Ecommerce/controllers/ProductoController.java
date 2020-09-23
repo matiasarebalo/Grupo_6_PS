@@ -160,11 +160,8 @@ public class ProductoController {
 
 		}
 		productoModel.setSubCategoria(subCategoriaService.listarId(productoModel.getSubCategoria().getId()));
-		List<AtributosModel> atributosModels = new ArrayList<AtributosModel>();
-		productoModel.setProdAtributos(atributosModels);
-		ProductoModel productos = new ProductoModel(0, "descripcionCorta", "descripcionLarga",
-		subCategoriaService.listarId(productoModel.getSubCategoria().getId()), "urlImagen", "sku", 1200, true, atributosModels);
-		ProductoModel pM=	productoService.insertOrUpdate(productos);
+		productoModel.setUrlImagen("urlImagen");
+		ProductoModel pM=	productoService.insertOrUpdate(productoModel);
 			return "redirect:/productos/newAtributo/" + pM.getId();
 	}
 	
@@ -219,12 +216,7 @@ public class ProductoController {
 		CategoriaModel categoriaModel = new CategoriaModel(1, "Hombres");
 		SubCategoriaModel subCategoriaModel = new SubCategoriaModel(1, "Remera", categoriaModel);
 
-	
-		List<AtributosModel> atributos = new ArrayList<AtributosModel>();
-		AtributosModel atributo = new AtributosModel(1, "Talle","valor",new ProductoModel(1, "Lisa 2020", "descripcionLarga", subCategoriaModel,"urlImagen", "sku", 1200, true, atributos));
-		atributos.add(atributo);
-
-		ProductoModel producto = new ProductoModel(1, "Lisa 2020", "descripcionLarga", subCategoriaModel,"urlImagen", "sku", 1200, true, atributos);
+		ProductoModel producto = new ProductoModel(1, "Lisa 2020", "descripcionLarga", subCategoriaModel,"urlImagen", "sku", 1200, true);
 
 		List<ProductoModel> productos = new ArrayList<ProductoModel>();
 		productos.add(producto);

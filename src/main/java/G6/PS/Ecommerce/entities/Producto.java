@@ -53,7 +53,7 @@ public class Producto {
 	public Producto() {}
 
 	public Producto(int id, String descripcionCorta, String descripcionLarga, SubCategoria subCategoria, String urlImagen, String sku,
-					float precio, boolean destacado, List<Atributos> prodAtributos) {
+					float precio, boolean destacado) {
 		super();
 		this.id = id;
 		this.descripcionCorta = descripcionCorta;
@@ -63,7 +63,6 @@ public class Producto {
 		this.urlImagen = urlImagen;
 		this.precio = precio;
 		this.destacado = destacado;
-		this.prodAtributos = prodAtributos;
 	}
 
 	public int getId() {

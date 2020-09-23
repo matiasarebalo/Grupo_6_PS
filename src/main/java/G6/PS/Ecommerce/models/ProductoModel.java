@@ -17,7 +17,7 @@ public class ProductoModel {
 	public ProductoModel() {}
 
 	public ProductoModel(int id, String descripcionCorta, String descripcionLarga, SubCategoriaModel subCategoria, String urlImagen, String sku,
-					float precio, boolean destacado, List<AtributosModel> prodAtributos) {
+					float precio, boolean destacado) {
 		super();
 		this.id = id;
 		this.descripcionCorta = descripcionCorta;
@@ -27,7 +27,6 @@ public class ProductoModel {
 		this.urlImagen = urlImagen;
 		this.precio = precio;
 		this.destacado = destacado;
-		this.prodAtributos = prodAtributos;
 	}
 
 	public int getId() {
