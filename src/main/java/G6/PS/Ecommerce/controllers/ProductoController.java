@@ -130,7 +130,7 @@ public class ProductoController {
 	public String saveCategoria(@Valid @ModelAttribute("categoria") CategoriaModel categoriaModel, BindingResult result,
 			RedirectAttributes redirect) {
 		if (result.hasErrors()) {
-			return ViewRouteHelper.FORM_CATEGORIA;
+			return ViewRouteHelper.FORM;
 		}
 		CategoriaModel cM = categoriaService.insertOrUpdate(categoriaModel);
 		return "redirect:/productos/newSubCategoria/" + cM.getId();
@@ -140,7 +140,7 @@ public class ProductoController {
 	public String saveSubCategoria(@Valid @ModelAttribute("subCategoria") SubCategoriaModel subCategoriaModel,
 			BindingResult result, RedirectAttributes redirect) {
 		if (result.hasErrors()) {
-			return ViewRouteHelper.FORM_SUBCATEGORIA;
+			return ViewRouteHelper.FORM;
 
 		}
 		subCategoriaModel.setCategoria(categoriaService.listarId(subCategoriaModel.getCategoria().getId()));
@@ -156,7 +156,7 @@ public class ProductoController {
 	public String saveProducto(@Valid @ModelAttribute("producto") ProductoModel productoModel, BindingResult result,
 			RedirectAttributes redirect) {
 		if (result.hasErrors()) {
-			return ViewRouteHelper.FORM_PRODUCTO;
+			return ViewRouteHelper.FORM;
 
 		}
 		productoModel.setSubCategoria(subCategoriaService.listarId(productoModel.getSubCategoria().getId()));
@@ -169,7 +169,7 @@ public class ProductoController {
 	@PostMapping("/saveAtributo")
 	public String saveAtributo(@Valid @ModelAttribute("producto") AtributosModel atributosModel, BindingResult result, RedirectAttributes redirect) {
 		if (result.hasErrors()) {
-			return ViewRouteHelper.FORM_PRODUCTO;
+			return ViewRouteHelper.FORM;
 		}
 		atributosModel.setProducto(productoService.listarId(atributosModel.getProducto().getId()));
 		atributosService.insertOrUpdate(atributosModel);
