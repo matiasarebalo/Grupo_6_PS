@@ -1,0 +1,83 @@
+<div>
+    <div class="wrapper wrapper--w820">
+        <div class="card card-1">
+
+            <div class="card-body">
+                <form class="wizard-container" method="POST" th:object="${producto}" th:action="@{/productos/saveProducto}" id="js-wizard-form">
+
+                    <ul class="tab-list">
+                        <li class="tab-list__item">
+                            <a class="tab-list__link" href="#tab1" data-toggle="tab"> 
+                                <span class="step">1</span>
+                                <span class="desc">Categoria</span>
+                            </a>
+                        </li>
+
+                        <li class="tab-list__item">
+                            <a class="tab-list__link" href="#tab2" data-toggle="tab"> 
+                                <span class="step">2</span>
+                                <span class="desc">Subcategoria</span>
+                            </a>
+                        </li>
+
+                        <li class="tab-list__item active">
+                            <a class="tab-list__link" href="#tab3" data-toggle="tab"> 
+                                <span class="step">3</span>
+                                <span class="desc">Producto</span>
+                            </a>
+                        </li>
+
+                        <li class="tab-list__item">
+                            <a class="tab-list__link" href="#tab4" data-toggle="tab"> 
+                                <span class="step">4</span>
+                                <span class="desc">Atributo</span>
+                            </a>
+                        </li>
+                        
+                    </ul>
+
+                    <!--  Tercer tab -->
+                    <div class="tab-pane active" id="tab3">
+                        <div class="form-step3">
+                            <div class="input-group">
+                                <div class="container">
+                                    <div class="row">
+
+                                        <div class="col">
+                                            <input th:field="*{descripcionCorta}" class="input--style-1" type="text" name="descripcionCorta" placeholder="Producto"  required="required">
+                                        </div>
+    
+                                        <div class="col">
+                                            <input th:field="*{descripcionLarga}" class="input--style-1" type="text" name="descripcionLarga" placeholder="Descripcion"  required="required">
+                                        </div>
+                                    </div>
+                                    <div class="row mt-4">
+
+                                        <div class="col">
+                                            <input th:field="*{precio}" class="input--style-1" type="number" name="precio" placeholder="Precio"  required="required">
+                                            <input th:field="*{subCategoria.id}" th:attr="name='producto.subCategoria.id'" style="display: none">
+                                        </div>
+                                        
+                                        <div class="col d-flex align-items-center">
+                                            <label class="custom-control-label" for="defaultChecked2">Destacar</label>
+                                            <input class="check"th:field="*{destacado}" type="checkbox" checked>
+                                        </div>
+                                    </div>
+
+                                    <div class="row mt-4">
+                                        <div class="col tab-list__link">
+                                            <input  type="submit" value="Agregar">
+                                        </div>
+                                    </div>
+                                </div>
+
+                            </div>
+                        </div>
+                    </div>
+
+                </form>
+
+            </div>
+        </div>
+    </div>
+</div>

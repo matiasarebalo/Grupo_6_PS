@@ -1,19 +1,27 @@
 package G6.PS.Ecommerce.controllers;
 
+import java.util.List;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
 
-
 import G6.PS.Ecommerce.helpers.ViewRouteHelper;
+import G6.PS.Ecommerce.models.ProductoModel;
+import G6.PS.Ecommerce.services.IProductoService;
 
 @Controller
 @RequestMapping("/")
 
 public class InicioController {
-
+	
+	@Autowired
+	@Qualifier("productoService")
+	private IProductoService productoService;
 	
 	@GetMapping("")
 	public ModelAndView index() {
@@ -26,8 +34,13 @@ public class InicioController {
 		boolean admin = false;
 		if(roleString.equals("[ROLE_ADMIN]")) {admin=true;}
 		mAV.addObject("admin", admin);
-
-
+		
+		List<ProductoModel> productos = productoService.findDestacados();
+		
+		if(productos!= null){
+			mAV.addObject("productos", productos);
+		}
+		
 		return mAV;
 	}
 	
@@ -42,8 +55,6 @@ public class InicioController {
 		boolean admin = false;
 		if(roleString.equals("[ROLE_ADMIN]")) {admin=true;}
 		mAV.addObject("admin", admin);
-
-
 		return mAV;
 	}
 }

@@ -1,0 +1,78 @@
+<div>
+    <div class="wrapper wrapper--w820">
+        <div class="card card-1">
+
+            <div class="card-body">
+                <form class="wizard-container" method="POST" th:object="${atributo}" th:action="@{/productos/saveAtributo}" id="js-wizard-form">
+
+                    <ul class="tab-list">
+                        <li class="tab-list__item">
+                            <a class="tab-list__link" href="#tab1" data-toggle="tab"> 
+                                <span class="step">1</span>
+                                <span class="desc">Categoria</span>
+                            </a>
+                        </li>
+
+                        <li class="tab-list__item">
+                            <a class="tab-list__link" href="#tab2" data-toggle="tab"> 
+                                <span class="step">2</span>
+                                <span class="desc">Subcategoria</span>
+                            </a>
+                        </li>
+
+                        <li class="tab-list__item">
+                            <a class="tab-list__link" href="#tab3" data-toggle="tab"> 
+                                <span class="step">3</span>
+                                <span class="desc">Producto</span>
+                            </a>
+                        </li>
+
+                        <li class="tab-list__item active">
+                            <a class="tab-list__link" href="#tab4" data-toggle="tab"> 
+                                <span class="step">4</span>
+                                <span class="desc">Atributo</span>
+                            </a>
+                        </li>
+                        
+                    </ul>
+
+                    <!--  Cuarto tab -->
+                    <div class="tab-pane active" id="tab4">
+                        <div class="form-step4">
+                            <div class="input-group">
+                                <div class="container">
+
+                                    <div class="row ">
+                                        <div class="col">
+                                            <input th:field="*{atributo}" class="input--style-1" type="text" name="atributo"
+                                            placeholder="Atributo"  required="required">
+                                        </div>
+
+                                        <div class="col">
+                                            <input th:field="*{valor}" class="input--style-1" type="text" name="valor"
+                                            placeholder="valor"  required="required">
+    
+                                            <input th:field="*{producto.id}" th:attr="name='atributos.producto.id'" style="display: none">
+                                        </div>
+                                    </div>
+    
+                                    <div class="row mt-4">
+                                        <div class="col">
+                                            <input class="btn btn--next" type="submit" value="Agregar">
+                                        </div>
+                                        
+    
+                                    </div>
+    
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+
+                </form>
+
+            </div>
+        </div>
+    </div>
+</div>

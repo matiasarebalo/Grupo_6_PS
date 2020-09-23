@@ -14,6 +14,11 @@ public class ViewRouteHelper {
 
 	public final static String FORM_CONTACT = "contact/form-contact"; 
 
+	public final static String FORM = "vendedor/crud-producto"; 
+
+	public final static String ARTICULO_UNICO = "home/producto-unico";
 	
+
+	public final static String GRILLA = "vendedor/productos"; 
 
 }
