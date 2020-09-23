@@ -30,7 +30,7 @@ public class AtributoValorService implements IAtributoValorService{
 
 	@Override
 	public AtributoValorModel insertOrUpdate(AtributoValorModel model) {
-		AtributoValor s= atributoValorConverter.modelToEntity(model);// TODO Auto-generated method stub
+		AtributoValor s= atributoValorRepository.save(atributoValorConverter.modelToEntity(model));// TODO Auto-generated method stub
 		return atributoValorConverter.entityToModel(s);
 	}
 

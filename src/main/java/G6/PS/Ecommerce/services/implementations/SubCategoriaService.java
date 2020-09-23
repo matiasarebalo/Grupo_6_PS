@@ -38,7 +38,7 @@ public class SubCategoriaService implements ISubCategoriaService{
 
 	@Override
 	public SubCategoriaModel insertOrUpdate(SubCategoriaModel model) {
-		SubCategoria s= subCategoriaConverter.modelToEntity(model);// TODO Auto-generated method stub
+		SubCategoria s= subCategoriaRepository.save(subCategoriaConverter.modelToEntity(model));// TODO Auto-generated method stub
 		return subCategoriaConverter.entityToModel(s);
 	}
 

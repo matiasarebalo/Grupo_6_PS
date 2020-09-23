@@ -12,8 +12,11 @@ public class ViewRouteHelper {
 
 	public final static String INSTITUCIONAL = "home/pagina_institucional"; 
 
+	public final static String FORM = "vendedor/crud-producto"; 
+
 	public final static String FORM_CATEGORIA = "vendedor/form_categoria"; 
 	public final static String FORM_SUBCATEGORIA = "vendedor/form_subCategoria";
 	public final static String FORM_PRODUCTO = "vendedor/form_producto";
+	public final static String FORM_ATRIBUTOS = "vendedor/form_atributos";
 
 }

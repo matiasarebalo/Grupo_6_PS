@@ -13,6 +13,7 @@ import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 import com.fasterxml.jackson.annotation.JsonManagedReference;
@@ -47,13 +48,7 @@ public class Producto {
 	@Column(name = "destacado")
 	private boolean destacado;
 
-	
-	
-	@ManyToMany
-	@JoinTable(
-		name = "producto_atributo", 
-		joinColumns = @JoinColumn(name = "producto_id"), 
-		inverseJoinColumns = @JoinColumn(name = "atributo_id"))
+	@OneToMany(fetch = FetchType.LAZY, mappedBy = "producto")
     private List<Atributos> prodAtributos;
 	
 	public Producto() {}
