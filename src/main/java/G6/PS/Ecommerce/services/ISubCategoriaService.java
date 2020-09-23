@@ -17,5 +17,7 @@ public interface ISubCategoriaService {
 
 	public String delete(int id);
 
+	public void deleteDependencies(int id);
+
 	
 }

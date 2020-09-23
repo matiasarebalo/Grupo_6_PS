@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+  <meta charset="utf-8">
+  <meta name="viewport"
+    content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <meta name="description" content="">
+  <meta name="author" content="">
+
+  <title>Small Business - Start Bootstrap Template</title>
+
+  <!-- Bootstrap core CSS -->
+  <link href="/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+
+  <!-- Custom styles for this template -->
+  <link href="/css/small-business.css" rel="stylesheet">
+
+</head>
+
+<body>
+
+  <!-- Navigation  user o admin segun corresponda-->
+  <nav th:if="${admin==true}" class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top"
+  th:include="nav_admin :: div"></nav>
+
+  <nav th:if="${admin==false}" class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top"
+    th:include="nav_user :: div"></nav>
+
+  <!-- Page Content -->
+  <div class="container">
+
+    <!-- Heading Row -->
+    <div class="row align-items-center my-5">
+      <div class="col-lg-7">
+        <img th:src="${producto.urlImagen}" class="img-fluid rounded mb-4 mb-lg-0" >
+      </div>
+      <!-- /.col-lg-8 -->
+      <div class="col-lg-5">
+        <h1 class="font-weight-light" th:text="${producto.descripcionCorta}"></h1>
+        <p th:text="${producto.descripcionLarga}">This is a template that is great for small businesses. It doesn't have too much fancy flare to it, but it makes a great use of the standard Bootstrap core components. Feel free to use this template for any project you want!</p>
+        <p th:text="'$' + ${producto.precio}">Aca va el precio</p>
+        <a class="btn btn-primary" href="#">Comprar Ahora</a>
+      </div>
+      <!-- /.col-md-4 -->
+    </div>
+    <!-- /.row -->
+
+    <!-- Call to Action Well -->
+    <div class="card text-white bg-secondary my-5 py-4 text-center">
+      <div class="card-body">
+        <h3 class="text-white m-0">Otros articulos que pueden interesarte</h3>
+      </div>
+    </div>
+	
+	<div class="row">
+		<div th:each="producto : ${relacionados}" class="col-lg-4 col-md-6 mb-4">
+			<div class="card h-100">
+				<a th:href="@{/productos/articulo/{id}(id=${producto.id})}">
+					<img th:src="${producto.urlImagen}" class="card-img-top" alt=""></a>
+			<div class="card-body">
+				<h4 class="card-title">
+					<a th:text="${producto.descripcionCorta}" href="#"></a>
+				</h4>
+			<h5 th:text="${producto.precio}"></h5>
+				<p th:text="${producto.descripcionLarga}" class="card-text"></p>
+			</div>
+			<div class="card-footer">
+				<small class="text-muted">&#9733; &#9733; &#9733;
+					&#9733; &#9734;</small>
+			</div>
+			</div>
+		</div>
+	</div>
+    <!-- Content Row -->
+    <!--  div class="row">
+      <div class="col-md-4 mb-5">
+        <div class="card h-100">
+          <div class="card-body">
+            <h2 class="card-title">Card One</h2>
+            <p class="card-text">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Rem magni quas ex numquam, maxime minus quam molestias corporis quod, ea minima accusamus.</p>
+          </div>
+          <div class="card-footer">
+            <a href="#" class="btn btn-primary btn-sm">More Info</a>
+          </div>
+        </div>
+      </div>
+
+      <div class="col-md-4 mb-5">
+        <div class="card h-100">
+          <div class="card-body">
+            <h2 class="card-title">Card Two</h2>
+            <p class="card-text">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Quod tenetur ex natus at dolorem enim! Nesciunt pariatur voluptatem sunt quam eaque, vel, non in id dolore voluptates quos eligendi labore.</p>
+          </div>
+          <div class="card-footer">
+            <a href="#" class="btn btn-primary btn-sm">More Info</a>
+          </div>
+        </div>
+      </div>
+      <div class="col-md-4 mb-5">
+        <div class="card h-100">
+          <div class="card-body">
+            <h2 class="card-title">Card Three</h2>
+            <p class="card-text">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Rem magni quas ex numquam, maxime minus quam molestias corporis quod, ea minima accusamus.</p>
+          </div>
+          <div class="card-footer">
+            <a href="#" class="btn btn-primary btn-sm">More Info</a>
+          </div>
+        </div>
+      </div> 
+
+    </div>
+    <!-- /.row -->
+
+  </div>
+  <!-- /.container -->
+
+  <!-- Footer -->
+  <footer class="py-5 bg-dark">
+    <div class="container">
+      <p class="m-0 text-center text-white">Copyright &copy; Your
+        Website 2020</p>
+    </div>
+    <!-- /.container -->
+  </footer>
+
+  <!-- Bootstrap core JavaScript -->
+  <script src="/vendor/jquery/jquery.min.js"></script>
+  <script src="/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+
+</body>
+
+</html>

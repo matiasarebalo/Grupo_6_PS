@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
@@ -15,15 +16,14 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
+import org.springframework.web.servlet.view.RedirectView;
 
 import javax.validation.Valid;
 
-import G6.PS.Ecommerce.models.AtributoValorModel;
 import G6.PS.Ecommerce.models.AtributosModel;
 import G6.PS.Ecommerce.models.CategoriaModel;
 import G6.PS.Ecommerce.models.ProductoModel;
 import G6.PS.Ecommerce.models.SubCategoriaModel;
-import G6.PS.Ecommerce.services.IAtributoValorService;
 import G6.PS.Ecommerce.services.IAtributosService;
 import G6.PS.Ecommerce.services.ICategoriaService;
 import G6.PS.Ecommerce.services.IProductoService;
@@ -49,11 +49,6 @@ public class ProductoController {
 	@Autowired
 	@Qualifier("atributosService")
 	private IAtributosService atributosService;
-
-	@Autowired
-	@Qualifier("atributoValorService")
-	private IAtributoValorService atributoValorService;
-	
 	
 	@GetMapping("/newCategoria")
 	public ModelAndView newCategoria() {
@@ -113,7 +108,7 @@ public class ProductoController {
 	}
 
 	
-	@GetMapping("/newAtributo/{id}")
+	@GetMapping("/newAtributo/{	}")
 	public ModelAndView newAtributo(@PathVariable("id") int id) {
 		ModelAndView mAV = new ModelAndView(ViewRouteHelper.FORM);
 		String roleString = SecurityContextHolder.getContext().getAuthentication().getAuthorities().toString();
@@ -124,9 +119,7 @@ public class ProductoController {
 		}
 		AtributosModel newAtributo = new AtributosModel();
 		newAtributo.setProducto(productoService.listarId(id));
-
-		AtributoValorModel atributoValorModel = new AtributoValorModel();
-		newAtributo.setAtributoValor(atributoValorModel);
+		
 		mAV.addObject("admin", admin);
 		mAV.addObject("step", 4);
 		mAV.addObject("atributo", newAtributo);
@@ -175,17 +168,85 @@ public class ProductoController {
 			return "redirect:/productos/newAtributo/" + pM.getId();
 	}
 	
+	
 	@PostMapping("/saveAtributo")
-	public String saveAtributo(@Valid @ModelAttribute("producto") AtributosModel atributosModel, BindingResult result,
-			RedirectAttributes redirect) {
+	public String saveAtributo(@Valid @ModelAttribute("producto") AtributosModel atributosModel, BindingResult result, RedirectAttributes redirect, int pId) {
 		if (result.hasErrors()) {
 			return ViewRouteHelper.FORM_PRODUCTO;
-
 		}
 		atributosModel.setProducto(productoService.listarId(atributosModel.getProducto().getId()));
-		atributoValorService.insertOrUpdate(atributosModel.getAtributoValor());
+		atributosModel.setProducto(productoService.listarId(pId));
 		atributosService.insertOrUpdate(atributosModel);
 		return "redirect:/";
 	}	
+
+	@GetMapping("/articulo/{id}")
+	public ModelAndView productoUnico(@PathVariable("id") int id) {
+		ModelAndView mAV = new ModelAndView(ViewRouteHelper.ARTICULO_UNICO);
+		// compruebo si se logueo el admin y en tal caso muestro el menu
+		// correspondiente, el resto de la pagina permanece igual
+		String roleString = SecurityContextHolder.getContext().getAuthentication().getAuthorities().toString();
+		boolean admin = false;
+		if (roleString.equals("[ROLE_ADMIN]")) {
+			admin = true;
+		}
+		mAV.addObject("admin", admin);
+
+		ProductoModel articulo = productoService.listarId(id);
+		mAV.addObject("producto", articulo);
+		
+		//List<ProductoModel> relacionados = productoService.findBySubCategoria(articulo.getSubCategoriaModel().getId());
+		
+		List<ProductoModel> relacionados = productoService.findRelacionados(articulo.getId(),articulo.getSubCategoriaModel().getId());
+		mAV.addObject("relacionados", relacionados);
+		return mAV;
+	}
+	
+	@GetMapping("/lista")
+	public ModelAndView grillaProductos() {
+		ModelAndView mAV = new ModelAndView(ViewRouteHelper.GRILLA);
+
+		// compruebo si se logueo el admin y en tal caso muestro el menu
+		// correspondiente, el resto de la pagina permanece igual
+		String roleString = SecurityContextHolder.getContext().getAuthentication().getAuthorities().toString();
+		System.out.println(roleString);
+
+		boolean admin = false;
+		if (roleString.equals("[ROLE_ADMIN]")) {
+			admin = true;
+		}
+		mAV.addObject("admin", admin);
+
+		CategoriaModel categoriaModel = new CategoriaModel(1, "Hombres");
+		SubCategoriaModel subCategoriaModel = new SubCategoriaModel(1, "Remera", categoriaModel);
+
+	
+		List<AtributosModel> atributos = new ArrayList<AtributosModel>();
+		AtributosModel atributo = new AtributosModel(1, "Talle","valor",new ProductoModel(1, "Lisa 2020", "descripcionLarga", subCategoriaModel,"urlImagen", "sku", 1200, true, atributos));
+		atributos.add(atributo);
+
+		ProductoModel producto = new ProductoModel(1, "Lisa 2020", "descripcionLarga", subCategoriaModel,"urlImagen", "sku", 1200, true, atributos);
+
+		List<ProductoModel> productos = new ArrayList<ProductoModel>();
+		productos.add(producto);
+
+		mAV.addObject("productos", productos);
+
+		return mAV;
+	}
+	
+	
+	@GetMapping("/eliminar/{id}")
+	public RedirectView delete(Model model, @PathVariable("id") int id, RedirectAttributes redirect) {
+		//no eliminar productos con envios en curso.
+		List<ProductoModel> p = productoService.findDependency(id);
+		if (p.isEmpty()) {
+			productoService.delete(id);
+			return new RedirectView(ViewRouteHelper.GRILLA);
+		} else
+
+			redirect.addFlashAttribute("popUp", "error");
+		return new RedirectView(ViewRouteHelper.GRILLA);
+	}
 	
 }

@@ -11,15 +11,21 @@ import G6.PS.Ecommerce.entities.Atributos;
 import G6.PS.Ecommerce.models.AtributosModel;
 import G6.PS.Ecommerce.repositories.IAtributosRepository;
 import G6.PS.Ecommerce.services.IAtributosService;
+import G6.PS.Ecommerce.services.IProductoService;
 
 @Service("atributosService")
-public class AtributosService implements IAtributosService{
-    @Autowired
+public class AtributosService implements IAtributosService {
+	@Autowired
 	private IAtributosRepository atributosRepository;
 
 	@Autowired
 	@Qualifier("atributosConverter")
 	private AtributosConverter atributosConverter;
+
+	@Autowired
+	@Qualifier("productoService")
+	private IProductoService productoService;
+
 	
 	@Override
 	public List<Atributos> getAll() {
@@ -35,8 +41,7 @@ public class AtributosService implements IAtributosService{
 
 	@Override
 	public AtributosModel listarId(int id) {
-		return	atributosConverter.entityToModel(atributosRepository.findById(id));
-	
+		return atributosConverter.entityToModel(atributosRepository.findById(id));
 	}
 
 	@Override
@@ -44,4 +49,12 @@ public class AtributosService implements IAtributosService{
 		atributosRepository.deleteById(id);
 		return "subCategoria Eliminada";
 	}
+
+	@Override
+	public void deleteDependencies(int id) {
+		// traigo todos los atributos de el producto que voy a eliminar
+		atributosRepository.deleteByProductoId(id);
+		}
+
+	
 }

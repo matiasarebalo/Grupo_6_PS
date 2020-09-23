@@ -14,4 +14,6 @@ public interface IAtributosService {
 	public AtributosModel listarId(int id);
 
 	public String delete(int id);
+
+	public void deleteDependencies(int id);
 }

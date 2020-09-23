@@ -1,25 +1,26 @@
 package G6.PS.Ecommerce.models;
 
-import java.util.List;
 
 public class AtributosModel {
 
     private int id;
 
     private String atributo;
+    
+    private String valor;
+    
     private ProductoModel producto;
-    private AtributoValorModel atributoValor;
-
+   
     public AtributosModel(){
         
     }
 
-    public AtributosModel(int id, String atributo, AtributoValorModel atributoValor, ProductoModel producto) {
+    public AtributosModel(int id, String atributo, String valor, ProductoModel producto) {
         super();
         this.id = id;
         this.atributo = atributo;
-        this.atributoValor = atributoValor;
-        this.setProducto(producto);
+        this.valor = valor;
+        this.producto=producto;
     }
 
     public int getId() {
@@ -38,12 +39,12 @@ public class AtributosModel {
         this.atributo = atributo;
     }
 
-    public AtributoValorModel getAtributoValor() {
-        return atributoValor;
+    public String getValor() {
+        return valor;
     }
 
-    public void setAtributoValor(AtributoValorModel atributoValor) {
-        this.atributoValor = atributoValor;
+    public void setValor(String valor) {
+        this.valor = valor;
     }
 
 	public ProductoModel getProducto() {
