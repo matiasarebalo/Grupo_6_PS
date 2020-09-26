@@ -548,3 +548,12 @@ label.error {
 .check {
   width: 40px;
 }
+.input--style-select {
+  border: 1px solid #e5e5e5;
+  line-height: 48px;
+  -webkit-border-radius: 25px;
+  -moz-border-radius: 25px;
+  border-radius: 25px;
+  font-size: 15px;
+  color: #666;
+}

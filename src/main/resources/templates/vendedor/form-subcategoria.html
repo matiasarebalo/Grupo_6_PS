@@ -40,8 +40,35 @@
 							<div class="tab-content">
 								<div class="tab-pane active" id="tab2">
 									<div class="form" >
-									
-										<div class="input-group">
+                                        <div>
+                                            <div class="d-flex justify-content-center mb-4 lead" >
+                                                Seleccione Subcategoria o Escriba una nueva
+                                            </div>
+                                            <div class="input-group">
+                                                <input th:field="*{categoria.id}" th:attr="name='subCategoria.categoria.id'" style="display: none">
+                                                <div>
+                                                    <select class="selectpicker input--style-1"style="height: 52px;padding-right: 100px;" data-width="auto" th:field="*{id}" 
+                                                        name="Subcategoria" placeholder="Seleccione Subcategoria"  required="required">	
+            
+                                                        <option  th:if="${nuevo!=0}" th:each="s : ${subCategorias}"  th:value="${(s.id)}" th:text="${s.subCategoria}"></option>
+                                                        <option  th:if="${nuevo==0}" th:value="${(nuevo)}">No se encontraron</option>
+
+                                                    </select>
+                                                </div>
+            
+                                                <div>
+                                                    <input th:field="*{subCategoria}" class="input--style-1" type="text" style="padding-right: 50px;" name="Subcategoria" placeholder="Nueva subcategoria">
+                                                    
+                                                </div>
+            
+                                                <div >
+                                                    <span class="btn--next">
+                                                        <input type="submit" name="action" value="Agregar" />
+                                                    </span>
+                                                </div>
+                                            </div>
+                                        </div>
+										<!-- <div class="input-group">
 											<input th:field="*{subCategoria}" class="input--style-1" type="text" name="SubCategoria"
 												placeholder=Subcategoria  required="required">
 
@@ -51,7 +78,7 @@
 												<input  type="submit" value="Agregar">
                                             </span>
                                             
-										</div>
+										</div> -->
 										
 									</div>
 								</div>	

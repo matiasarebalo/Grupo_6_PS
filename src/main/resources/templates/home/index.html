@@ -21,6 +21,7 @@
 <!-- Custom styles for this template -->
 <link href="css/shop-homepage.css" rel="stylesheet">
 
+<link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.2.0/css/font-awesome.min.css" rel="stylesheet">
 
 
 
@@ -33,29 +34,48 @@
 			<nav th:if="${admin==true}" class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top"
 				 th:include="nav_admin :: div"></nav>
 			
-			<nav th:if="${admin==false}" class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top"
+			<nav th:if="${admin==false}" class="navbar navbar-expand-md navbar-dark bg-dark fixed-top"
 				 th:include="nav_user :: div"></nav>
 	
 
-
+				 <nav class="navbar navbar-expand-md navbar-dark bg-dark">
+    
+    
+					<div class="navbar-collapse collapse flex-shrink-1 flex-grow-0 order-last" id="navbar7">
+						<ul class="navbar-nav">
+							<li class="nav-item">
+								<a class="nav-link" href="#">Categoria</a>
+							</li>
+							<li class="nav-item">
+								<a class="nav-link" href="#">Categoria</a>
+							</li>
+							<li class="nav-item">
+								<a class="nav-link" href="#">Categoria</a>
+							</li>
+							<li class="nav-item">
+								<a class="nav-link" href="#">Categoria</a>
+							</li>
+							<li class="nav-item">
+								<a class="nav-link" href="#">Categoria</a>
+							</li>
+							<li class="nav-item">
+								<a class="nav-link" href="#">Categoria</a>
+							</li><li class="nav-item">
+								<a class="nav-link" href="#">Categoria</a>
+							</li>
+							<li class="nav-item">
+								<a class="nav-link" href="#">Categoria</a>
+							</li>
+						</ul>
+					</div>
+					
+				</nav>
 	<!-- Page Content -->
 	<div class="container">
 
 		<div class="row">
 
-			<div class="col-lg-3">
-
-				<h1 class="my-4">Shop Name</h1>
-				<div class="list-group">
-					<a href="#" class="list-group-item">Category 1</a> <a href="#"
-						class="list-group-item">Category 2</a> <a href="#"
-						class="list-group-item">Category 3</a>
-				</div>
-
-			</div>
-			<!-- /.col-lg-3 -->
-
-			<div class="col-lg-9">
+			<div>
 
 				<div id="carouselExampleIndicators" class="carousel slide my-4"
 					data-ride="carousel">

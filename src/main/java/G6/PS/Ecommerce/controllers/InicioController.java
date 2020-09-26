@@ -4,10 +4,12 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.data.repository.query.Param;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
 
 import G6.PS.Ecommerce.helpers.ViewRouteHelper;
@@ -55,6 +57,24 @@ public class InicioController {
 		boolean admin = false;
 		if(roleString.equals("[ROLE_ADMIN]")) {admin=true;}
 		mAV.addObject("admin", admin);
+		return mAV;
+	}
+
+    @RequestMapping(value = "productoSearch", method = RequestMethod.GET)
+	public ModelAndView search(@Param("productoSearch") String productoSearch) {
+		ModelAndView mAV = new ModelAndView(ViewRouteHelper.INDEX);
+		String roleString = SecurityContextHolder.getContext().getAuthentication().getAuthorities().toString();
+        System.out.println(roleString);
+
+		boolean admin = false;
+		if(roleString.equals("[ROLE_ADMIN]")) {admin=true;}
+		mAV.addObject("admin", admin);
+
+		List<ProductoModel> productos = productoService.searchByProducto(productoSearch);
+		if(productos!= null){
+			mAV.addObject("productos", productos);
+		}
+
 		return mAV;
 	}
 }

@@ -19,5 +19,6 @@ public interface ISubCategoriaService {
 
 	public void deleteDependencies(int id);
 
+	public List<SubCategoriaModel> getSubcategoriasByCategoria(int id);
 	
 }

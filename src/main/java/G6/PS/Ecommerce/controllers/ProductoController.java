@@ -81,8 +81,13 @@ public class ProductoController {
 		CategoriaModel categoria = categoriaService.listarId(id);
 		SubCategoriaModel newSubcategoria = new SubCategoriaModel();
 		newSubcategoria.setCategoria(categoria);
-		List<SubCategoriaModel> subCategorias = subCategoriaService.getAll();
-		mAV.addObject("subCategorias", subCategorias);
+		List<SubCategoriaModel> subCategorias = subCategoriaService.getSubcategoriasByCategoria(categoria.getId());
+		if(subCategorias.isEmpty()) {
+			mAV.addObject("nuevo", 0);
+		}else{
+			mAV.addObject("subCategorias", subCategorias);
+			mAV.addObject("nuevo", 1);
+		}
 		mAV.addObject("subCategoria", newSubcategoria);
 		
 		return mAV;
@@ -132,7 +137,13 @@ public class ProductoController {
 		if (result.hasErrors()) {
 			return ViewRouteHelper.FORM;
 		}
-		CategoriaModel cM = categoriaService.insertOrUpdate(categoriaModel);
+		CategoriaModel cM = new CategoriaModel();
+		if(categoriaModel.getCategoria().isEmpty()){
+			cM = categoriaService.listarId(categoriaModel.getId());
+		}else{
+			categoriaModel.setId(0);
+			cM = categoriaService.insertOrUpdate(categoriaModel);
+		}
 		return "redirect:/productos/newSubCategoria/" + cM.getId();
 	}
 
@@ -147,7 +158,16 @@ public class ProductoController {
 
 		List<ProductoModel> productoModel = new ArrayList<ProductoModel>();
 		subCategoriaModel.setProductoModel(productoModel);
-		SubCategoriaModel sC =subCategoriaService.insertOrUpdate(subCategoriaModel);
+
+		SubCategoriaModel sC = new SubCategoriaModel();
+
+		if(subCategoriaModel.getSubCategoria().isEmpty()){
+			sC = subCategoriaService.listarId(subCategoriaModel.getId());
+		}else{
+			subCategoriaModel.setId(0);
+			sC =subCategoriaService.insertOrUpdate(subCategoriaModel);
+		}
+
 		return "redirect:/productos/newProducto/" + sC.getId();
 
 	}
@@ -213,14 +233,7 @@ public class ProductoController {
 		}
 		mAV.addObject("admin", admin);
 
-		CategoriaModel categoriaModel = new CategoriaModel(1, "Hombres");
-		SubCategoriaModel subCategoriaModel = new SubCategoriaModel(1, "Remera", categoriaModel);
-
-		ProductoModel producto = new ProductoModel(1, "Lisa 2020", "descripcionLarga", subCategoriaModel,"urlImagen", "sku", 1200, true);
-
-		List<ProductoModel> productos = new ArrayList<ProductoModel>();
-		productos.add(producto);
-
+		List<ProductoModel> productos = productoService.findDestacados();
 		mAV.addObject("productos", productos);
 
 		return mAV;

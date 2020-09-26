@@ -92,15 +92,24 @@ public class ProductoService implements IProductoService {
 
 	@Override
 	public List<ProductoModel> findDependency(int id) {
-//cuando tengamos envios verificar que un producto no tenga envios realizado o en curso antes de eliminarlos.
-//		List<Producto> productos = 	productoRepository.findIfExist(id);
-//		List<ProductoModel> pM = new ArrayList<ProductoModel>();
-//
-//		for (Producto p : productos) {
-//			pM.add(productoConverter.entityToModel(p));
-//		}
-//
-//		return pM;
+	//cuando tengamos envios verificar que un producto no tenga envios realizado o en curso antes de eliminarlos.
+	//		List<Producto> productos = 	productoRepository.findIfExist(id);
+	//		List<ProductoModel> pM = new ArrayList<ProductoModel>();
+	//
+	//		for (Producto p : productos) {
+	//			pM.add(productoConverter.entityToModel(p));
+	//		}
+	//
+	//		return pM;
 		return null;
+	}
+
+	public List<ProductoModel> searchByProducto(String producto){
+		List<Producto> productos = productoRepository.findBydescripcionCortaContainingIgnoreCase(producto);
+		List<ProductoModel> pM = new ArrayList<ProductoModel>();
+		for (Producto p : productos) {
+			pM.add(productoConverter.entityToModel(p));
+		}
+		return pM;	
 	}
 }

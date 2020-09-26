@@ -37,20 +37,34 @@
                     </ul>
 
                     <div class="tab-content">
+                        
                         <div class="tab-pane active" id="tab1">
-                            <div class="form" >
                             
-                                <div class="input-group">
-
-                                    <input th:field="*{categoria}" class="input--style-1" type="text" name="Categoria" placeholder=categoria  required="required">
-                                     
-                                    <span class="btn--next">
-                                        <input  type="submit" value="Agregar">
-                                    </span>
-                                   
-                                     
+                            <div class="form" >
+                                <div class="d-flex justify-content-center mb-4 lead" >
+                                    Seleccione categoria o Escriba una nueva
                                 </div>
-                                
+                                <div class="input-group">
+                                    <div>
+                                        <select class="selectpicker input--style-1"style="height: 52px;padding-right: 100px;" data-width="auto" th:field="*{id}" 
+                                            name="Categoria" placeholder="Seleccione Categoria"  required="required">	
+
+                                            <option th:each="c : ${categorias}"  th:value="${(c.id)}" th:text="${c.categoria}"></option>
+
+                                        </select>
+                                    </div>
+
+                                    <div>
+                                        <input th:field="*{categoria}" class="input--style-1" type="text" style="padding-right: 50px;" name="Categoria" placeholder="Nueva categoria">
+
+                                    </div>
+
+                                    <div >
+                                        <span class="btn--next">
+                                            <input type="submit" name="action" value="Agregar" />
+                                        </span>
+                                    </div>
+                                </div>
                             </div>
                         </div>	
                     </div>

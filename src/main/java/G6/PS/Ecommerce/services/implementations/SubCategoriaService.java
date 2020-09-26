@@ -59,6 +59,17 @@ public class SubCategoriaService implements ISubCategoriaService{
 	}
 
 	@Override
+	public List<SubCategoriaModel> getSubcategoriasByCategoria(int id) {
+		List<SubCategoriaModel> subCategorias= new ArrayList<SubCategoriaModel>();
+		for(SubCategoriaModel s: this.getAll()) {
+			if(s.getCategoria().getId() == id){
+				subCategorias.add(s);
+			}
+		}
+		return subCategorias;
+	}
+
+	@Override
 	public void deleteDependencies(int id) {
 		
 		if(this.listarId(id).getProductoModel().isEmpty()) {
