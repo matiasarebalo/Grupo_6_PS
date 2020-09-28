@@ -29,7 +29,7 @@ public class ProductoConverter {
 
 	public Producto modelToEntity(ProductoModel model) {
 		return new Producto(model.getId(), model.getDescripcionCorta(), model.getDescripcionLarga(), 
-				subCategoriaConverter.modelToEntity(model.getSubCategoriaModel()), model.getUrlImagen(), model.getSku(),
+				subCategoriaConverter.modelToEntity(model.getSubCategoria()), model.getUrlImagen(), model.getSku(),
 				model.getPrecio(), model.getDestacado());
 	}
 }

@@ -52,13 +52,6 @@ public class ProductoModel {
 	public void setDescripcionLarga(String descripcionLarga) {
 		this.descripcionLarga = descripcionLarga;
 	}
-	public SubCategoriaModel getSubCategoriaModel() {
-		return subCategoria;
-	}
-
-	public void setSubCategoriaModel(SubCategoriaModel subCategoria) {
-		this.subCategoria = subCategoria;
-	}
 
 	public String getSku() {
 		return sku;

@@ -28,6 +28,8 @@ import G6.PS.Ecommerce.services.IAtributosService;
 import G6.PS.Ecommerce.services.ICategoriaService;
 import G6.PS.Ecommerce.services.IProductoService;
 import G6.PS.Ecommerce.services.ISubCategoriaService;
+import G6.PS.Ecommerce.entities.Categoria;
+import G6.PS.Ecommerce.entities.SubCategoria;
 import G6.PS.Ecommerce.helpers.ViewRouteHelper;
 
 @Controller
@@ -49,7 +51,31 @@ public class ProductoController {
 	@Autowired
 	@Qualifier("atributosService")
 	private IAtributosService atributosService;
-	
+
+	@GetMapping("/editar/{id}")
+	public ModelAndView editCategoria(@PathVariable("id") int id) {
+		ModelAndView mAV = new ModelAndView(ViewRouteHelper.EDIT);
+		
+		String roleString = SecurityContextHolder.getContext().getAuthentication().getAuthorities().toString();
+		boolean admin = false;
+		if (roleString.equals("[ROLE_ADMIN]")) {
+			admin = true;
+		}
+		mAV.addObject("admin", admin);
+		mAV.addObject("step", 1);
+
+		ProductoModel producto = productoService.listarId(id);
+		producto.getSubCategoria().getCategoria().setSubcategoria(subCategoriaService.getSubcategoriasByCategoria(producto.getSubCategoria().getCategoria().getId()));
+		producto.setProdAtributos(atributosService.getByProducto(id));
+
+		mAV.addObject("nuevo", 1);
+		mAV.addObject("categorias", categoriaService.getAll());
+		mAV.addObject("atributos", atributosService.getByProducto(id));
+
+		mAV.addObject("producto", producto );
+		return mAV;
+	}
+
 	@GetMapping("/newCategoria")
 	public ModelAndView newCategoria() {
 		ModelAndView mAV = new ModelAndView(ViewRouteHelper.FORM);
@@ -154,7 +180,8 @@ public class ProductoController {
 			return ViewRouteHelper.FORM;
 
 		}
-		subCategoriaModel.setCategoria(categoriaService.listarId(subCategoriaModel.getCategoria().getId()));
+		CategoriaModel categoria = categoriaService.listarId(subCategoriaModel.getCategoria().getId());
+		subCategoriaModel.setCategoria(categoria);
 
 		List<ProductoModel> productoModel = new ArrayList<ProductoModel>();
 		subCategoriaModel.setProductoModel(productoModel);
@@ -167,7 +194,7 @@ public class ProductoController {
 			subCategoriaModel.setId(0);
 			sC =subCategoriaService.insertOrUpdate(subCategoriaModel);
 		}
-
+		
 		return "redirect:/productos/newProducto/" + sC.getId();
 
 	}
@@ -187,13 +214,22 @@ public class ProductoController {
 	
 	
 	@PostMapping("/saveAtributo")
-	public String saveAtributo(@Valid @ModelAttribute("producto") AtributosModel atributosModel, BindingResult result, RedirectAttributes redirect) {
+	public ModelAndView saveAtributo(@Valid @ModelAttribute("producto") AtributosModel atributosModel, BindingResult result, RedirectAttributes redirect) {
+		ModelAndView mAV = new ModelAndView(ViewRouteHelper.FORM);
 		if (result.hasErrors()) {
-			return ViewRouteHelper.FORM;
+			return  mAV = new ModelAndView(ViewRouteHelper.FORM);
 		}
-		atributosModel.setProducto(productoService.listarId(atributosModel.getProducto().getId()));
+		ProductoModel producto = productoService.listarId(atributosModel.getProducto().getId());
+
+		atributosModel.setProducto(producto);
+		AtributosModel newAtributo = new AtributosModel();
+		newAtributo.setProducto(producto);
+
 		atributosService.insertOrUpdate(atributosModel);
-		return "redirect:/";
+
+		mAV.addObject("step", 4);
+		mAV.addObject("atributo", newAtributo);
+		return mAV;
 	}	
 
 	@GetMapping("/articulo/{id}")
@@ -213,9 +249,23 @@ public class ProductoController {
 		
 		//List<ProductoModel> relacionados = productoService.findBySubCategoria(articulo.getSubCategoriaModel().getId());
 		
-		List<ProductoModel> relacionados = productoService.findRelacionados(articulo.getId(),articulo.getSubCategoriaModel().getId());
+		List<ProductoModel> relacionados = productoService.findRelacionados(articulo.getId(),articulo.getSubCategoria().getId());
 		mAV.addObject("relacionados", relacionados);
 		return mAV;
+	}
+
+	@PostMapping("/saveEdit")
+	public String SaveEdit(@Valid @ModelAttribute("producto") ProductoModel productoModel, BindingResult result,
+			RedirectAttributes redirect) {
+		if (result.hasErrors()) {
+			return ViewRouteHelper.FORM;
+
+		}
+		int id = productoModel.getId();
+		ProductoModel pm = 	productoService.listarId(productoModel.getId());
+		productoModel.setUrlImagen(pm.getUrlImagen());
+		productoService.insertOrUpdate(productoModel);
+		return "redirect:/productos/lista/";
 	}
 	
 	@GetMapping("/lista")
@@ -233,7 +283,7 @@ public class ProductoController {
 		}
 		mAV.addObject("admin", admin);
 
-		List<ProductoModel> productos = productoService.findDestacados();
+		List<ProductoModel> productos = productoService.getAll();
 		mAV.addObject("productos", productos);
 
 		return mAV;

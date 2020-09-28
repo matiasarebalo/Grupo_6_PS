@@ -1,5 +1,6 @@
 package G6.PS.Ecommerce.services.implementations;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -42,6 +43,16 @@ public class AtributosService implements IAtributosService {
 	@Override
 	public AtributosModel listarId(int id) {
 		return atributosConverter.entityToModel(atributosRepository.findById(id));
+	}
+
+	@Override
+	public List<AtributosModel> getByProducto(int id) {
+		List<Atributos> atributosModels = atributosRepository.findByProducto(id);
+		List<AtributosModel> aM = new ArrayList<AtributosModel>();
+		for (Atributos a : atributosModels) {
+			aM.add(atributosConverter.entityToModel(a));
+		}
+		return aM;
 	}
 
 	@Override

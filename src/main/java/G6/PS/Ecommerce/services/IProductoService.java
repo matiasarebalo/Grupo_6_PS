@@ -9,7 +9,7 @@ import G6.PS.Ecommerce.models.ProductoModel;
 
 public interface IProductoService {
 	
-	public List<Producto> getAll();
+	public List<ProductoModel> getAll();
 
 	public ProductoModel insertOrUpdate(ProductoModel productoModel);
 
