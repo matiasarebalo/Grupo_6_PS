@@ -59,11 +59,11 @@ public class ProductoService implements IProductoService {
 	@Override
 	public String delete(int id) {
 		
-    int sC=	productoRepository.findById(id).getSubCategoria().getId();
+   		int sC=	productoRepository.findById(id).getSubCategoria().getId();
 		
     	atributosService.deleteDependencies(id);
-		productoRepository.deleteById(id);
 		subCategoriaService.deleteDependencies(sC);
+		productoRepository.deleteById(id);
 		
 		return "producto Eliminado";
 	}

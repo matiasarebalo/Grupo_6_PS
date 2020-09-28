@@ -13,9 +13,6 @@ import G6.PS.Ecommerce.entities.Atributos;
 public interface IAtributosRepository extends JpaRepository<Atributos, Serializable>{
     
     public abstract Atributos findById(int id);
-
-    @Query(nativeQuery=true,value="delete from atributos where producto_id=(:id)")
-    public abstract void deleteByProductoId(int id);
     
     @Query(nativeQuery=true,value="Select * from atributos where producto_id=(:id)")
 	public List<Atributos> findByProducto(int id);

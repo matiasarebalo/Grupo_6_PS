@@ -9,9 +9,11 @@ import org.springframework.stereotype.Service;
 
 import G6.PS.Ecommerce.converters.SubCategoriaConverter;
 import G6.PS.Ecommerce.entities.SubCategoria;
+import G6.PS.Ecommerce.models.ProductoModel;
 import G6.PS.Ecommerce.models.SubCategoriaModel;
 import G6.PS.Ecommerce.repositories.ISubCategoriaRepository;
 import G6.PS.Ecommerce.services.ICategoriaService;
+import G6.PS.Ecommerce.services.IProductoService;
 import G6.PS.Ecommerce.services.ISubCategoriaService;
 
 
@@ -22,6 +24,9 @@ public class SubCategoriaService implements ISubCategoriaService{
 	@Qualifier("categoriaService")
 	private ICategoriaService categoriaService;
 
+	@Autowired
+	@Qualifier("productoService")
+	private IProductoService productoService;
 	
 	@Autowired
 	private ISubCategoriaRepository subCategoriaRepository;
@@ -59,10 +64,10 @@ public class SubCategoriaService implements ISubCategoriaService{
 	}
 
 	@Override
-	public List<SubCategoriaModel> getSubcategoriasByCategoria(int id) {
+	public List<SubCategoriaModel> getSubcategoriasByCategoria(int idCategoria) {
 		List<SubCategoriaModel> subCategorias= new ArrayList<SubCategoriaModel>();
 		for(SubCategoriaModel s: this.getAll()) {
-			if(s.getCategoria().getId() == id){
+			if(s.getCategoria().getId() == idCategoria){
 				subCategorias.add(s);
 			}
 		}
@@ -70,14 +75,16 @@ public class SubCategoriaService implements ISubCategoriaService{
 	}
 
 	@Override
-	public void deleteDependencies(int id) {
-		
-		if(this.listarId(id).getProductoModel().isEmpty()) {
-		int c=	this.listarId(id).getCategoria().getId();
-		this.delete(id);
-		categoriaService.deleteDependencies(c);
+	public void deleteDependencies(int idSubcategoria) {
+		SubCategoriaModel sModel = listarId(idSubcategoria);
+		List<ProductoModel> productos = productoService.findBySubCategoria(idSubcategoria);
+		if(productos.isEmpty()) {
+			delete(idSubcategoria);
+			int idCategoria = sModel.getCategoria().getId();
+			if( getSubcategoriasByCategoria(idCategoria).isEmpty() ){
+				categoriaService.delete(idCategoria);
+			}
 		}
-		
 		
 	}
 	

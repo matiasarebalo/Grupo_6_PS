@@ -1,5 +1,10 @@
 package G6.PS.Ecommerce.controllers;
 
+import java.io.File;
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -14,6 +19,8 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import org.springframework.web.servlet.view.RedirectView;
@@ -28,8 +35,6 @@ import G6.PS.Ecommerce.services.IAtributosService;
 import G6.PS.Ecommerce.services.ICategoriaService;
 import G6.PS.Ecommerce.services.IProductoService;
 import G6.PS.Ecommerce.services.ISubCategoriaService;
-import G6.PS.Ecommerce.entities.Categoria;
-import G6.PS.Ecommerce.entities.SubCategoria;
 import G6.PS.Ecommerce.helpers.ViewRouteHelper;
 
 @Controller
@@ -55,7 +60,7 @@ public class ProductoController {
 	@GetMapping("/editar/{id}")
 	public ModelAndView editCategoria(@PathVariable("id") int id) {
 		ModelAndView mAV = new ModelAndView(ViewRouteHelper.EDIT);
-		
+
 		String roleString = SecurityContextHolder.getContext().getAuthentication().getAuthorities().toString();
 		boolean admin = false;
 		if (roleString.equals("[ROLE_ADMIN]")) {
@@ -65,21 +70,22 @@ public class ProductoController {
 		mAV.addObject("step", 1);
 
 		ProductoModel producto = productoService.listarId(id);
-		producto.getSubCategoria().getCategoria().setSubcategoria(subCategoriaService.getSubcategoriasByCategoria(producto.getSubCategoria().getCategoria().getId()));
+		producto.getSubCategoria().getCategoria().setSubcategoria(
+				subCategoriaService.getSubcategoriasByCategoria(producto.getSubCategoria().getCategoria().getId()));
 		producto.setProdAtributos(atributosService.getByProducto(id));
 
 		mAV.addObject("nuevo", 1);
 		mAV.addObject("categorias", categoriaService.getAll());
 		mAV.addObject("atributos", atributosService.getByProducto(id));
 
-		mAV.addObject("producto", producto );
+		mAV.addObject("producto", producto);
 		return mAV;
 	}
 
 	@GetMapping("/newCategoria")
 	public ModelAndView newCategoria() {
 		ModelAndView mAV = new ModelAndView(ViewRouteHelper.FORM);
-		
+
 		String roleString = SecurityContextHolder.getContext().getAuthentication().getAuthorities().toString();
 		boolean admin = false;
 		if (roleString.equals("[ROLE_ADMIN]")) {
@@ -89,7 +95,7 @@ public class ProductoController {
 		mAV.addObject("step", 1);
 		List<CategoriaModel> categorias = categoriaService.getAll();
 		mAV.addObject("categorias", categorias);
-		mAV.addObject("categoria", new CategoriaModel() );
+		mAV.addObject("categoria", new CategoriaModel());
 		return mAV;
 	}
 
@@ -108,17 +114,17 @@ public class ProductoController {
 		SubCategoriaModel newSubcategoria = new SubCategoriaModel();
 		newSubcategoria.setCategoria(categoria);
 		List<SubCategoriaModel> subCategorias = subCategoriaService.getSubcategoriasByCategoria(categoria.getId());
-		if(subCategorias.isEmpty()) {
+		if (subCategorias.isEmpty()) {
 			mAV.addObject("nuevo", 0);
-		}else{
+		} else {
 			mAV.addObject("subCategorias", subCategorias);
 			mAV.addObject("nuevo", 1);
 		}
 		mAV.addObject("subCategoria", newSubcategoria);
-		
+
 		return mAV;
 	}
-	
+
 	@GetMapping("/newProducto/{id}")
 	public ModelAndView newProducto(@PathVariable("id") int id) {
 		ModelAndView mAV = new ModelAndView(ViewRouteHelper.FORM);
@@ -138,7 +144,6 @@ public class ProductoController {
 		return mAV;
 	}
 
-	
 	@GetMapping("/newAtributo/{id}")
 	public ModelAndView newAtributo(@PathVariable("id") int id) {
 		ModelAndView mAV = new ModelAndView(ViewRouteHelper.FORM);
@@ -150,7 +155,7 @@ public class ProductoController {
 		}
 		AtributosModel newAtributo = new AtributosModel();
 		newAtributo.setProducto(productoService.listarId(id));
-		
+
 		mAV.addObject("admin", admin);
 		mAV.addObject("step", 4);
 		mAV.addObject("atributo", newAtributo);
@@ -164,9 +169,9 @@ public class ProductoController {
 			return ViewRouteHelper.FORM;
 		}
 		CategoriaModel cM = new CategoriaModel();
-		if(categoriaModel.getCategoria().isEmpty()){
+		if (categoriaModel.getCategoria().isEmpty()) {
 			cM = categoriaService.listarId(categoriaModel.getId());
-		}else{
+		} else {
 			categoriaModel.setId(0);
 			cM = categoriaService.insertOrUpdate(categoriaModel);
 		}
@@ -188,26 +193,58 @@ public class ProductoController {
 
 		SubCategoriaModel sC = new SubCategoriaModel();
 
-		if(subCategoriaModel.getSubCategoria().isEmpty()){
+		if (subCategoriaModel.getSubCategoria().isEmpty()) {
 			sC = subCategoriaService.listarId(subCategoriaModel.getId());
-		}else{
+		} else {
 			subCategoriaModel.setId(0);
-			sC =subCategoriaService.insertOrUpdate(subCategoriaModel);
+			sC = subCategoriaService.insertOrUpdate(subCategoriaModel);
 		}
-		
+
 		return "redirect:/productos/newProducto/" + sC.getId();
 
 	}
 
 	@PostMapping("/saveProducto")
-	public String saveProducto(@Valid @ModelAttribute("producto") ProductoModel productoModel, BindingResult result,
+	public String saveProducto(@Valid @ModelAttribute("producto") ProductoModel productoModel,
+			@RequestParam(name = "file", required = false) MultipartFile foto, BindingResult result,
 			RedirectAttributes redirect) {
 		if (result.hasErrors()) {
 			return ViewRouteHelper.FORM;
 
 		}
+		StringBuilder stringBuilder = new StringBuilder();
+		stringBuilder.append(Paths.get("")
+        .toAbsolutePath()
+        .toString());
+		stringBuilder.append(File.separator);		
+		stringBuilder.append("src");
+		stringBuilder.append(File.separator);
+		stringBuilder.append("main");
+		stringBuilder.append(File.separator);
+		stringBuilder.append("resources");
+		stringBuilder.append(File.separator);
+		stringBuilder.append("static");
+		stringBuilder.append(File.separator);
+		stringBuilder.append("img");
+		stringBuilder.append(File.separator);
+		stringBuilder.append(foto.getOriginalFilename());
+
+		byte[] bytes = null;
+		try {
+			bytes = foto.getBytes();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		Path path = Paths.get(stringBuilder.toString());
+		try {
+			Files.write(path, bytes);
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		productoModel.setUrlImagen("/img/" + foto.getOriginalFilename());
 		productoModel.setSubCategoria(subCategoriaService.listarId(productoModel.getSubCategoria().getId()));
-		productoModel.setUrlImagen("urlImagen");
 		ProductoModel pM=	productoService.insertOrUpdate(productoModel);
 			return "redirect:/productos/newAtributo/" + pM.getId();
 	}
@@ -261,8 +298,7 @@ public class ProductoController {
 			return ViewRouteHelper.FORM;
 
 		}
-		int id = productoModel.getId();
-		ProductoModel pm = 	productoService.listarId(productoModel.getId());
+		ProductoModel pm = productoService.listarId(productoModel.getId());
 		productoModel.setUrlImagen(pm.getUrlImagen());
 		productoService.insertOrUpdate(productoModel);
 		return "redirect:/productos/lista/";
@@ -291,16 +327,17 @@ public class ProductoController {
 	
 	
 	@GetMapping("/eliminar/{id}")
-	public RedirectView delete(Model model, @PathVariable("id") int id, RedirectAttributes redirect) {
+	public String delete(Model model, @PathVariable("id") int id, RedirectAttributes redirect) {
 		//no eliminar productos con envios en curso.
-		List<ProductoModel> p = productoService.findDependency(id);
-		if (p.isEmpty()) {
-			productoService.delete(id);
-			return new RedirectView(ViewRouteHelper.GRILLA);
-		} else
+		// List<ProductoModel> p = productoService.findDependency(id);
+		// if (p.isEmpty()) {
+		// 	productoService.delete(id);
+		// 	return new RedirectView(ViewRouteHelper.GRILLA);
+		// } else
 
-			redirect.addFlashAttribute("popUp", "error");
-		return new RedirectView(ViewRouteHelper.GRILLA);
+		productoService.delete(id);
+		
+		return "redirect:/productos/lista/";
 	}
 	
 }

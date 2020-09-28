@@ -62,10 +62,13 @@ public class AtributosService implements IAtributosService {
 	}
 
 	@Override
-	public void deleteDependencies(int id) {
+	public void deleteDependencies(int idProducto) {
 		// traigo todos los atributos de el producto que voy a eliminar
-		atributosRepository.deleteByProductoId(id);
+		List<AtributosModel> aM = this.getByProducto(idProducto);
+		for (AtributosModel a : aM) {
+			delete(a.getId());
 		}
+	}
 
 	
 }

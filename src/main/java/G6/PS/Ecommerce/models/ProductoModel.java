@@ -2,6 +2,8 @@ package G6.PS.Ecommerce.models;
 
 import java.util.List;
 
+import org.springframework.web.multipart.MultipartFile;
+
 public class ProductoModel {
 	
 	private int id;
@@ -13,6 +15,8 @@ public class ProductoModel {
 	private float precio;
 	private boolean destacado;
 	private List<AtributosModel> prodAtributos;
+	private MultipartFile file;
+
 	
 	public ProductoModel() {}
 
@@ -99,6 +103,14 @@ public class ProductoModel {
 
 	public void setProdAtributos(List<AtributosModel> prodAtributos) {
 		this.prodAtributos = prodAtributos;
+	}
+
+	public MultipartFile getFile() {
+		return file;
+	}
+
+	public void setFile(MultipartFile file) {
+		this.file = file;
 	}
 
 	
