@@ -18,7 +18,10 @@ public class ViewRouteHelper {
 
 	public final static String ARTICULO_UNICO = "home/producto-unico";
 	
-
+	public final static String CATALOGO_CATEGORIA = "home/catalogo_categoria";
+	
 	public final static String GRILLA = "vendedor/productos"; 
+	
+	
 
 }

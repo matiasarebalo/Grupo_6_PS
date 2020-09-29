@@ -13,7 +13,9 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
 
 import G6.PS.Ecommerce.helpers.ViewRouteHelper;
+import G6.PS.Ecommerce.models.CategoriaModel;
 import G6.PS.Ecommerce.models.ProductoModel;
+import G6.PS.Ecommerce.services.ICategoriaService;
 import G6.PS.Ecommerce.services.IProductoService;
 
 @Controller
@@ -24,6 +26,10 @@ public class InicioController {
 	@Autowired
 	@Qualifier("productoService")
 	private IProductoService productoService;
+	
+	@Autowired
+	@Qualifier("categoriaService")
+	private ICategoriaService categoriaService;
 	
 	@GetMapping("")
 	public ModelAndView index() {
@@ -38,9 +44,13 @@ public class InicioController {
 		mAV.addObject("admin", admin);
 		
 		List<ProductoModel> productos = productoService.findDestacados();
-		
 		if(productos!= null){
 			mAV.addObject("productos", productos);
+		}
+		
+		List<CategoriaModel> categorias = categoriaService.getAll();
+		if (categorias != null) {
+			mAV.addObject("categorias", categorias);
 		}
 		
 		return mAV;

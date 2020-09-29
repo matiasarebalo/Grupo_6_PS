@@ -112,4 +112,13 @@ public class ProductoService implements IProductoService {
 		}
 		return pM;	
 	}
+	
+	public List<ProductoModel> findByCategoria(int id){
+		List<Producto> productos = productoRepository.findByCategoria(id);
+		List<ProductoModel> pM = new ArrayList<ProductoModel>();
+		for (Producto p : productos) {
+			pM.add(productoConverter.entityToModel(p));
+		}
+		return pM;
+	}
 }
