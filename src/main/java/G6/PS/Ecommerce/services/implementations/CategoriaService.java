@@ -37,7 +37,6 @@ public class CategoriaService implements ICategoriaService{
 
 	@Override
 	public CategoriaModel insertOrUpdate(CategoriaModel categoriaModel) {
-		// TODO Auto-generated method stub
 		Categoria categoria= categoriaRepository.save(categoriaConverter.modelToEntity(categoriaModel));
 		return categoriaConverter.entityToModel(categoria);
 	}
@@ -50,7 +49,6 @@ public class CategoriaService implements ICategoriaService{
 
 	@Override
 	public String delete(int id) {
-		// TODO Auto-generated method stub
 		categoriaRepository.deleteById(id);
 		return "Categoria eliminada";
 	}

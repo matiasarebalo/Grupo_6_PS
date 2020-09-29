@@ -30,13 +30,12 @@ public class AtributosService implements IAtributosService {
 	
 	@Override
 	public List<Atributos> getAll() {
-		// TODO Auto-generated method stub
 		return atributosRepository.findAll();
 	}
 
 	@Override
 	public AtributosModel insertOrUpdate(AtributosModel model) {
-		Atributos s= atributosRepository.save( atributosConverter.modelToEntity(model));// TODO Auto-generated method stub
+		Atributos s= atributosRepository.save( atributosConverter.modelToEntity(model));
 		return atributosConverter.entityToModel(s);
 	}
 

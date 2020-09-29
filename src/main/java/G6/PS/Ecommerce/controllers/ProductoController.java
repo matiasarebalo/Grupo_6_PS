@@ -23,8 +23,6 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
-import org.springframework.web.servlet.view.RedirectView;
-
 import javax.validation.Valid;
 
 import G6.PS.Ecommerce.models.AtributosModel;
@@ -233,17 +231,16 @@ public class ProductoController {
 		try {
 			bytes = foto.getBytes();
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		Path path = Paths.get(stringBuilder.toString());
 		try {
 			Files.write(path, bytes);
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		productoModel.setUrlImagen("/img/" + foto.getOriginalFilename());
+		// TODO Codigo SKU
 		productoModel.setSubCategoria(subCategoriaService.listarId(productoModel.getSubCategoria().getId()));
 		ProductoModel pM=	productoService.insertOrUpdate(productoModel);
 			return "redirect:/productos/newAtributo/" + pM.getId();
