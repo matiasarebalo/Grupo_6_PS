@@ -301,6 +301,28 @@ public class ProductoController {
 		return "redirect:/productos/lista/";
 	}
 	
+	@GetMapping("/categoria/{id}")
+	public ModelAndView productoCategoria(@PathVariable("id") int id) {
+		ModelAndView mAV = new ModelAndView(ViewRouteHelper.CATALOGO_CATEGORIA);
+		String roleString = SecurityContextHolder.getContext().getAuthentication().getAuthorities().toString();
+		boolean admin = false;
+		if (roleString.equals("[ROLE_ADMIN]")) {
+			admin = true;
+		}
+		
+		List<CategoriaModel> categorias = categoriaService.getAll();
+		if (categorias != null) {
+			mAV.addObject("categorias", categorias);
+		}
+		
+		mAV.addObject("admin", admin);
+		List<ProductoModel> productos = productoService.findByCategoria(id);
+		if(productos != null) {
+			mAV.addObject("productos", productos);
+		}
+		return mAV;
+	}
+	
 	@GetMapping("/lista")
 	public ModelAndView grillaProductos() {
 		ModelAndView mAV = new ModelAndView(ViewRouteHelper.GRILLA);
@@ -336,5 +358,4 @@ public class ProductoController {
 		
 		return "redirect:/productos/lista/";
 	}
-	
 }
