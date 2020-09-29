@@ -55,14 +55,4 @@ public class CategoriaService implements ICategoriaService{
 		return "Categoria eliminada";
 	}
 
-	@Override
-	public void deleteDependencies(int c) {
-		
-	if(this.listarId(c).getSubcategoria().isEmpty()) {
-		this.delete(c);
-	}
-		// TODO Auto-generated method stub
-		
-	}
-
 }

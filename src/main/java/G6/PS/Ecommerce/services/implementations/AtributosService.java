@@ -1,5 +1,6 @@
 package G6.PS.Ecommerce.services.implementations;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -45,16 +46,29 @@ public class AtributosService implements IAtributosService {
 	}
 
 	@Override
+	public List<AtributosModel> getByProducto(int id) {
+		List<Atributos> atributosModels = atributosRepository.findByProducto(id);
+		List<AtributosModel> aM = new ArrayList<AtributosModel>();
+		for (Atributos a : atributosModels) {
+			aM.add(atributosConverter.entityToModel(a));
+		}
+		return aM;
+	}
+
+	@Override
 	public String delete(int id) {
 		atributosRepository.deleteById(id);
 		return "subCategoria Eliminada";
 	}
 
 	@Override
-	public void deleteDependencies(int id) {
+	public void deleteDependencies(int idProducto) {
 		// traigo todos los atributos de el producto que voy a eliminar
-		atributosRepository.deleteByProductoId(id);
+		List<AtributosModel> aM = this.getByProducto(idProducto);
+		for (AtributosModel a : aM) {
+			delete(a.getId());
 		}
+	}
 
 	
 }

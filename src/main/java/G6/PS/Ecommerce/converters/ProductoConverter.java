@@ -1,8 +1,6 @@
 package G6.PS.Ecommerce.converters;
 
 import java.util.ArrayList;
-import java.util.List;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Component;
@@ -29,7 +27,7 @@ public class ProductoConverter {
 
 	public Producto modelToEntity(ProductoModel model) {
 		return new Producto(model.getId(), model.getDescripcionCorta(), model.getDescripcionLarga(), 
-				subCategoriaConverter.modelToEntity(model.getSubCategoriaModel()), model.getUrlImagen(), model.getSku(),
+				subCategoriaConverter.modelToEntity(model.getSubCategoria()), model.getUrlImagen(), model.getSku(),
 				model.getPrecio(), model.getDestacado());
 	}
 }

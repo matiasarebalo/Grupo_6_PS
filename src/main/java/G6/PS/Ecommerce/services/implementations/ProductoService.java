@@ -35,8 +35,13 @@ public class ProductoService implements IProductoService {
 	private ProductoConverter productoConverter;
 	
 	@Override
-	public List<Producto> getAll(){
-		return productoRepository.findAll();
+	public List<ProductoModel> getAll(){
+		List<Producto> productos = productoRepository.findAll();
+		List<ProductoModel> pM = new ArrayList<ProductoModel>();
+		for (Producto p : productos) {
+			pM.add(productoConverter.entityToModel(p));
+		}
+		return pM;
 	}
 	
 	@Override
@@ -54,11 +59,11 @@ public class ProductoService implements IProductoService {
 	@Override
 	public String delete(int id) {
 		
-    int sC=	productoRepository.findById(id).getSubCategoria().getId();
+   		int sC=	productoRepository.findById(id).getSubCategoria().getId();
 		
     	atributosService.deleteDependencies(id);
-		productoRepository.deleteById(id);
 		subCategoriaService.deleteDependencies(sC);
+		productoRepository.deleteById(id);
 		
 		return "producto Eliminado";
 	}

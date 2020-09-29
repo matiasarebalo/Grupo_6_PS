@@ -57,13 +57,18 @@
                                     </div>
     
                                     <div class="row mt-4">
-                                        <div class="col">
-                                            <input class="btn btn--next" type="submit" value="Agregar">
-                                        </div>
                                         
+
+                                        <div class="col">
+                                            <input class="btn btn--next" type="submit" value="Agregar atributo">
+                                        </div>
+                                        <div class="col">
+                                            <input class="btn btn--next" type="submit" value="Finalizar"  style="display: none">
+                                        </div>
     
                                     </div>
-    
+                                    
+                                    
                                 </div>
                             </div>
 
@@ -72,6 +77,12 @@
 
                 </form>
 
+                <div>
+                    <form th:action="@{/productos/lista}" method="get" role="form">
+                        <input class="btn btn--next" type="submit" value="Finalizar" style="bottom: 0px;top: 458.8150; top: 200px;width: 362px; height: 52px;"/>
+                    </form>
+                </div>
+                
             </div>
         </div>
     </div>

@@ -60,9 +60,13 @@
 									<td th:text="${producto.subCategoria.subCategoria}" class="cell100 column3"></td>
 									<td th:text="${producto.descripcionCorta}" class="cell100 column4"></td>
 									<td th:text="${producto.precio}" class="cell100 column5"></td>
-									<td class="cell100 column6"><i class="fas fa-edit"></i></td>
 									<td class="cell100 column7">
-										<form th:action="@{/productos/eliminar/{id}(id=${producto.id})}" method="post" role="form">
+										<form th:action="@{/productos/editar/{id}(id=${producto.id})}" method="get" role="form">
+											<input class="icon-borrar" type="image" src="../../img/edit.png"  title="Editar" />
+										</form>
+									</td>
+									<td class="cell100 column7">
+										<form th:action="@{/productos/eliminar/{id}(id=${producto.id})}" method="get" role="form">
 											<input class="icon-borrar" type="image" src="../../img/borrar.svg"  title="Eliminar" />
 										</form>
 									</td>
