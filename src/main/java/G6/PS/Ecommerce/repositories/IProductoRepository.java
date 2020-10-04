@@ -35,10 +35,10 @@ public interface IProductoRepository extends JpaRepository<Producto, Serializabl
 	public List<Producto> findByCategoria(int id);
 	
 	@Query(nativeQuery=true,value="select * from producto p where p.sub_categoria_id in (select s.id from subcategoria s, categoria c where s.categoria_id = c.id and c.id = (:id))")
-	Page<ProductoModel> findByCategoria(Pageable pageable,int id);
+	Page<Producto> findPageByCategoria(Pageable pageable,int id);
 	
-	@Query(nativeQuery=true,value="select * from producto p where p.sub_categoria_id in (select s.id from subcategoria s, categoria c where s.categoria_id = c.id and c.id = (:id))")
-	Page<ProductoModel> findBySubCategoria(Pageable pageable,int id);
+	@Query(nativeQuery=true,value="select * from producto p where p.sub_categoria_id  = (:id)")
+	Page<Producto> findPageBySubCategoria(Pageable pageable,int id);
 	
 	
 	//agregar cuando tengamos pedidos para ver si el producto tiene un pedido en curso o ya realizado.	

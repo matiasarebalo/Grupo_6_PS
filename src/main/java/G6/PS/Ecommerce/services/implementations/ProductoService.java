@@ -132,7 +132,7 @@ public class ProductoService implements IProductoService {
 	
 	@Override
 	public Page<ProductoModel> findByCategoria(Pageable pageable,int id) {
-		Page<Producto> productos = productoRepository.findAll(pageable);
+		Page<Producto> productos = productoRepository.findPageByCategoria(pageable, id);
 		Page<ProductoModel> pages = productos.map(new Function<Producto, ProductoModel>() {
 			public ProductoModel apply(Producto producto) {
 				ProductoModel model = productoConverter.entityToModel(producto);
@@ -145,7 +145,7 @@ public class ProductoService implements IProductoService {
 	
 	@Override
 	public Page<ProductoModel> findBySubCategoria(Pageable pageable,int id) {
-		Page<Producto> productos = productoRepository.findAll(pageable);
+		Page<Producto> productos = productoRepository.findPageByCategoria(pageable, id);
 		Page<ProductoModel> pages = productos.map(new Function<Producto, ProductoModel>() {
 			public ProductoModel apply(Producto producto) {
 				ProductoModel model = productoConverter.entityToModel(producto);
