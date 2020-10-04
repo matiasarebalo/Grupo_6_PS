@@ -15,8 +15,10 @@ import org.springframework.web.servlet.ModelAndView;
 import G6.PS.Ecommerce.helpers.ViewRouteHelper;
 import G6.PS.Ecommerce.models.CategoriaModel;
 import G6.PS.Ecommerce.models.ProductoModel;
+import G6.PS.Ecommerce.models.SubCategoriaModel;
 import G6.PS.Ecommerce.services.ICategoriaService;
 import G6.PS.Ecommerce.services.IProductoService;
+import G6.PS.Ecommerce.services.ISubCategoriaService;
 
 @Controller
 @RequestMapping("/")
@@ -30,6 +32,10 @@ public class InicioController {
 	@Autowired
 	@Qualifier("categoriaService")
 	private ICategoriaService categoriaService;
+	
+	@Autowired
+	@Qualifier("subCategoriaService")
+	private ISubCategoriaService subCategoriaService;
 	
 	@GetMapping("")
 	public ModelAndView index() {
@@ -51,6 +57,11 @@ public class InicioController {
 		List<CategoriaModel> categorias = categoriaService.getAll();
 		if (categorias != null) {
 			mAV.addObject("categorias", categorias);
+		}
+		
+		List<SubCategoriaModel> subCategorias = subCategoriaService.getAll();
+		if (subCategorias != null) {
+			mAV.addObject("subcategorias", subCategorias);
 		}
 		
 		return mAV;

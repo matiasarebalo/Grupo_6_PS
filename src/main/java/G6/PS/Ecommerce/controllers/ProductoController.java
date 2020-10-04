@@ -322,6 +322,11 @@ public class ProductoController {
 			mAV.addObject("categorias", categorias);
 		}
 
+		List<SubCategoriaModel> subCategorias = subCategoriaService.getAll();
+		if (subCategorias != null) {
+			mAV.addObject("subcategorias", subCategorias);
+		}
+
 		mAV.addObject("admin", admin);
 		
 		//paginacion init
@@ -358,6 +363,13 @@ public class ProductoController {
 		if (roleString.equals("[ROLE_ADMIN]")) {
 			admin = true;
 		}
+		
+		
+		List<CategoriaModel> categorias = categoriaService.getAll();
+		if (categorias != null) {
+			mAV.addObject("categorias", categorias);
+		}
+
 		
 		List<SubCategoriaModel> subCategorias = subCategoriaService.getAll();
 		if (subCategorias != null) {
