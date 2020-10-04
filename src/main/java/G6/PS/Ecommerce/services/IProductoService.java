@@ -31,5 +31,7 @@ public interface IProductoService {
 
 	public List<ProductoModel> searchByProducto(String producto);
 
-	Page<ProductoModel> getAllPages(Pageable pageable,String atributo);
+	Page<ProductoModel> findByCategoria(Pageable pageable,int id);
+	
+	Page<ProductoModel> findBySubCategoria(Pageable pageable,int id);
 }

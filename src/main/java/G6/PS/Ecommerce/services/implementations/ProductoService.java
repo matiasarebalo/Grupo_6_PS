@@ -131,7 +131,20 @@ public class ProductoService implements IProductoService {
 	}
 	
 	@Override
-	public Page<ProductoModel> getAllPages(Pageable pageable,String atributo) {
+	public Page<ProductoModel> findByCategoria(Pageable pageable,int id) {
+		Page<Producto> productos = productoRepository.findAll(pageable);
+		Page<ProductoModel> pages = productos.map(new Function<Producto, ProductoModel>() {
+			public ProductoModel apply(Producto producto) {
+				ProductoModel model = productoConverter.entityToModel(producto);
+				return model;
+			}
+		});
+
+		return pages;
+	}
+	
+	@Override
+	public Page<ProductoModel> findBySubCategoria(Pageable pageable,int id) {
 		Page<Producto> productos = productoRepository.findAll(pageable);
 		Page<ProductoModel> pages = productos.map(new Function<Producto, ProductoModel>() {
 			public ProductoModel apply(Producto producto) {

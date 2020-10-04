@@ -51,6 +51,22 @@
 					</div>
 					
 				</nav>
+					 <nav class="navbar navbar-expand-md navbar-dark bg-dark">
+    
+    
+					<div class="navbar-collapse collapse flex-shrink-1 flex-grow-0 order-last" id="navbar7">
+						<ul class="navbar-nav">
+							<li th:each="subcategoria : ${subcategorias}"class="nav-item">
+								<a class="nav-link" th:text=${subcategoria.subcategoria} th:href="@{|/productos/subcategoria/?id=${subcategoria.id}|}">Subcategoria</a>
+				 						
+							</li>
+						</ul>
+					</div>
+					
+					
+					
+					
+				</nav>
 	<!-- Page Content -->
 	<div class="container">
 

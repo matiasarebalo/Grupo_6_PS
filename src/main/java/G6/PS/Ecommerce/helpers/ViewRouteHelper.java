@@ -22,6 +22,8 @@ public class ViewRouteHelper {
 	
 	public final static String CATALOGO_CATEGORIA = "home/catalogo_categoria";
 	
+	public final static String CATALOGO_SUBCATEGORIA = "home/catalogo_subcategoria";	
+	
 	public final static String GRILLA = "vendedor/productos"; 
 	
 	

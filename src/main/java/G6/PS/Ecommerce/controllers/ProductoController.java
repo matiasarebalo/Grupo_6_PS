@@ -327,7 +327,7 @@ public class ProductoController {
 		//paginacion init
 		int page = params.get("page") != null ? (Integer.valueOf(params.get("page").toString()) - 1) : 0;
 		PageRequest pageRequest = PageRequest.of(page, 3, Sort.by(atributo));
-		Page<ProductoModel> pageProducto = productoService.getAllPages(pageRequest,atributo);
+		Page<ProductoModel> pageProducto = productoService.findByCategoria(pageRequest,id);
 		int totalPage = pageProducto.getTotalPages();
 		if (totalPage > 0) {
 			List<Integer> pages = IntStream.rangeClosed(1, totalPage).boxed().collect(Collectors.toList());
@@ -349,6 +349,49 @@ public class ProductoController {
 //		}
 		return mAV;
 	}
+
+	@GetMapping("/subcategoria/")
+	public ModelAndView productoSubCategoria(@RequestParam int id,@RequestParam Map<String, Object> params,@RequestParam(defaultValue= "id") String atributo, Model model) {
+		ModelAndView mAV = new ModelAndView(ViewRouteHelper.CATALOGO_SUBCATEGORIA);
+		String roleString = SecurityContextHolder.getContext().getAuthentication().getAuthorities().toString();
+		boolean admin = false;
+		if (roleString.equals("[ROLE_ADMIN]")) {
+			admin = true;
+		}
+		
+		List<SubCategoriaModel> subCategorias = subCategoriaService.getAll();
+		if (subCategorias != null) {
+			mAV.addObject("subcategorias", subCategorias);
+		}
+
+		mAV.addObject("admin", admin);
+		
+		//paginacion init
+		int page = params.get("page") != null ? (Integer.valueOf(params.get("page").toString()) - 1) : 0;
+		PageRequest pageRequest = PageRequest.of(page, 3, Sort.by(atributo));
+		Page<ProductoModel> pageProducto = productoService.findBySubCategoria(pageRequest,id);
+		int totalPage = pageProducto.getTotalPages();
+		if (totalPage > 0) {
+			List<Integer> pages = IntStream.rangeClosed(1, totalPage).boxed().collect(Collectors.toList());
+			model.addAttribute("pages", pages);
+
+		}
+		model.addAttribute("current", page + 1);
+		model.addAttribute("next", page + 2);
+		model.addAttribute("prev", page);
+		model.addAttribute("last", totalPage);
+		model.addAttribute("list", pageProducto.getContent());
+		model.addAttribute("scat_id", id);
+		
+		
+		//paginacion end
+//		List<ProductoModel> productos = productoService.findByCategoria(id);
+//		if(productos != null) {
+//			mAV.addObject("productos", productos);
+//		}
+		return mAV;
+	}
+
 	
 	@GetMapping("/lista")
 	public ModelAndView grillaProductos() {
