@@ -2,6 +2,9 @@ package G6.PS.Ecommerce.services;
 
 import java.util.List;
 
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+
 import G6.PS.Ecommerce.models.ProductoModel;
 
 
@@ -27,4 +30,6 @@ public interface IProductoService {
 	public List<ProductoModel> findDependency(int id);
 
 	public List<ProductoModel> searchByProducto(String producto);
+
+	Page<ProductoModel> getAllPages(Pageable pageable,String atributo);
 }

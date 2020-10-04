@@ -2,9 +2,12 @@ package G6.PS.Ecommerce.services.implementations;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.function.Function;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import G6.PS.Ecommerce.converters.ProductoConverter;
@@ -126,4 +129,18 @@ public class ProductoService implements IProductoService {
 		}
 		return pM;
 	}
+	
+	@Override
+	public Page<ProductoModel> getAllPages(Pageable pageable,String atributo) {
+		Page<Producto> productos = productoRepository.findAll(pageable);
+		Page<ProductoModel> pages = productos.map(new Function<Producto, ProductoModel>() {
+			public ProductoModel apply(Producto producto) {
+				ProductoModel model = productoConverter.entityToModel(producto);
+				return model;
+			}
+		});
+
+		return pages;
+	}
+
 }

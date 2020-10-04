@@ -25,3 +25,4 @@ insert into producto values (321, "remera nike", "Remera Nike Breathe Ss Hyper D
 insert into producto values (12354, "Zapatillas court", "ZAPATILLAS VL COURT 2.0", true, 6499,"asd","/img/zapatillas3.jpg", 12);
 
 commit;
+

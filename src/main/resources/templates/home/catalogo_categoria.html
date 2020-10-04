@@ -41,10 +41,33 @@
 					<div class="navbar-collapse collapse flex-shrink-1 flex-grow-0 order-last" id="navbar7">
 						<ul class="navbar-nav">
 							<li th:each="categoria : ${categorias}"class="nav-item">
-								<a class="nav-link" th:text=${categoria.categoria} th:href="@{/productos/categoria/{id}(id=${categoria.id})}">Categoria</a>
+								<a class="nav-link" th:text=${categoria.categoria} th:href="@{|/productos/categoria/?id=${categoria.id}|}">Categoria</a>
+				 						
 							</li>
 						</ul>
 					</div>
+					
+					
+					
+					
+				</nav>
+				
+				
+							 <nav class="navbar navbar-expand-md navbar-dark bg-dark" >
+    
+					<div class="navbar-collapse collapse flex-shrink-1 flex-grow-0 order-last" id="navbar7">
+						<ul class="navbar-nav" >
+							<li class="nav-item">
+							<a >Ordenar por</a>
+								<a class="nav-link" th:text="Precio" th:href="@{|/productos/categoria/?id=${cat_id}&atributo=precio|}">Categoria</a>
+				 				<a class="nav-link" th:text="Descripcion" th:href="@{|/productos/categoria/?id=${cat_id}&atributo=descripcionCorta|}">Categoria</a>
+				 						
+							</li>
+						</ul>
+					</div>
+					
+					
+					
 					
 				</nav>
 	<!-- Page Content -->
@@ -58,7 +81,7 @@
 
 				<div class="row">
 					
-					<div th:each="producto : ${productos}" class="col-lg-4 col-md-6 mb-4">
+					<div th:each="producto:${list}" class="col-lg-4 col-md-6 mb-4">
 						<div class="card h-100">
 							<a th:href="@{/productos/articulo/{id}(id=${producto.id})}">
 								<img th:src="${producto.urlImagen}" class="card-img-top" alt=""></a>
@@ -85,8 +108,31 @@
 		</div>
 		<!-- /.row -->
 
+
+
 	</div>
 	<!-- /.container -->
+	
+			<nav aria-label="Page navigation example">
+						<ul class="pagination justify-content-center">
+
+							<li class="page-item"
+								th:classappend="${prev == 0 ? 'disabled': '' }"><a
+								class="page-link" th:href="@{|/productos/categoria/?id=${cat_id}&page=${prev}|}">Anterior</a>
+							</li>
+							<li class="page-item" th:each="page : ${pages}"
+								th:classappend="${current == page ? 'active': '' }"><a
+								class="page-link" th:href="@{|/productos/categoria/?id=${cat_id}&page=${page}|}"
+								th:text="${page}"></a>
+							<li class="page-item"
+								th:classappend="${current == last ? 'disabled': '' }"><a
+								class="page-link" th:href="@{|/productos/categoria/?id=${cat_id}&page=${next}|}">Proxima</a>
+							</li>
+
+						</ul>
+					</nav>
+			
+	
 
 	<!-- Footer -->
 	<footer class="py-5 bg-dark">
@@ -98,10 +144,11 @@
 	</footer>
 
 	<!-- Bootstrap core JavaScript -->
-	<script src="vendor/jquery/jquery.min.js"></script>
-	<script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+	<script src="/vendor/jquery/jquery.min.js"></script>
+	<script src="/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
 
 
+			
 
 
 

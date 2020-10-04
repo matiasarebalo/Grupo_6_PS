@@ -7,9 +7,15 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
+import java.util.stream.Collectors;
+import java.util.stream.IntStream;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Sort;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -301,8 +307,9 @@ public class ProductoController {
 		return "redirect:/productos/lista/";
 	}
 	
-	@GetMapping("/categoria/{id}")
-	public ModelAndView productoCategoria(@PathVariable("id") int id) {
+	
+	@GetMapping("/categoria/")
+	public ModelAndView productoCategoria(@RequestParam int id,@RequestParam Map<String, Object> params,@RequestParam(defaultValue= "id") String atributo, Model model) {
 		ModelAndView mAV = new ModelAndView(ViewRouteHelper.CATALOGO_CATEGORIA);
 		String roleString = SecurityContextHolder.getContext().getAuthentication().getAuthorities().toString();
 		boolean admin = false;
@@ -314,12 +321,32 @@ public class ProductoController {
 		if (categorias != null) {
 			mAV.addObject("categorias", categorias);
 		}
-		
+
 		mAV.addObject("admin", admin);
-		List<ProductoModel> productos = productoService.findByCategoria(id);
-		if(productos != null) {
-			mAV.addObject("productos", productos);
+		
+		//paginacion init
+		int page = params.get("page") != null ? (Integer.valueOf(params.get("page").toString()) - 1) : 0;
+		PageRequest pageRequest = PageRequest.of(page, 3, Sort.by(atributo));
+		Page<ProductoModel> pageProducto = productoService.getAllPages(pageRequest,atributo);
+		int totalPage = pageProducto.getTotalPages();
+		if (totalPage > 0) {
+			List<Integer> pages = IntStream.rangeClosed(1, totalPage).boxed().collect(Collectors.toList());
+			model.addAttribute("pages", pages);
+
 		}
+		model.addAttribute("current", page + 1);
+		model.addAttribute("next", page + 2);
+		model.addAttribute("prev", page);
+		model.addAttribute("last", totalPage);
+		model.addAttribute("list", pageProducto.getContent());
+		model.addAttribute("cat_id", id);
+		
+		
+		//paginacion end
+//		List<ProductoModel> productos = productoService.findByCategoria(id);
+//		if(productos != null) {
+//			mAV.addObject("productos", productos);
+//		}
 		return mAV;
 	}
 	
