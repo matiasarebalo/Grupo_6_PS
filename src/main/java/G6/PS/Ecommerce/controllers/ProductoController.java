@@ -345,8 +345,8 @@ public class ProductoController {
 		model.addAttribute("last", totalPage);
 		model.addAttribute("list", pageProducto.getContent());
 		model.addAttribute("cat_id", id);
-		
-		
+		model.addAttribute("categoria_elegida", categoriaService.listarId(id));
+
 		//paginacion end
 //		List<ProductoModel> productos = productoService.findByCategoria(id);
 //		if(productos != null) {
@@ -394,6 +394,8 @@ public class ProductoController {
 		model.addAttribute("last", totalPage);
 		model.addAttribute("list", pageProducto.getContent());
 		model.addAttribute("scat_id", id);
+		model.addAttribute("subcategoria_elegida", subCategoriaService.listarId(id));
+
 		
 		
 		//paginacion end

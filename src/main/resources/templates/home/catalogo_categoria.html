@@ -40,12 +40,9 @@
 
 		<nav class="navbar navbar-expand-md navbar-dark bg-dark">
 
-			<div
-				class="navbar-collapse collapse flex-shrink-1 flex-grow-0 order-last"
-				id="navbar7">
+			<div class="navbar-collapse collapse flex-shrink-1 flex-grow-0 order-last" id="navbar7">
 				<ul class="navbar-nav">
-												<a> Categorias</a>
-				
+					<a> Categorias</a>
 					<li th:each="categoria : ${categorias}" class="nav-item"><a
 						class="nav-link" th:text=${categoria.categoria}
 						th:href="@{|/productos/categoria/?id=${categoria.id}|}">Categoria</a>
@@ -54,44 +51,55 @@
 			</div>
 		</nav>
 
-		<nav class="navbar navbar-expand-md navbar-dark bg-dark">
-			<div
-				class="navbar-collapse collapse flex-shrink-1 flex-grow-0 order-last"
-				id="navbar7">
-				<ul class="navbar-nav">
-					<a> SubCategorias</a>
-					<li th:each="subcategoria : ${subcategorias}" class="nav-item">
-						<a class="nav-link" th:text=${subcategoria.subCategoria}
-						th:href="@{|/productos/subcategoria/?id=${subcategoria.id}|}">Subcategoria</a>
-					</li>
-				</ul>
-			</div>
-		</nav>
-		<nav class="navbar navbar-expand-md navbar-dark bg-dark">
-			<div
-				class="navbar-collapse collapse flex-shrink-1 flex-grow-0 order-last"
-				id="navbar7">
-				<ul class="navbar-nav">
-					<li class="nav-item"><a>Ordenar por</a> <a class="nav-link"
-						th:text="Precio"
-						th:href="@{|/productos/categoria/?id=${cat_id}&atributo=precio|}">Categoria</a>
-						<a class="nav-link" th:text="Descripcion"
-						th:href="@{|/productos/categoria/?id=${cat_id}&atributo=descripcionCorta|}">Categoria</a>
-
-					</li>
-				</ul>
-			</div>
-		</nav>
 		<!-- Page Content -->
-		<div class="container">
+		<div class="container mt-5">
+
 			<div class="row">
-				<div>
+				<div class="col-lg-3">
+
+					<h1 th:text=${categoria_elegida.categoria} class="my-4"></h1>
+					<div class="list-group" th:each="subcategoria : ${subcategorias}">
+
+						<a th:text=${subcategoria.subCategoria} th:href="@{|/productos/subcategoria/?id=${subcategoria.id}|}" class="list-group-item">Category 1</a> 
+
+					</div>
+	
+				</div>
+				
+				<div class="col-lg-9">
+					<header class="border-bottom mb-4 pb-3">
+						<div class="form-inline">
+							<span class="mr-md-auto">32 Items found </span>
+							<!-- Order by -->
+							<div class="dropdown show mr-5">
+								<a class="btn btn-secondary dropdown-toggle" href="#" role="button" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+								  Dropdown link
+								</a>
+							  
+								<div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
+								  <a class="dropdown-item" th:text="Precio" th:href="@{|/productos/categoria/?id=${cat_id}&atributo=precio|}"></a>
+								  <a class="dropdown-item" th:text="Descripcion" th:href="@{|/productos/categoria/?id=${cat_id}&atributo=descripcionCorta|}"></a>
+								</div>
+							</div>
+
+							<div class="btn-group">
+								<a id="mostrarCards" class="btn  btn-outline-secondary active" data-toggle="tooltip" title="" data-original-title="Grid view"> 
+									<i class="fa fa-th"></i></a>
+								<a id="mostrarTiles" class="btn btn-outline-secondary " data-toggle="tooltip" title="" data-original-title="List view"> 
+									<i class="fa fa-bars"></i></a>
+							</div>
+						</div>
+					</header><!-- sect-heading -->
+	
 					<div class="row">
-						<div th:each="producto:${list}" class="col-lg-4 col-md-6 mb-4">
+						
+						<!-- cards -->
+						<div th:each="producto:${list}" class="col-lg-4 col-md-6 mb-4 cards">
 							<div class="card h-100">
 								<a th:href="@{/productos/articulo/{id}(id=${producto.id})}">
 									<img th:src="${producto.urlImagen}" class="card-img-top" alt="">
 								</a>
+								
 								<div class="card-body">
 									<h4 class="card-title">
 										<a th:text="${producto.descripcionCorta}" href="#"></a>
@@ -99,48 +107,90 @@
 									<h5 th:text="'$' + ${producto.precio}"></h5>
 									<p th:text="${producto.descripcionLarga}" class="card-text"></p>
 								</div>
+
 								<div class="card-footer">
 									<small class="text-muted">&#9733; &#9733; &#9733;
 										&#9733; &#9734;</small>
 								</div>
 							</div>
 						</div>
+						<!-- /cards -->
 
+						<!-- tiles -->
+						<article id ="tilesId" class="card card-product-list hideTiles">
+							<div  th:each="producto:${list}" class="row no-gutters">
+								
+								<aside class="col-md-3">
+									<a th:href="@{/productos/articulo/{id}(id=${producto.id})}" class="img-wrap">
+										<span class="badge badge-danger"> NEW </span>
+										<img th:src="${producto.urlImagen}"  class="card-img-top">
+									</a>
+								</aside> <!-- col.// -->
+
+								<div class="col-md-6">
+									<div class="info-main">
+										<h5 th:text="'$' + ${producto.precio}"></h5>
+										
+										<p th:text="${producto.descripcionLarga}" class="card-text"></p>									
+									</div> 
+									<!-- info-main.// -->
+								</div> <!-- col.// -->
+
+								<aside class="col-sm-3">
+									<div class="info-aside">
+										<div class="price-wrap">
+											<span th:text="'$' + ${producto.precio}"></span>	
+											<del class="price-old"> $198</del>
+										</div> <!-- info-price-detail // -->
+										<p class="text-success">Envio gratis</p>
+										<br>
+										<p>
+											<a th:href="@{/productos/articulo/{id}(id=${producto.id})}" class="btn btn-primary btn-block"> Detalles </a>
+										</p>
+									</div> <!-- info-aside.// -->
+								</aside> <!-- col.// -->
+
+							</div> <!-- row.// -->
+						</article> <!-- card-product .// -->
+
+						<!-- /tiles -->
+	
 					</div>
 					<!-- /.row -->
-
+	
 				</div>
 				<!-- /.col-lg-9 -->
+	
+			</div>
+			<!-- /.container -->
+	
+			<nav aria-label="Page navigation example">
+				<ul class="pagination justify-content-center">
+	
+					<li class="page-item"
+						th:classappend="${prev == 0 ? 'disabled': '' }"><a
+						class="page-link"
+						th:href="@{|/productos/categoria/?id=${cat_id}&page=${prev}|}">Anterior</a>
+					</li>
+					<li class="page-item" th:each="page : ${pages}"
+						th:classappend="${current == page ? 'active': '' }"><a
+						class="page-link"
+						th:href="@{|/productos/categoria/?id=${cat_id}&page=${page}|}"
+						th:text="${page}"></a>
+					<li class="page-item"
+						th:classappend="${current == last ? 'disabled': '' }"><a
+						class="page-link"
+						th:href="@{|/productos/categoria/?id=${cat_id}&page=${next}|}">Proxima</a>
+					</li>
+	
+				</ul>
+			</nav>
+
 
 			</div>
-			<!-- /.row -->
+			
 
-
-
-		</div>
-		<!-- /.container -->
-
-		<nav aria-label="Page navigation example">
-			<ul class="pagination justify-content-center">
-
-				<li class="page-item"
-					th:classappend="${prev == 0 ? 'disabled': '' }"><a
-					class="page-link"
-					th:href="@{|/productos/categoria/?id=${cat_id}&page=${prev}|}">Anterior</a>
-				</li>
-				<li class="page-item" th:each="page : ${pages}"
-					th:classappend="${current == page ? 'active': '' }"><a
-					class="page-link"
-					th:href="@{|/productos/categoria/?id=${cat_id}&page=${page}|}"
-					th:text="${page}"></a>
-				<li class="page-item"
-					th:classappend="${current == last ? 'disabled': '' }"><a
-					class="page-link"
-					th:href="@{|/productos/categoria/?id=${cat_id}&page=${next}|}">Proxima</a>
-				</li>
-
-			</ul>
-		</nav>
+			
 
 
 
@@ -157,7 +207,23 @@
 		<script src="/vendor/jquery/jquery.min.js"></script>
 		<script src="/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
 
+		<script>
+			$( "article.hideTiles" ).hide();
 
+			$( "#mostrarTiles" ).click(function() {
+				$( ".cards" ).hide( "slow", function() {
+					$( "article" ).removeAttr( 'style' );
+					$('#tilesId').removeClass('hideTiles').addClass('showTiles');
+				});
+			});
+
+			$( "#mostrarCards" ).click(function() {
+				$( ".showTiles" ).hide( "slow", function() {
+					$( ".cards" ).show();
+				});
+			});
+			
+		</script>
 
 
 
