@@ -18,7 +18,7 @@ import com.fasterxml.jackson.annotation.JsonManagedReference;
 @Entity
 @Table(name = "producto")
 public class Producto {
-	
+
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private int id;
@@ -32,7 +32,7 @@ public class Producto {
 	@JsonManagedReference
 	@ManyToOne(cascade = CascadeType.MERGE, fetch = FetchType.LAZY)
 	private SubCategoria subCategoria;
-	
+
 	@Column(name = "sku")
 	private String sku;
 
@@ -46,12 +46,15 @@ public class Producto {
 	private boolean destacado;
 
 	@OneToMany(fetch = FetchType.LAZY, mappedBy = "producto")
-    private List<Atributos> prodAtributos;
-	
-	public Producto() {}
+	private List<Atributos> prodAtributos;
+	@OneToMany(fetch = FetchType.LAZY, mappedBy = "producto")
+	private List<Pedido> pedidos;
 
-	public Producto(int id, String descripcionCorta, String descripcionLarga, SubCategoria subCategoria, String urlImagen, String sku,
-					float precio, boolean destacado) {
+	public Producto() {
+	}
+
+	public Producto(int id, String descripcionCorta, String descripcionLarga, SubCategoria subCategoria,
+			String urlImagen, String sku, float precio, boolean destacado) {
 		super();
 		this.id = id;
 		this.descripcionCorta = descripcionCorta;
@@ -135,5 +138,12 @@ public class Producto {
 		this.prodAtributos = prodAtributos;
 	}
 
-	
+	public List<Pedido> getPedidos() {
+		return pedidos;
+	}
+
+	public void setPedidos(List<Pedido> pedidos) {
+		this.pedidos = pedidos;
+	}
+
 }

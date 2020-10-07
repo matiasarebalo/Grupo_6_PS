@@ -1,7 +1,5 @@
 package G6.PS.Ecommerce.entities;
 
-
-
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -17,67 +15,63 @@ import com.fasterxml.jackson.annotation.JsonManagedReference;
 @Entity
 @Table(name = "atributos")
 public class Atributos {
-    
-    @Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int id;
-    
-    @Column(name = "atributo", nullable = false, length = 40)
-    private String atributo;
 
-    @Column(name = "valor", nullable = false, length = 40)
-    private String valor;
-    
-    @JsonManagedReference
+	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	private int id;
+
+	@Column(name = "atributo", nullable = false, length = 40)
+	private String atributo;
+
+	@Column(name = "valor", nullable = false, length = 40)
+	private String valor;
+
+	@JsonManagedReference
 	@ManyToOne(cascade = CascadeType.MERGE, fetch = FetchType.LAZY)
 	private Producto producto;
-    
-  
-    
-    public Atributos(){
-        
-    }
 
-    public Atributos(int id, String atributo, String valor,Producto producto) {
-        super();
-        this.id = id;
-        this.atributo = atributo;
-        this.valor = valor;
-        this.producto = producto;
-    }
+	public Atributos() {
 
-    public int getId() {
-        return id;
-    }
+	}
 
-    public void setId(int id) {
-        this.id = id;
-    }
+	public Atributos(int id, String atributo, String valor, Producto producto) {
+		super();
+		this.id = id;
+		this.atributo = atributo;
+		this.valor = valor;
+		this.producto = producto;
+	}
 
-    public String getAtributo() {
-        return atributo;
-    }
+	public int getId() {
+		return id;
+	}
 
-    public void setAtributo(String atributo) {
-        this.atributo = atributo;
-    }
+	public void setId(int id) {
+		this.id = id;
+	}
 
-    public Producto getProducto() {
-        return producto;
-    }
+	public String getAtributo() {
+		return atributo;
+	}
 
-    public void setProducto(Producto producto) {
-        this.producto = producto;
-    }
+	public void setAtributo(String atributo) {
+		this.atributo = atributo;
+	}
 
-    public String getValor() {
-        return valor;
-    }
+	public Producto getProducto() {
+		return producto;
+	}
 
-    public void setValor(String valor) {
-        this.valor = valor;
-    }
+	public void setProducto(Producto producto) {
+		this.producto = producto;
+	}
 
-    
-    
+	public String getValor() {
+		return valor;
+	}
+
+	public void setValor(String valor) {
+		this.valor = valor;
+	}
+
 }
