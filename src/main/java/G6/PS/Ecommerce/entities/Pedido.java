@@ -7,7 +7,9 @@ import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
 import com.fasterxml.jackson.annotation.JsonManagedReference;
@@ -22,8 +24,9 @@ public class Pedido {
 	@JsonManagedReference
 	@ManyToOne(cascade = CascadeType.MERGE, fetch = FetchType.LAZY)
 	private Producto producto;
-	@Column(name = "comentarios")
-	private String comentarios;
+	@OneToOne
+	@JoinColumn(name = "comentario_id")
+	private Comentario comentario;
 	@Column(name = "direccion")
 	private String direccion;
 	@Column(name = "costo")
@@ -39,16 +42,30 @@ public class Pedido {
 		super();
 	}
 
-	public Pedido(int id, Producto producto, String comentarios, String direccion, double costo, String codigoPromocion,
-			String metodoDePago) {
+	public Pedido(int id, Producto producto, Comentario comentario, String direccion, double costo,
+			String codigoPromocion, String metodoDePago, Boolean aceptado) {
 		super();
 		this.id = id;
 		this.producto = producto;
-		this.comentarios = comentarios;
+		this.comentario = comentario;
 		this.direccion = direccion;
 		this.costo = costo;
 		this.codigoPromocion = codigoPromocion;
-		this.setMetodoDePago(metodoDePago);
+		this.metodoDePago = metodoDePago;
+		this.aceptado = aceptado;
+	}
+	
+	
+	public Pedido(int id, Producto producto, Comentario comentario, String direccion, double costo,
+			String codigoPromocion, String metodoDePago) {
+		super();
+		this.id = id;
+		this.producto = producto;
+		this.comentario = comentario;
+		this.direccion = direccion;
+		this.costo = costo;
+		this.codigoPromocion = codigoPromocion;
+		this.metodoDePago = metodoDePago;
 		this.aceptado = false;
 	}
 
@@ -68,12 +85,12 @@ public class Pedido {
 		this.producto = producto;
 	}
 
-	public String getComentarios() {
-		return comentarios;
+	public Comentario getComentario() {
+		return comentario;
 	}
 
-	public void setComentarios(String comentarios) {
-		this.comentarios = comentarios;
+	public void setComentario(Comentario comentario) {
+		this.comentario = comentario;
 	}
 
 	public String getDireccion() {
@@ -114,6 +131,6 @@ public class Pedido {
 
 	public void setAceptado(Boolean aceptado) {
 		this.aceptado = aceptado;
-	};
+	}
 
 }

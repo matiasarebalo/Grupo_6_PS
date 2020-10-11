@@ -1,10 +1,12 @@
 package G6.PS.Ecommerce.models;
 
+import G6.PS.Ecommerce.entities.Comentario;
+
 public class PedidoModel {
 
 	private int id;
 	private ProductoModel producto;
-	private String comentarios;
+	private ComentarioModel comentario;
 	private String direccion;
 	private double costo;
 	private String codigoPromocion;
@@ -14,19 +16,32 @@ public class PedidoModel {
 	public PedidoModel() {
 	}
 
-	public PedidoModel(int id, ProductoModel producto, String comentarios, String direccion, double costo,
+	public PedidoModel(int id, ProductoModel producto, ComentarioModel comentario, String direccion, double costo,
+			String codigoPromocion, String metodoDePago, Boolean aceptado) {
+		super();
+		this.id = id;
+		this.producto = producto;
+		this.comentario = comentario;
+		this.direccion = direccion;
+		this.costo = costo;
+		this.codigoPromocion = codigoPromocion;
+		this.metodoDePago = metodoDePago;
+		this.aceptado = aceptado;
+	}
+
+	public PedidoModel(int id, ProductoModel producto, ComentarioModel comentario, String direccion, double costo,
 			String codigoPromocion, String metodoDePago) {
 		super();
 		this.id = id;
 		this.producto = producto;
-		this.comentarios = comentarios;
+		this.comentario = comentario;
 		this.direccion = direccion;
 		this.costo = costo;
 		this.codigoPromocion = codigoPromocion;
 		this.metodoDePago = metodoDePago;
 		this.aceptado = false;
 	}
-
+	
 	public int getId() {
 		return id;
 	}
@@ -43,12 +58,12 @@ public class PedidoModel {
 		this.producto = producto;
 	}
 
-	public String getComentarios() {
-		return comentarios;
+	public ComentarioModel getComentario() {
+		return comentario;
 	}
 
-	public void setComentarios(String comentarios) {
-		this.comentarios = comentarios;
+	public void setComentario(ComentarioModel comentario) {
+		this.comentario = comentario;
 	}
 
 	public String getDireccion() {
