@@ -16,12 +16,14 @@ public class ProductoModel {
 	private boolean destacado;
 	private List<AtributosModel> prodAtributos;
 	private MultipartFile file;
+	private boolean visible;
+
 
 	
 	public ProductoModel() {}
 
 	public ProductoModel(int id, String descripcionCorta, String descripcionLarga, SubCategoriaModel subCategoria, String urlImagen, String sku,
-					float precio, boolean destacado) {
+					float precio, boolean destacado, boolean visible) {
 		super();
 		this.id = id;
 		this.descripcionCorta = descripcionCorta;
@@ -31,6 +33,7 @@ public class ProductoModel {
 		this.urlImagen = urlImagen;
 		this.precio = precio;
 		this.destacado = destacado;
+		this.visible = visible;
 	}
 
 	public int getId() {
@@ -113,5 +116,12 @@ public class ProductoModel {
 		this.file = file;
 	}
 
-	
+	public boolean isVisible() {
+		return visible;
+	}
+
+	public void setVisible(boolean visible) {
+		this.visible = visible;
+	}
+
 }

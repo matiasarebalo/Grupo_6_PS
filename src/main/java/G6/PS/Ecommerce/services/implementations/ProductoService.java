@@ -47,6 +47,16 @@ public class ProductoService implements IProductoService {
 		return pM;
 	}
 	
+	public List<ProductoModel> getAllVisibles(){
+		List<ProductoModel> pM = new ArrayList<ProductoModel>();
+		for (ProductoModel p : this.getAll()) {
+			if(p.isVisible()){
+				pM.add(p);
+			}
+		}
+		return pM;
+	}
+
 	@Override
 	public ProductoModel insertOrUpdate(ProductoModel model) {
 		Producto p = productoRepository.save( productoConverter.modelToEntity(model));

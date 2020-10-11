@@ -13,6 +13,8 @@ public interface IProductoService {
 	
 	public List<ProductoModel> getAll();
 
+	public List<ProductoModel> getAllVisibles();
+
 	public ProductoModel insertOrUpdate(ProductoModel productoModel);
 
 	public ProductoModel listarId(int id);

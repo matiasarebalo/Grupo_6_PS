@@ -152,13 +152,18 @@
                                                 </div>
                                                 <div class="row mt-4">
 
-                                                    <div class="col">
+                                                    <div class="col-sm d-flex align-items-center">
                                                         <input th:field="*{precio}" class="input--style-1" type="number" name="precio" placeholder="Precio"  required="required">
                                                     </div>
                                                     
-                                                    <div class="col d-flex align-items-center">
+                                                    <div class="col-sm d-flex align-items-center">
                                                         <label class="custom-control-label" for="defaultChecked2">Destacar</label>
                                                         <input class="check"th:field="*{destacado}" type="checkbox" checked>
+                                                    </div>
+            
+                                                    <div class="col-sm d-flex align-items-center">
+                                                        <label class="custom-control-label" for="defaultChecked2">Visible en Catalogo</label>
+                                                        <input class="check"th:field="*{visible}" type="checkbox" checked>
                                                     </div>
                                                 </div>
 

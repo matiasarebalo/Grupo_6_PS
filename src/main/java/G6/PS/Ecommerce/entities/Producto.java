@@ -46,12 +46,15 @@ public class Producto {
 	private boolean destacado;
 
 	@OneToMany(fetch = FetchType.LAZY, mappedBy = "producto")
-    private List<Atributos> prodAtributos;
+	private List<Atributos> prodAtributos;
+	
+	@Column(name = "visible")
+	private boolean visible;
 	
 	public Producto() {}
 
 	public Producto(int id, String descripcionCorta, String descripcionLarga, SubCategoria subCategoria, String urlImagen, String sku,
-					float precio, boolean destacado) {
+					float precio, boolean destacado,  boolean visible) {
 		super();
 		this.id = id;
 		this.descripcionCorta = descripcionCorta;
@@ -61,6 +64,7 @@ public class Producto {
 		this.urlImagen = urlImagen;
 		this.precio = precio;
 		this.destacado = destacado;
+		this.visible = visible;
 	}
 
 	public int getId() {
@@ -135,5 +139,12 @@ public class Producto {
 		this.prodAtributos = prodAtributos;
 	}
 
+	public boolean isVisible() {
+		return visible;
+	}
+
+	public void setVisible(boolean visible) {
+		this.visible = visible;
+	}
 	
 }
