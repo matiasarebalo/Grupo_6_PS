@@ -46,7 +46,7 @@
       <!-- /.col-lg-8 -->
       <div class="col-lg-5">
         <h1 class="font-weight-light" th:text="${producto.descripcionCorta}"></h1>
-        <p th:text="${producto.descripcionLarga}">This is a template that is great for small businesses. It doesn't have too much fancy flare to it, but it makes a great use of the standard Bootstrap core components. Feel free to use this template for any project you want!</p>
+        <p th:text="${producto.descripcionLarga}"></p>
         <p th:text="'$' + ${producto.precio}">Aca va el precio</p>
         <a class="btn btn-primary" href="#">Comprar Ahora</a>
       </div>
@@ -85,8 +85,8 @@
     <!-- Start Reviews -->
 
     <div class="bg-white rounded shadow-sm p-4 mb-4 restaurant-detailed-ratings-and-reviews">
-      <a href="#" class="btn btn-outline-primary btn-sm float-right">Top Rated</a>
-      <h5 class="mb-1">All Ratings and Reviews</h5>
+      <a href="#" class="btn btn-outline-primary btn-sm float-right">Top Comentarios</a>
+      <h5 class="mb-1">Todos los comentarios</h5>
 
      <!-- Review -->
       <div th:each="c : ${comentarios}" class="reviews-members pt-4 pb-4">
@@ -110,7 +110,7 @@
         <hr>
       </div>
      <!-- /.Review -->
-      <a class="text-center w-100 d-block mt-4 font-weight-bold" href="#">See All Reviews</a>
+      <a class="text-center w-100 d-block mt-4 font-weight-bold" href="#">Ver todos los comentarios</a>
     </div>
 
 
@@ -138,7 +138,7 @@
         
         <!-- Button trigger modal -->
         <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal">
-          Launch demo modal
+          Enviar
         </button>
 
         <!-- Modal -->
