@@ -5,7 +5,10 @@ import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.time.Instant;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
@@ -33,10 +36,15 @@ import javax.validation.Valid;
 
 import G6.PS.Ecommerce.models.AtributosModel;
 import G6.PS.Ecommerce.models.CategoriaModel;
+import G6.PS.Ecommerce.models.ComentarioModel;
+import G6.PS.Ecommerce.models.PedidoModel;
 import G6.PS.Ecommerce.models.ProductoModel;
 import G6.PS.Ecommerce.models.SubCategoriaModel;
+import G6.PS.Ecommerce.repositories.IComentarioRepository;
 import G6.PS.Ecommerce.services.IAtributosService;
 import G6.PS.Ecommerce.services.ICategoriaService;
+import G6.PS.Ecommerce.services.IComentarioService;
+import G6.PS.Ecommerce.services.IPedidoService;
 import G6.PS.Ecommerce.services.IProductoService;
 import G6.PS.Ecommerce.services.ISubCategoriaService;
 import G6.PS.Ecommerce.helpers.ViewRouteHelper;
@@ -60,6 +68,14 @@ public class ProductoController {
 	@Autowired
 	@Qualifier("atributosService")
 	private IAtributosService atributosService;
+
+	@Autowired
+	@Qualifier("pedidoService")
+	private IPedidoService pedidoService;
+
+	@Autowired
+	@Qualifier("comentarioService")
+	private IComentarioService comentarioService;
 
 	@GetMapping("/editar/{id}")
 	public ModelAndView editCategoria(@PathVariable("id") int id) {
@@ -291,6 +307,12 @@ public class ProductoController {
 		
 		List<ProductoModel> relacionados = productoService.findRelacionados(articulo.getId(),articulo.getSubCategoria().getId());
 		mAV.addObject("relacionados", relacionados);
+		ComentarioModel comentarioModel = new ComentarioModel();
+		mAV.addObject("comentario", comentarioModel);
+
+		List<ComentarioModel> comentarios = comentarioService.getByProducto(id);
+		mAV.addObject("comentarios", comentarios);
+
 		return mAV;
 	}
 
@@ -442,4 +464,24 @@ public class ProductoController {
 		
 		return "redirect:/productos/lista/";
 	}
+
+	
+	@PostMapping("/newComentario/{id}")
+	public String NewComentario(@PathVariable("id") int id, @Valid @ModelAttribute("comentario") ComentarioModel comentarioModel, BindingResult result,RedirectAttributes redirect) {
+
+		PedidoModel pedido = pedidoService.listarId(comentarioModel.getPedido().getId());
+		
+		if(pedido == null){
+			redirect.addFlashAttribute("message", "Failed");
+			return "redirect:/productos/articulo/" + id;
+		}
+		
+		comentarioModel.setFechaComentario(Date.from(Instant.now()));
+		comentarioModel.setPedido(pedido);
+		comentarioService.insertOrUpdate(comentarioModel);
+
+
+		return "redirect:/productos/articulo/" + id;
+	}
+
 }

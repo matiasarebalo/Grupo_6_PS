@@ -1,40 +1,28 @@
 package G6.PS.Ecommerce.models;
 
+import java.util.List;
+
 import G6.PS.Ecommerce.entities.Comentario;
 
 public class PedidoModel {
 
 	private int id;
 	private ProductoModel producto;
-	private ComentarioModel comentario;
 	private String direccion;
 	private double costo;
 	private String codigoPromocion;
 	private String metodoDePago;
 	private Boolean aceptado;
+	private List<Comentario> comentarios;
+
 
 	public PedidoModel() {
 	}
 
-	public PedidoModel(int id, ProductoModel producto, ComentarioModel comentario, String direccion, double costo,
-			String codigoPromocion, String metodoDePago, Boolean aceptado) {
+	public PedidoModel(int id, ProductoModel producto, String direccion, double costo, String codigoPromocion, String metodoDePago) {
 		super();
 		this.id = id;
 		this.producto = producto;
-		this.comentario = comentario;
-		this.direccion = direccion;
-		this.costo = costo;
-		this.codigoPromocion = codigoPromocion;
-		this.metodoDePago = metodoDePago;
-		this.aceptado = aceptado;
-	}
-
-	public PedidoModel(int id, ProductoModel producto, ComentarioModel comentario, String direccion, double costo,
-			String codigoPromocion, String metodoDePago) {
-		super();
-		this.id = id;
-		this.producto = producto;
-		this.comentario = comentario;
 		this.direccion = direccion;
 		this.costo = costo;
 		this.codigoPromocion = codigoPromocion;
@@ -56,14 +44,6 @@ public class PedidoModel {
 
 	public void setProducto(ProductoModel producto) {
 		this.producto = producto;
-	}
-
-	public ComentarioModel getComentario() {
-		return comentario;
-	}
-
-	public void setComentario(ComentarioModel comentario) {
-		this.comentario = comentario;
 	}
 
 	public String getDireccion() {
@@ -105,4 +85,15 @@ public class PedidoModel {
 	public void setAceptado(Boolean aceptado) {
 		this.aceptado = aceptado;
 	}
+
+	public List<Comentario> getComentarios() {
+		return comentarios;
+	}
+
+	public void setComentarios(List<Comentario> comentarios) {
+		this.comentarios = comentarios;
+	}
+
+	
 }
+

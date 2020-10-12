@@ -8,13 +8,12 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 
 import G6.PS.Ecommerce.entities.Comentario;
-import G6.PS.Ecommerce.entities.Pedido;
 
 @Repository("comentarioRepository")
-public interface IComentarioRepository extends  JpaRepository<Pedido, Serializable> {
+public interface IComentarioRepository extends  JpaRepository<Comentario, Serializable> {
 	
 	public abstract Comentario findById(int id);
 	
-	@Query(nativeQuery=true,value="select * from comentario c where c.id in (select p.comentario_id from pedido p where p.producto_id = (:id))")
+	@Query(nativeQuery=true,value="select * from comentario c where c.pedido_id = (select pedido_id from pedido p where p.producto_id = (:id))")
 	public List<Comentario> findByProducto(int id);
 }

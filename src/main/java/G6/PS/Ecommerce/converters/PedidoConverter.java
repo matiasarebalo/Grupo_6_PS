@@ -15,15 +15,12 @@ public class PedidoConverter {
 	@Qualifier("productoConverter")
 	private ProductoConverter productoConverter;
 	
-	@Autowired
-	@Qualifier("comentarioConverter")
-	private ComentarioConverter comentarioConverter;
 	
 	public PedidoModel entityToModel(Pedido pedido) {
-		return new PedidoModel(pedido.getId(),productoConverter.entityToModel(pedido.getProducto()),comentarioConverter.entityToModel(pedido.getComentario()),pedido.getDireccion(),pedido.getCosto(),pedido.getCodigoPromocion(),pedido.getMetodoDePago());
+		return new PedidoModel(pedido.getId(), productoConverter.entityToModel(pedido.getProducto()), pedido.getDireccion(), pedido.getCosto(), pedido.getCodigoPromocion(), pedido.getMetodoDePago());
 	}
 	
 	public Pedido modelToEntity(PedidoModel model) {
-		return new Pedido(model.getId(),productoConverter.modelToEntity(model.getProducto()),comentarioConverter.modelToEntity(model.getComentario()),model.getDireccion(),model.getCosto(),model.getCodigoPromocion(),model.getMetodoDePago());
+		return new Pedido(model.getId(),productoConverter.modelToEntity(model.getProducto()), model.getDireccion(),model.getCosto(),model.getCodigoPromocion(),model.getMetodoDePago());
 	}
 }

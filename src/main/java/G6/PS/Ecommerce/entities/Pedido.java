@@ -1,5 +1,7 @@
 package G6.PS.Ecommerce.entities;
 
+import java.util.List;
+
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -7,9 +9,8 @@ import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
-import javax.persistence.OneToOne;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 import com.fasterxml.jackson.annotation.JsonManagedReference;
@@ -21,12 +22,8 @@ public class Pedido {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private int id;
-	@JsonManagedReference
 	@ManyToOne(cascade = CascadeType.MERGE, fetch = FetchType.LAZY)
 	private Producto producto;
-	@OneToOne
-	@JoinColumn(name = "comentario_id")
-	private Comentario comentario;
 	@Column(name = "direccion")
 	private String direccion;
 	@Column(name = "costo")
@@ -37,31 +34,17 @@ public class Pedido {
 	private String metodoDePago;
 	@Column(name = "aceptado")
 	private Boolean aceptado;
+	@OneToMany(fetch = FetchType.LAZY, mappedBy = "pedido")
+	private List<Comentario> comentarios;
 
 	public Pedido() {
 		super();
 	}
-
-	public Pedido(int id, Producto producto, Comentario comentario, String direccion, double costo,
-			String codigoPromocion, String metodoDePago, Boolean aceptado) {
+	
+	public Pedido(int id, Producto producto, String direccion, double costo, String codigoPromocion, String metodoDePago) {
 		super();
 		this.id = id;
 		this.producto = producto;
-		this.comentario = comentario;
-		this.direccion = direccion;
-		this.costo = costo;
-		this.codigoPromocion = codigoPromocion;
-		this.metodoDePago = metodoDePago;
-		this.aceptado = aceptado;
-	}
-	
-	
-	public Pedido(int id, Producto producto, Comentario comentario, String direccion, double costo,
-			String codigoPromocion, String metodoDePago) {
-		super();
-		this.id = id;
-		this.producto = producto;
-		this.comentario = comentario;
 		this.direccion = direccion;
 		this.costo = costo;
 		this.codigoPromocion = codigoPromocion;
@@ -83,14 +66,6 @@ public class Pedido {
 
 	public void setProducto(Producto producto) {
 		this.producto = producto;
-	}
-
-	public Comentario getComentario() {
-		return comentario;
-	}
-
-	public void setComentario(Comentario comentario) {
-		this.comentario = comentario;
 	}
 
 	public String getDireccion() {
@@ -133,4 +108,13 @@ public class Pedido {
 		this.aceptado = aceptado;
 	}
 
+	public List<Comentario> getComentarios() {
+		return comentarios;
+	}
+
+	public void setComentarios(List<Comentario> comentarios) {
+		this.comentarios = comentarios;
+	}
+
+	
 }

@@ -23,6 +23,7 @@
  insert into producto values (1102, "zapatillas running", "Zapatillas Runfalcon Running De Hombre", true, 3749,"asd","/img/zapatillas1.jpg", 12);
  insert into producto values (321, "remera nike", "Remera Nike Breathe Ss Hyper Dry", true, 3999,"asd","/img/remera1.jpg", 10);
  insert into producto values (12354, "Zapatillas court", "ZAPATILLAS VL COURT 2.0", true, 6499,"asd","/img/zapatillas3.jpg", 12);
+ insert into pedido values(321803, 1, 12345, 3999, "Santa Barbara 213", "Efectivo", 321 );
 
 -- commit;
 

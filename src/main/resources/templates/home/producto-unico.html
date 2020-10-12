@@ -16,6 +16,11 @@
 
   <!-- Custom styles for this template -->
   <link href="/css/small-business.css" rel="stylesheet">
+  <link rel="stylesheet" type="text/css" href="/css/main-comments.css">
+  <link rel="stylesheet" href="http://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/css/toastr.min.css">
+  <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.2.0/css/font-awesome.min.css" rel="stylesheet">
+
+
 
 </head>
 
@@ -30,6 +35,8 @@
 
   <!-- Page Content -->
   <div class="container">
+
+    <a th:if="${message}" id="alert-target"></a>
 
     <!-- Heading Row -->
     <div class="row align-items-center my-5">
@@ -54,66 +61,124 @@
       </div>
     </div>
 	
-	<div class="row">
-		<div th:each="producto : ${relacionados}" class="col-lg-4 col-md-6 mb-4">
-			<div class="card h-100">
-				<a th:href="@{/productos/articulo/{id}(id=${producto.id})}">
-					<img th:src="${producto.urlImagen}" class="card-img-top" alt=""></a>
-			<div class="card-body">
-				<h4 class="card-title">
-					<a th:text="${producto.descripcionCorta}" href="#"></a>
-				</h4>
-			<h5 th:text="${producto.precio}"></h5>
-				<p th:text="${producto.descripcionLarga}" class="card-text"></p>
-			</div>
-			<div class="card-footer">
-				<small class="text-muted">&#9733; &#9733; &#9733;
-					&#9733; &#9734;</small>
-			</div>
-			</div>
-		</div>
-	</div>
-    <!-- Content Row -->
-    <!--  div class="row">
-      <div class="col-md-4 mb-5">
+    <div class="row">
+      <div th:each="producto : ${relacionados}" class="col-lg-4 col-md-6 mb-4">
         <div class="card h-100">
-          <div class="card-body">
-            <h2 class="card-title">Card One</h2>
-            <p class="card-text">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Rem magni quas ex numquam, maxime minus quam molestias corporis quod, ea minima accusamus.</p>
-          </div>
-          <div class="card-footer">
-            <a href="#" class="btn btn-primary btn-sm">More Info</a>
-          </div>
+          <a th:href="@{/productos/articulo/{id}(id=${producto.id})}">
+            <img th:src="${producto.urlImagen}" class="card-img-top" alt=""></a>
+        <div class="card-body">
+          <h4 class="card-title">
+            <a th:text="${producto.descripcionCorta}" href="#"></a>
+          </h4>
+        <h5 th:text="${producto.precio}"></h5>
+          <p th:text="${producto.descripcionLarga}" class="card-text"></p>
+        </div>
+        <div class="card-footer">
+          <small class="text-muted">&#9733; &#9733; &#9733;
+            &#9733; &#9734;</small>
+        </div>
         </div>
       </div>
-
-      <div class="col-md-4 mb-5">
-        <div class="card h-100">
-          <div class="card-body">
-            <h2 class="card-title">Card Two</h2>
-            <p class="card-text">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Quod tenetur ex natus at dolorem enim! Nesciunt pariatur voluptatem sunt quam eaque, vel, non in id dolore voluptates quos eligendi labore.</p>
-          </div>
-          <div class="card-footer">
-            <a href="#" class="btn btn-primary btn-sm">More Info</a>
-          </div>
-        </div>
-      </div>
-      <div class="col-md-4 mb-5">
-        <div class="card h-100">
-          <div class="card-body">
-            <h2 class="card-title">Card Three</h2>
-            <p class="card-text">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Rem magni quas ex numquam, maxime minus quam molestias corporis quod, ea minima accusamus.</p>
-          </div>
-          <div class="card-footer">
-            <a href="#" class="btn btn-primary btn-sm">More Info</a>
-          </div>
-        </div>
-      </div> 
-
     </div>
     <!-- /.row -->
 
+    <!-- Start Reviews -->
+
+    <div class="bg-white rounded shadow-sm p-4 mb-4 restaurant-detailed-ratings-and-reviews">
+      <a href="#" class="btn btn-outline-primary btn-sm float-right">Top Rated</a>
+      <h5 class="mb-1">All Ratings and Reviews</h5>
+
+     <!-- Review -->
+      <div th:each="c : ${comentarios}" class="reviews-members pt-4 pb-4">
+        <div class="media">
+          <div class="media-body">
+            <div class="reviews-members-header">
+              <span class="star-rating float-right">
+                <a href="#"><i class="icofont-ui-rating active"></i></a>
+                <a href="#"><i class="icofont-ui-rating active"></i></a>
+                <a href="#"><i class="icofont-ui-rating active"></i></a>
+                <a href="#"><i class="icofont-ui-rating active"></i></a>
+                <a href="#"><i class="icofont-ui-rating"></i></a>
+                </span>
+              <h6 class="mb-1" ><a class="text-black" th:text="${c.fechaComentario}"></a></h6>
+            </div>
+            <div class="reviews-members-body">
+              <p th:text="${c.comentario}"></p>
+            </div>
+          </div>
+        </div>
+        <hr>
+      </div>
+     <!-- /.Review -->
+      <a class="text-center w-100 d-block mt-4 font-weight-bold" href="#">See All Reviews</a>
+    </div>
+
+
+    
+    <!-- Comentario form -->
+    <div class="bg-white rounded shadow-sm p-4 mb-5 rating-review-select-page">
+      <h5 class="mb-4">Deja un comentario</h5>
+      <p class="mb-2">Rate the Place</p>
+      <div class="mb-4">
+        <span class="star-rating">
+            <a href="#"><i class="icofont-ui-rating icofont-2x"></i></a>
+            <a href="#"><i class="icofont-ui-rating icofont-2x"></i></a>
+            <a href="#"><i class="icofont-ui-rating icofont-2x"></i></a>
+            <a href="#"><i class="icofont-ui-rating icofont-2x"></i></a>
+            <a href="#"><i class="icofont-ui-rating icofont-2x"></i></a>
+            </span>
+      </div>
+
+      <form class="wizard-container" method="POST" th:object="${comentario}" th:action="@{/productos/newComentario/{id}(id=${producto.id})}">
+
+        <div class="form-group">
+          <label>Tu comentario</label>
+          <textarea class="form-control"  th:field="*{comentario}"></textarea>
+        </div>
+        
+        <!-- Button trigger modal -->
+        <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal">
+          Launch demo modal
+        </button>
+
+        <!-- Modal -->
+        <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+          <div class="modal-dialog">
+            <div class="modal-content">
+              <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Ingrese el Codigo de su Pedido</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                  <span aria-hidden="true">&times;</span>
+                </button>
+              </div>
+              <div class="modal-body">
+                <form class="form-inline">
+                  <div class="form-group">
+                    <label >Codigo</label>
+                    <input type="number" th:field="*{pedido.id}" class="form-control m" >
+                    <small id="passwordHelpInline" class="text-muted">
+                      Must be 8-20 characters long.
+                    </small>
+                  </div>
+                </form>
+              </div>
+              <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
+                <button type="submit" class="btn btn-primary">Enviar</button>
+              </div>
+            </div>
+          </div>
+        </div>
+
+      </form>
+      
+    </div>
+    <!-- /.Comentario form-->
+
+
+
   </div>
+
   <!-- /.container -->
 
   <!-- Footer -->
@@ -129,6 +194,16 @@
   <script src="/vendor/jquery/jquery.min.js"></script>
   <script src="/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
 
+  <script src="http://cdnjs.cloudflare.com/ajax/libs/jquery/latest/jquery.min.js"></script>
+  <script src="http://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/js/toastr.min.js"></script>
+
+
+  <script>
+		$("#alert-target").show(function () {
+      toastr.error("Codigo de Pedido erroneo")
+      });    
+  </script>
+  
 </body>
 
 </html>
