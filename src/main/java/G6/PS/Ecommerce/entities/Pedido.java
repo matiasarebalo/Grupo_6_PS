@@ -1,7 +1,5 @@
 package G6.PS.Ecommerce.entities;
 
-import java.util.List;
-
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -10,10 +8,8 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
-import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
-import com.fasterxml.jackson.annotation.JsonManagedReference;
 
 @Entity
 @Table(name = "pedido")
@@ -34,8 +30,6 @@ public class Pedido {
 	private String metodoDePago;
 	@Column(name = "aceptado")
 	private Boolean aceptado;
-	@OneToMany(fetch = FetchType.LAZY, mappedBy = "pedido")
-	private List<Comentario> comentarios;
 
 	public Pedido() {
 		super();
@@ -107,14 +101,5 @@ public class Pedido {
 	public void setAceptado(Boolean aceptado) {
 		this.aceptado = aceptado;
 	}
-
-	public List<Comentario> getComentarios() {
-		return comentarios;
-	}
-
-	public void setComentarios(List<Comentario> comentarios) {
-		this.comentarios = comentarios;
-	}
-
 	
 }

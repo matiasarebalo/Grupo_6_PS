@@ -1,9 +1,5 @@
 package G6.PS.Ecommerce.models;
 
-import java.util.List;
-
-import G6.PS.Ecommerce.entities.Comentario;
-
 public class PedidoModel {
 
 	private int id;
@@ -13,8 +9,6 @@ public class PedidoModel {
 	private String codigoPromocion;
 	private String metodoDePago;
 	private Boolean aceptado;
-	private List<Comentario> comentarios;
-
 
 	public PedidoModel() {
 	}
@@ -84,14 +78,6 @@ public class PedidoModel {
 
 	public void setAceptado(Boolean aceptado) {
 		this.aceptado = aceptado;
-	}
-
-	public List<Comentario> getComentarios() {
-		return comentarios;
-	}
-
-	public void setComentarios(List<Comentario> comentarios) {
-		this.comentarios = comentarios;
 	}
 
 	

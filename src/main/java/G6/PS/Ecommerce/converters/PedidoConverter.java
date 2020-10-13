@@ -21,6 +21,6 @@ public class PedidoConverter {
 	}
 	
 	public Pedido modelToEntity(PedidoModel model) {
-		return new Pedido(model.getId(),productoConverter.modelToEntity(model.getProducto()), model.getDireccion(),model.getCosto(),model.getCodigoPromocion(),model.getMetodoDePago());
+		return new Pedido(model.getId(), productoConverter.modelToEntity(model.getProducto()), model.getDireccion(), model.getCosto(), model.getCodigoPromocion(), model.getMetodoDePago());
 	}
 }

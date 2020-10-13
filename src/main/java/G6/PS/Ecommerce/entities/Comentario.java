@@ -2,14 +2,12 @@ package G6.PS.Ecommerce.entities;
 
 import java.util.Date;
 
-import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.ManyToOne;
+import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
 import org.springframework.format.annotation.DateTimeFormat;
@@ -25,7 +23,7 @@ public class Comentario {
 	@Column(name = "fechaComentario")
 	@DateTimeFormat(pattern = "yyyy-MM-dd")
 	private Date fechaComentario;
-	@ManyToOne(cascade = CascadeType.MERGE, fetch = FetchType.LAZY)
+	@OneToOne
 	private Pedido pedido;
 
 	

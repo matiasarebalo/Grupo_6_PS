@@ -14,6 +14,6 @@ public interface IComentarioRepository extends  JpaRepository<Comentario, Serial
 	
 	public abstract Comentario findById(int id);
 	
-	@Query(nativeQuery=true,value="select * from comentario c where c.pedido_id = (select pedido_id from pedido p where p.producto_id = (:id))")
+	@Query(nativeQuery=true,value="select * from comentario c where c.pedido_id in (select pedido_id from pedido p where p.producto_id = (:id))")
 	public List<Comentario> findByProducto(int id);
 }
