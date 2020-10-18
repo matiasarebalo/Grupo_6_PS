@@ -19,6 +19,10 @@ public class Pedido {
 	private int id;
 	@ManyToOne(cascade = CascadeType.MERGE, fetch = FetchType.LAZY)
 	private Producto producto;
+	@Column(name = "nombre_apellido")
+	private String nombre_apellido;
+	@Column(name = "email")
+	private String email;
 	@Column(name = "direccion")
 	private String direccion;
 	@Column(name = "costo")
@@ -36,7 +40,8 @@ public class Pedido {
 		super();
 	}
 	
-	public Pedido(int id, Producto producto, String direccion, double costo, String codigoPromocion, String metodoDePago, Embalaje embalaje) {
+	public Pedido(int id, Producto producto, String direccion, double costo, String codigoPromocion, String metodoDePago, Embalaje embalaje,
+					String nombre_apellido, String email) {
 		super();
 		this.id = id;
 		this.producto = producto;
@@ -46,6 +51,8 @@ public class Pedido {
 		this.metodoDePago = metodoDePago;
 		this.aceptado = false;
 		this.embalaje = embalaje;
+		this.nombre_apellido = nombre_apellido;
+		this.email = email;
 	}
 
 	public int getId() {
@@ -110,5 +117,21 @@ public class Pedido {
 
 	public void setEmbalaje(Embalaje embalaje) {
 		this.embalaje = embalaje;
+	}
+
+	public String getNombre_apellido() {
+		return nombre_apellido;
+	}
+
+	public void setNombre_apellido(String nombre_apellido) {
+		this.nombre_apellido = nombre_apellido;
+	}
+
+	public String getEmail() {
+		return email;
+	}
+
+	public void setEmail(String email) {
+		this.email = email;
 	}
 }

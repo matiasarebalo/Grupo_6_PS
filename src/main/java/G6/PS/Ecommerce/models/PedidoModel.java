@@ -4,6 +4,8 @@ public class PedidoModel {
 
 	private int id;
 	private ProductoModel producto;
+	private String nombre_apellido;
+	private String email;
 	private String direccion;
 	private double costo;
 	private String codigoPromocion;
@@ -15,7 +17,7 @@ public class PedidoModel {
 	}
 
 	public PedidoModel(int id, ProductoModel producto, String direccion, double costo, String codigoPromocion,
-			String metodoDePago, Boolean aceptado, EmbalajeModel embalaje) {
+			String metodoDePago, Boolean aceptado, EmbalajeModel embalaje, String nombre_apellido, String email) {
 		super();
 		this.id = id;
 		this.producto = producto;
@@ -25,6 +27,8 @@ public class PedidoModel {
 		this.metodoDePago = metodoDePago;
 		this.aceptado = aceptado;
 		this.embalaje = embalaje;
+		this.nombre_apellido = nombre_apellido;
+		this.email = email;
 	}
 
 	public int getId() {
@@ -91,5 +95,20 @@ public class PedidoModel {
 		this.embalaje = embalaje;
 	}
 	
+	public String getNombre_apellido() {
+		return nombre_apellido;
+	}
+
+	public void setNombre_apellido(String nombre_apellido) {
+		this.nombre_apellido = nombre_apellido;
+	}
+
+	public String getEmail() {
+		return email;
+	}
+
+	public void setEmail(String email) {
+		this.email = email;
+	}
 }
 

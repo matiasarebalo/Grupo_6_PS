@@ -36,6 +36,7 @@ import javax.validation.Valid;
 import G6.PS.Ecommerce.models.AtributosModel;
 import G6.PS.Ecommerce.models.CategoriaModel;
 import G6.PS.Ecommerce.models.ComentarioModel;
+import G6.PS.Ecommerce.models.EmbalajeModel;
 import G6.PS.Ecommerce.models.PedidoModel;
 import G6.PS.Ecommerce.models.ProductoModel;
 import G6.PS.Ecommerce.models.SubCategoriaModel;
@@ -481,12 +482,13 @@ public class ProductoController {
 
 		return "redirect:/productos/articulo/" + id;
 	}
-	/*
+
 	@GetMapping("/articulo/{id}/compra")
 	public ModelAndView productoCompra(@PathVariable("id") int id) {
-		ModelAndView mAV = new ModelAndView(ViewRouteHelper.ARTICULO_UNICO);
+		ModelAndView mAV = new ModelAndView(ViewRouteHelper.CHECKOUT);
 		// compruebo si se logueo el admin y en tal caso muestro el menu
 		// correspondiente, el resto de la pagina permanece igual
+		
 		String roleString = SecurityContextHolder.getContext().getAuthentication().getAuthorities().toString();
 		boolean admin = false;
 		if (roleString.equals("[ROLE_ADMIN]")) {
@@ -496,19 +498,30 @@ public class ProductoController {
 
 		ProductoModel articulo = productoService.listarId(id);
 		mAV.addObject("producto", articulo);
-		
-		//List<ProductoModel> relacionados = productoService.findBySubCategoria(articulo.getSubCategoriaModel().getId());
-		
-		List<ProductoModel> relacionados = productoService.findRelacionados(articulo.getId(),articulo.getSubCategoria().getId());
-		mAV.addObject("relacionados", relacionados);
-		ComentarioModel comentarioModel = new ComentarioModel();
-		mAV.addObject("comentario", comentarioModel);
+		mAV.addObject("pedido", new PedidoModel());
+		return mAV;
+	}
 
-		List<ComentarioModel> comentarios = comentarioService.getByProducto(id);
-		mAV.addObject("comentarios", comentarios);
+	@PostMapping("/articulo/{id}/compra/save")
+	public ModelAndView remitoSave(@PathVariable("id") int id, @Valid @ModelAttribute("pedido") PedidoModel pedidoModel, BindingResult result,RedirectAttributes redirect) {
+		ModelAndView mAV = new ModelAndView(ViewRouteHelper.CHECKOUT);
+		// compruebo si se logueo el admin y en tal caso muestro el menu
+		// correspondiente, el resto de la pagina permanece igual
+		
+		String roleString = SecurityContextHolder.getContext().getAuthentication().getAuthorities().toString();
+		boolean admin = false;
+		if (roleString.equals("[ROLE_ADMIN]")) {
+			admin = true;
+		}
+		mAV.addObject("admin", admin);
+		EmbalajeModel embalaje = null;
+		ProductoModel articulo = productoService.listarId(id);
+		mAV.addObject("producto", articulo);
+		pedidoModel.setProducto(articulo);
+		pedidoModel.setEmbalaje(embalaje);
+		pedidoService.insertOrUpdate(pedidoModel);
 
 		return mAV;
 	}
-	*/
 	
 }
