@@ -21,10 +21,12 @@ public class PedidoConverter {
 	
 	
 	public PedidoModel entityToModel(Pedido pedido) {
-		return new PedidoModel(pedido.getId(), productoConverter.entityToModel(pedido.getProducto()), pedido.getDireccion(), pedido.getCosto(), pedido.getCodigoPromocion(), pedido.getMetodoDePago(), pedido.getAceptado(),embalajeConverter.entityToModel(pedido.getEmbalaje()));
+		return new PedidoModel(pedido.getId(), productoConverter.entityToModel(pedido.getProducto()), pedido.getDireccion(), pedido.getCosto(), pedido.getCodigoPromocion(), 
+		pedido.getMetodoDePago(), pedido.getAceptado(),embalajeConverter.entityToModel(pedido.getEmbalaje()), pedido.getNombre_apellido(), pedido.getEmail());
 	}
 	
 	public Pedido modelToEntity(PedidoModel model) {
-		return new Pedido(model.getId(), productoConverter.modelToEntity(model.getProducto()), model.getDireccion(), model.getCosto(), model.getCodigoPromocion(), model.getMetodoDePago(), embalajeConverter.modelToEntity(model.getEmbalaje()));
+		return new Pedido(model.getId(), productoConverter.modelToEntity(model.getProducto()), model.getDireccion(), model.getCosto(), model.getCodigoPromocion(), 
+		model.getMetodoDePago(), embalajeConverter.modelToEntity(model.getEmbalaje()), model.getNombre_apellido(), model.getEmail());
 	}
 }

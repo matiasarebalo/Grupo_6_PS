@@ -28,6 +28,6 @@ public class ViewRouteHelper {
 	
 	public final static String GRILLA = "vendedor/productos"; 
 	
-	
+	public final static String CHECKOUT = "vendedor/checkout"; 
 
 }

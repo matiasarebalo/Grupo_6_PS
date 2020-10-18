@@ -47,8 +47,8 @@
       <div class="col-lg-5">
         <h1 class="font-weight-light" th:text="${producto.descripcionCorta}"></h1>
         <p th:text="${producto.descripcionLarga}"></p>
-        <p th:text="'$' + ${producto.precio}">Aca va el precio</p>
-        <a class="btn btn-primary" href="#">Comprar Ahora</a>
+        <p th:text="'$' + ${producto.precio}"></p>
+        <a class="btn btn-primary" th:href="@{/productos/articulo/{id}/compra(id=${producto.id})}">Comprar Ahora</a>
       </div>
       <!-- /.col-md-4 -->
     </div>
@@ -207,3 +207,21 @@
 </body>
 
 </html>
+
+<div class="d-block my-3 ">
+  <div class="custom-control custom-radio form-check-inline">
+      <input class="form-check-input check" type="checkbox" id="inlineCheckbox1" value="Efectivo" required  th:field="*{metodoDePago}">
+      <label class="form-check-label custom-control-label" for="inlineCheckbox1">Efectivo</label>
+  </div>
+  
+  <div class="custom-control custom-radio form-check-inline">
+      <input class="form-check-input check" type="checkbox" id="inlineCheckbox1" value="TarjetaCredito" required th:field="*{metodoDePago}">
+      <label class="form-check-label custom-control-label" for="inlineCheckbox1">Tarjeta de Credito</label>
+  </div>
+
+  <div class="custom-control custom-radio form-check-inline">
+      <input class="form-check-input check" type="checkbox" id="inlineCheckbox1" value="TarjetaDebito" required th:field="*{metodoDePago}">
+      <label class="form-check-label custom-control-label" for="inlineCheckbox1">Tarjeta de Debito</label>
+  </div>
+  
+</div>
