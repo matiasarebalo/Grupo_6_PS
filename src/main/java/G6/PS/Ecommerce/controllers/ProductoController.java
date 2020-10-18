@@ -524,8 +524,6 @@ public class ProductoController {
 	      
 	      }
 	    }
-	
-	/*
 
 	@GetMapping("/articulo/{id}/compra")
 	public ModelAndView productoCompra(@PathVariable("id") int id) {
@@ -586,7 +584,6 @@ public class ProductoController {
 
 		return mAV;
 		}
-		*/
 	}
 	
 
