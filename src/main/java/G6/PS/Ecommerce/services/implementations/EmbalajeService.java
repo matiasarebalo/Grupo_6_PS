@@ -34,4 +34,14 @@ public class EmbalajeService implements IEmbalajeService {
 		return embalajes;
 	}
 
+	@Override
+	public EmbalajeModel listarId(int id) {
+		Embalaje embalajes = embalajeRepository.findById(id);
+		if(embalajes == null){
+			return null;
+		}
+		return embalajeConverter.entityToModel(embalajes);
+		
+	}
+
 }

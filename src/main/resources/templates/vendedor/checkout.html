@@ -97,11 +97,11 @@
 
                     <div class="mb-3">
                         <label for="country">Zona</label>
-                        <select class="custom-select d-block w-100" id="country" required>
+                        <select class="custom-select d-block w-100" id="country" required th:field="*{zona}">
                         <option value="">Choose...</option>
-                        <option>Capital</option>
-                        <option>GBA</option>
-                        <option>Provincia</option>
+                        <option value="Capital">Capital</option>
+                        <option value="GBA">GBA</option>
+                        <option value="Provincia">Provincia</option>
                         </select>
                         <div class="invalid-feedback">
                         Por favor seleccione una zona valida.

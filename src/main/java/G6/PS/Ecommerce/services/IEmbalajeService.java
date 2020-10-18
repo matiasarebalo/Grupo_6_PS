@@ -6,4 +6,6 @@ import G6.PS.Ecommerce.models.EmbalajeModel;
 
 public interface IEmbalajeService {
 	public List<EmbalajeModel> getAll();
+	public EmbalajeModel listarId(int id);
+
 }

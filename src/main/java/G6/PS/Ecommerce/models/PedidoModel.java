@@ -13,6 +13,8 @@ public class PedidoModel {
 	private Boolean aceptado;
 	private EmbalajeModel embalaje;
 	
+	private String zona;
+
 	public PedidoModel() {
 	}
 
@@ -60,7 +62,7 @@ public class PedidoModel {
 	}
 
 	public void setCosto(double costo) {
-		this.costo = costo + this.embalaje.getPrecio();
+		this.costo = costo;
 	}
 
 	public String getCodigoPromocion() {
@@ -110,5 +112,13 @@ public class PedidoModel {
 	public void setEmail(String email) {
 		this.email = email;
 	}
-}
 
+	public String getZona() {
+		return zona;
+	}
+
+	public void setZona(String zona) {
+		this.zona = zona;
+	}
+	
+}

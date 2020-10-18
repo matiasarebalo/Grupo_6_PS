@@ -8,6 +8,7 @@ import java.nio.file.Paths;
 import java.time.Instant;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
@@ -43,6 +44,7 @@ import G6.PS.Ecommerce.models.SubCategoriaModel;
 import G6.PS.Ecommerce.services.IAtributosService;
 import G6.PS.Ecommerce.services.ICategoriaService;
 import G6.PS.Ecommerce.services.IComentarioService;
+import G6.PS.Ecommerce.services.IEmbalajeService;
 import G6.PS.Ecommerce.services.IPedidoService;
 import G6.PS.Ecommerce.services.IProductoService;
 import G6.PS.Ecommerce.services.ISubCategoriaService;
@@ -75,6 +77,10 @@ public class ProductoController {
 	@Autowired
 	@Qualifier("comentarioService")
 	private IComentarioService comentarioService;
+
+	@Autowired
+	@Qualifier("embalajeService")
+	private IEmbalajeService embalajeService;
 
 	@GetMapping("/editar/{id}")
 	public ModelAndView editCategoria(@PathVariable("id") int id) {
@@ -514,11 +520,30 @@ public class ProductoController {
 			admin = true;
 		}
 		mAV.addObject("admin", admin);
-		EmbalajeModel embalaje = null;
+
+		Map<String, Double> zonas = new HashMap<String, Double>();
+		zonas.put("GBA", 500.00);
+		zonas.put("Capital", 700.00);
+		zonas.put("Provincia", 1000.00);
+		double valorZona = 0;
+		if(zonas.containsKey(pedidoModel.getZona())){
+
+			for (String key : zonas.keySet()) {
+				if(key.equalsIgnoreCase(pedidoModel.getZona())){
+					valorZona = zonas.get(key);
+				}
+		 	}
+		}
+
+		EmbalajeModel embalaje = embalajeService.listarId(1);
+		pedidoModel.setEmbalaje(embalaje);
+
+
+		pedidoModel.setCosto(valorZona + embalaje.getPrecio());
+
 		ProductoModel articulo = productoService.listarId(id);
 		mAV.addObject("producto", articulo);
 		pedidoModel.setProducto(articulo);
-		pedidoModel.setEmbalaje(embalaje);
 		pedidoService.insertOrUpdate(pedidoModel);
 
 		return mAV;
