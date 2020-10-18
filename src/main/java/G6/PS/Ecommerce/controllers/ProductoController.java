@@ -560,6 +560,8 @@ public class ProductoController {
 		pedidoService.insertOrUpdate(pedidoModel);
 
 		return mAV;
+		}
+		*/
 	}
 	
-}
+
