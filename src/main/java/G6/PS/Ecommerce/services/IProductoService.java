@@ -4,9 +4,9 @@ import java.util.List;
 
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.web.multipart.MultipartFile;
 
 import G6.PS.Ecommerce.models.ProductoModel;
-
 
 
 public interface IProductoService {
@@ -18,6 +18,8 @@ public interface IProductoService {
 	public ProductoModel insertOrUpdate(ProductoModel productoModel);
 
 	public ProductoModel listarId(int id);
+
+	public ProductoModel findBySku(String Sku);
 
 	public String delete(int id);
 	
@@ -36,4 +38,6 @@ public interface IProductoService {
 	Page<ProductoModel> findByCategoria(Pageable pageable,int id);
 	
 	Page<ProductoModel> findBySubCategoria(Pageable pageable,int id);
+	
+	public boolean saveAll(MultipartFile file);
 }

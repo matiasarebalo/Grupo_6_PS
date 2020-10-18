@@ -18,6 +18,7 @@ import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -46,6 +47,7 @@ import G6.PS.Ecommerce.services.IComentarioService;
 import G6.PS.Ecommerce.services.IPedidoService;
 import G6.PS.Ecommerce.services.IProductoService;
 import G6.PS.Ecommerce.services.ISubCategoriaService;
+import G6.PS.Ecommerce.helpers.ExcelHelper;
 import G6.PS.Ecommerce.helpers.ViewRouteHelper;
 
 @Controller
@@ -75,6 +77,8 @@ public class ProductoController {
 	@Autowired
 	@Qualifier("comentarioService")
 	private IComentarioService comentarioService;
+	
+		
 
 	@GetMapping("/editar/{id}")
 	public ModelAndView editCategoria(@PathVariable("id") int id) {
@@ -482,6 +486,40 @@ public class ProductoController {
 
 		return "redirect:/productos/articulo/" + id;
 	}
+	
+	@GetMapping("/cargarExcel")
+	public ModelAndView cargaExcel() {
+		ModelAndView mAV = new ModelAndView(ViewRouteHelper.EXCEL);
+		String roleString = SecurityContextHolder.getContext().getAuthentication().getAuthorities().toString();
+		System.out.println(roleString);
+		boolean admin = false;
+		if (roleString.equals("[ROLE_ADMIN]")) {
+			admin = true;
+		}
+		
+		mAV.addObject("admin", admin);
+		return mAV;
+	}
+
+	
+	
+	 @PostMapping("/upload")
+	  public String uploadFile(@RequestParam("file") MultipartFile file, RedirectAttributes redirect) {
+	    
+
+	    if (ExcelHelper.hasExcelFormat(file)) {
+	         productoService.saveAll(file);
+				return "redirect:/productos/lista/";
+
+	      } else {
+				redirect.addFlashAttribute("message", "Failed");
+				return "redirect:/productos/cargarExcel";
+
+	      
+	      }
+	    }
+	
+	/*
 
 	@GetMapping("/articulo/{id}/compra")
 	public ModelAndView productoCompra(@PathVariable("id") int id) {

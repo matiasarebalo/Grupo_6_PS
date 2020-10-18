@@ -11,6 +11,9 @@ public class CategoriaModel {
 	
 	public CategoriaModel() {	}
 	
+	public CategoriaModel(String categoria) {
+		this.categoria = categoria;
+		}
 	public CategoriaModel(int id, String categoria) {
 		super();
 		this.id = id;
