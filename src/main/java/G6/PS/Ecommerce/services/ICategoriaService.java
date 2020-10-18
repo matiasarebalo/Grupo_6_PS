@@ -13,5 +13,7 @@ public interface ICategoriaService  {
 	public CategoriaModel listarId(int id);
 
 	public String delete(int id);
+	
+	public CategoriaModel traerPorNombre(String nombre);
 
 }

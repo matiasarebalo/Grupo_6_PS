@@ -20,4 +20,8 @@ public interface ISubCategoriaService {
 
 	public List<SubCategoriaModel> getSubcategoriasByCategoria(int id);
 	
+	
+	public SubCategoriaModel traerPorNombre(String nombre);
+
+	
 }
