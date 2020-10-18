@@ -11,6 +11,10 @@ public class SubCategoriaModel {
 
 	public SubCategoriaModel() {}
 	
+	public SubCategoriaModel(int id) {
+		this.id=id;
+	}
+	
 	public SubCategoriaModel(int id, String subCategoria, CategoriaModel categoria) {
 		super();
 		this.id = id;

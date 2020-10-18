@@ -12,6 +12,7 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 
 import G6.PS.Ecommerce.entities.Producto;
+import G6.PS.Ecommerce.models.ProductoModel;
 
 @Repository("productoRepository")
 public interface IProductoRepository extends JpaRepository<Producto, Serializable>{
@@ -20,6 +21,9 @@ public interface IProductoRepository extends JpaRepository<Producto, Serializabl
 	
 	@Query(nativeQuery=true,value="select * from producto where destacado = true and visible = true")
 	public List<Producto> findDestacados();
+	
+	@Query(nativeQuery=true,value="select * from producto where sku =(:sku)")
+	public Producto findBySku(String sku);
 	
 	@Query(nativeQuery=true,value="Select * from producto where sub_categoria_id=(:id) and visible = true")
 	public List<Producto> findBySubCategoria(int id);
@@ -37,6 +41,8 @@ public interface IProductoRepository extends JpaRepository<Producto, Serializabl
 	
 	@Query(nativeQuery=true,value="select * from producto p where p.sub_categoria_id  = (:id) and visible = true")
 	Page<Producto> findPageBySubCategoria(Pageable pageable,int id);
+
+	
 	
 	
 	//agregar cuando tengamos pedidos para ver si el producto tiene un pedido en curso o ya realizado.	

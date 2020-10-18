@@ -1,5 +1,6 @@
 package G6.PS.Ecommerce.services.implementations;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.function.Function;
@@ -9,9 +10,11 @@ import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
 
 import G6.PS.Ecommerce.converters.ProductoConverter;
 import G6.PS.Ecommerce.entities.Producto;
+import G6.PS.Ecommerce.helpers.ExcelHelper;
 import G6.PS.Ecommerce.models.ProductoModel;
 import G6.PS.Ecommerce.repositories.IProductoRepository;
 import G6.PS.Ecommerce.services.IAtributosService;
@@ -169,5 +172,32 @@ public class ProductoService implements IProductoService {
 
 		return pages;
 	}
+
+	@Override
+	public boolean saveAll(MultipartFile file) {
+		try {
+			List<ProductoModel> productos = ExcelHelper.excelToProductos(file.getInputStream());
+			for (ProductoModel p : productos) {
+				p.setSubCategoria(subCategoriaService.listarId(p.getSubCategoria().getId()));
+				if(this.findBySku(p.getSku())==null) {
+					this.insertOrUpdate(p);		
+				}
+			}
+			return true;
+			
+		} catch (IOException e) {
+		      throw new RuntimeException("fail to store excel data: " + e.getMessage());		}
+	}
+
+	@Override
+	public ProductoModel findBySku(String sku) {
+			if(productoRepository.findBySku(sku)!=null) {
+		return 	productoConverter.entityToModel(productoRepository.findBySku(sku));}
+			else {
+				return null;
+			}
+	}
+
+
 
 }
