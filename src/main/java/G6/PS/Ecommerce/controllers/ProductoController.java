@@ -481,5 +481,34 @@ public class ProductoController {
 
 		return "redirect:/productos/articulo/" + id;
 	}
+	/*
+	@GetMapping("/articulo/{id}/compra")
+	public ModelAndView productoCompra(@PathVariable("id") int id) {
+		ModelAndView mAV = new ModelAndView(ViewRouteHelper.ARTICULO_UNICO);
+		// compruebo si se logueo el admin y en tal caso muestro el menu
+		// correspondiente, el resto de la pagina permanece igual
+		String roleString = SecurityContextHolder.getContext().getAuthentication().getAuthorities().toString();
+		boolean admin = false;
+		if (roleString.equals("[ROLE_ADMIN]")) {
+			admin = true;
+		}
+		mAV.addObject("admin", admin);
 
+		ProductoModel articulo = productoService.listarId(id);
+		mAV.addObject("producto", articulo);
+		
+		//List<ProductoModel> relacionados = productoService.findBySubCategoria(articulo.getSubCategoriaModel().getId());
+		
+		List<ProductoModel> relacionados = productoService.findRelacionados(articulo.getId(),articulo.getSubCategoria().getId());
+		mAV.addObject("relacionados", relacionados);
+		ComentarioModel comentarioModel = new ComentarioModel();
+		mAV.addObject("comentario", comentarioModel);
+
+		List<ComentarioModel> comentarios = comentarioService.getByProducto(id);
+		mAV.addObject("comentarios", comentarios);
+
+		return mAV;
+	}
+	*/
+	
 }

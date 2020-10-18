@@ -9,21 +9,24 @@ public class PedidoModel {
 	private String codigoPromocion;
 	private String metodoDePago;
 	private Boolean aceptado;
-
+	private EmbalajeModel embalaje;
+	
 	public PedidoModel() {
 	}
 
-	public PedidoModel(int id, ProductoModel producto, String direccion, double costo, String codigoPromocion, String metodoDePago) {
+	public PedidoModel(int id, ProductoModel producto, String direccion, double costo, String codigoPromocion,
+			String metodoDePago, Boolean aceptado, EmbalajeModel embalaje) {
 		super();
 		this.id = id;
 		this.producto = producto;
 		this.direccion = direccion;
-		this.costo = costo;
+		setCosto(costo);
 		this.codigoPromocion = codigoPromocion;
 		this.metodoDePago = metodoDePago;
-		this.aceptado = false;
+		this.aceptado = aceptado;
+		this.embalaje = embalaje;
 	}
-	
+
 	public int getId() {
 		return id;
 	}
@@ -53,7 +56,7 @@ public class PedidoModel {
 	}
 
 	public void setCosto(double costo) {
-		this.costo = costo;
+		this.costo = costo + this.embalaje.getPrecio();
 	}
 
 	public String getCodigoPromocion() {
@@ -80,6 +83,13 @@ public class PedidoModel {
 		this.aceptado = aceptado;
 	}
 
+	public EmbalajeModel getEmbalaje() {
+		return embalaje;
+	}
+
+	public void setEmbalaje(EmbalajeModel embalaje) {
+		this.embalaje = embalaje;
+	}
 	
 }
 

@@ -10,7 +10,6 @@ import javax.persistence.Id;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
-
 @Entity
 @Table(name = "pedido")
 public class Pedido {
@@ -30,12 +29,14 @@ public class Pedido {
 	private String metodoDePago;
 	@Column(name = "aceptado")
 	private Boolean aceptado;
+	@ManyToOne(cascade = CascadeType.MERGE, fetch = FetchType.LAZY)
+	private Embalaje embalaje;
 
 	public Pedido() {
 		super();
 	}
 	
-	public Pedido(int id, Producto producto, String direccion, double costo, String codigoPromocion, String metodoDePago) {
+	public Pedido(int id, Producto producto, String direccion, double costo, String codigoPromocion, String metodoDePago, Embalaje embalaje) {
 		super();
 		this.id = id;
 		this.producto = producto;
@@ -44,6 +45,7 @@ public class Pedido {
 		this.codigoPromocion = codigoPromocion;
 		this.metodoDePago = metodoDePago;
 		this.aceptado = false;
+		this.embalaje = embalaje;
 	}
 
 	public int getId() {
@@ -101,5 +103,12 @@ public class Pedido {
 	public void setAceptado(Boolean aceptado) {
 		this.aceptado = aceptado;
 	}
-	
+
+	public Embalaje getEmbalaje() {
+		return embalaje;
+	}
+
+	public void setEmbalaje(Embalaje embalaje) {
+		this.embalaje = embalaje;
+	}
 }
