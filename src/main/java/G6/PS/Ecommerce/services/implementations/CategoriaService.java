@@ -53,4 +53,12 @@ public class CategoriaService implements ICategoriaService{
 		return "Categoria eliminada";
 	}
 
+	@Override
+	public CategoriaModel traerPorNombre(String nombre) {
+		return 	categoriaConverter.entityToModel(categoriaRepository.findBynombre(nombre));
+		
+		// TODO Auto-generated method stub
+		
+	}
+
 }

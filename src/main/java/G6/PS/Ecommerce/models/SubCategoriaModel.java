@@ -11,8 +11,8 @@ public class SubCategoriaModel {
 
 	public SubCategoriaModel() {}
 	
-	public SubCategoriaModel(int id) {
-		this.id=id;
+	public SubCategoriaModel(String subCategoria) {
+		this.subCategoria = subCategoria;
 	}
 	
 	public SubCategoriaModel(int id, String subCategoria, CategoriaModel categoria) {

@@ -87,6 +87,12 @@ public class SubCategoriaService implements ISubCategoriaService{
 		}
 		
 	}
+
+	@Override
+	public SubCategoriaModel traerPorNombre(String nombre) {
+		return 	subCategoriaConverter.entityToModel(subCategoriaRepository.findBynombre(nombre));
+		
+	}
 	
 
 }

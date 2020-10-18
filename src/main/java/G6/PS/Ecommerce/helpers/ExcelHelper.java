@@ -19,8 +19,10 @@ import org.springframework.web.multipart.MultipartFile;
 
 import G6.PS.Ecommerce.models.ProductoModel;
 import G6.PS.Ecommerce.models.SubCategoriaModel;
+import G6.PS.Ecommerce.models.AtributosModel;
+import G6.PS.Ecommerce.models.CategoriaModel;
+
 import G6.PS.Ecommerce.services.ISubCategoriaService;
-import G6.PS.Ecommerce.services.implementations.SubCategoriaService;
 
 
 public class ExcelHelper {
@@ -30,7 +32,7 @@ public class ExcelHelper {
 private   ISubCategoriaService subCategoriaService;
 	
 	 public static String TYPE = "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet";
-	  static String[] HEADERs = { "DescripcionCorta", "DescripcionLarga", "Subcategoria", "urlImagen","sku","precio","destacado","visible" };
+	  static String[] HEADERs = { "DescripcionCorta", "DescripcionLarga", "urlImagen","sku","precio","destacado","visible","Subcategoria_id","Subcategoria","Categoria_id","Categoria", };
 	  static String SHEET = "Productos";
 	  
 
@@ -53,7 +55,7 @@ private   ISubCategoriaService subCategoriaService;
 		      Iterator<Row> rows = sheet.iterator();
 
 		      List<ProductoModel> productos = new ArrayList<ProductoModel>();
-
+		      List<AtributosModel> atributos= new ArrayList<AtributosModel>();      
 		      int rowNumber = 0;
 		      while (rows.hasNext()) {
 		        Row currentRow = rows.next();
@@ -67,11 +69,16 @@ private   ISubCategoriaService subCategoriaService;
 		        Iterator<Cell> cellsInRow = currentRow.iterator();
 
 		        ProductoModel producto = new ProductoModel();
-
+		        
+		        producto.setProdAtributos(atributos);
+		        
 		        int cellIdx = 0;
 		        while (cellsInRow.hasNext()) {
 		          Cell currentCell = cellsInRow.next();
-
+		          Cell nextCell = currentCell;
+		          nextCell = cellsInRow.next();
+		          
+		          AtributosModel atr = new AtributosModel();
 		          switch (cellIdx) {
 		          case 0:
 		            producto.setDescripcionCorta(currentCell.getStringCellValue());
@@ -82,34 +89,61 @@ private   ISubCategoriaService subCategoriaService;
 		            break;
 
 		          case 2:
-			            producto.setSubCategoria(new SubCategoriaModel((int) currentCell.getNumericCellValue()));;
-
-		            break;
-
-		          case 3:
 			            producto.setUrlImagen(currentCell.getStringCellValue());        	  
 		            break;
-		          case 4:
+		          case 3:
 		        	  	producto.setSku(currentCell.getStringCellValue());
 			            break;
-		          case 5:
+		          case 4:
 			            producto.setPrecio((float) currentCell.getNumericCellValue());
 			            break;      
-		          case 6:
+		          case 5:
 		        	  	producto.setDestacado(currentCell.getBooleanCellValue());
 		        	  	break;
-		          case 7:
+		          case 6:
 		        	  	producto.setVisible(currentCell.getBooleanCellValue());
 		        	  	break;
-		          default:
+		          case 7:
+			            producto.setSubCategoria(new SubCategoriaModel(currentCell.getStringCellValue()));
+		//	            subcategoria.setId((int) currentCell.getNumericCellValue()); si la subcategoria no existe deberia generar el id automaticamente
+		            break;
+		          case 8:
+			            producto.getSubCategoria().setCategoria(new CategoriaModel(currentCell.getStringCellValue()));
+       	    	  	break;
+		          case 9:
+		        	  
+		        	  	atr.setAtributo(currentCell.getStringCellValue());
+		        	  	atr.setAtributo(nextCell.getStringCellValue());
+		        	  	cellIdx++;
+		        	    break;
+		          
+		           case 10:
+		        	   
+		        	  	atr.setAtributo(currentCell.getStringCellValue());
+		        	  	atr.setAtributo(nextCell.getStringCellValue());
+		        	  	cellIdx++;
+		        	    break;
+		           case 11:
+			        	  
+		        	  	atr.setAtributo(currentCell.getStringCellValue());
+		        	  	atr.setAtributo(nextCell.getStringCellValue());
+		        	  	cellIdx++;
+		        	    break;
+		          
+		           case 12:
+		        	   
+		        	  	atr.setAtributo(currentCell.getStringCellValue());
+		        	  	atr.setAtributo(nextCell.getStringCellValue());
+		        	  	cellIdx++;
+		        	    break;
+		            default:
 		            break;
 		          }
 
 		          cellIdx++;
 		        }
 
-		        productos.add(producto);
-		      }
+		        productos.add(producto);		      }
 
 		      workbook.close();
 
