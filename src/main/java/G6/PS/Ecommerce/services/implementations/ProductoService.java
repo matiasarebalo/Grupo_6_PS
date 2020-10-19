@@ -230,7 +230,7 @@ public class ProductoService implements IProductoService {
 		List<AtributosModel> atributos= productoModel.getProdAtributos();
 		String talle=null;
 		String color=null;
-		
+		String sku=null;
 		String precio= String.valueOf(productoModel.getPrecio());
 		char ch1 = precio.charAt(0);
 		char ch2 = precio.charAt(precio.length()-1);
@@ -253,8 +253,17 @@ public class ProductoService implements IProductoService {
 		if(color==null) {
 			color="NaC";
 		}
-		String sku=String.valueOf(a)+talle+color;
-		
+		if(color==null&talle==null) {
+			char ch3 = atributos.get(1).getAtributo().charAt(0);
+			char ch4 = atributos.get(1).getValor().charAt(0);
+			char [] b = { ch3 , ch4 };
+			 sku=String.valueOf(a)+talle+color+String.valueOf(b);
+			
+		}else {
+			 sku=String.valueOf(a)+talle+color;
+			
+		}
+			
 		
 	return sku;	
 	}
