@@ -274,7 +274,13 @@ public class ProductoController {
 		// TODO Codigo SKU
 		productoModel.setSubCategoria(subCategoriaService.listarId(productoModel.getSubCategoria().getId()));
 		ProductoModel pM=	productoService.insertOrUpdate(productoModel);
-			return "redirect:/productos/newAtributo/" + pM.getId();
+		if(pM!=null) {	
+		return "redirect:/productos/newAtributo/" + pM.getId();
+		}else {
+		redirect.addAttribute("message", "error al agregar el producto");	
+		return	"redirect:/productos/newProducto/"+productoModel.getSubCategoria().getId();
+		
+		}
 	}
 	
 	

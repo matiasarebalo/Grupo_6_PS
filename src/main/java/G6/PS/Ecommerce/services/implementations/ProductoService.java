@@ -3,6 +3,7 @@ package G6.PS.Ecommerce.services.implementations;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Random;
 import java.util.function.Function;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -70,9 +71,13 @@ public class ProductoService implements IProductoService {
 	@Override
 	public ProductoModel insertOrUpdate(ProductoModel model) {
 		model.setSku(this.generarSku(model));
-		Producto p = productoRepository.save(productoConverter.modelToEntity(model));
+		if (this.findBySku(model.getSku().toUpperCase()) == null) {
+			Producto p = productoRepository.save(productoConverter.modelToEntity(model));
 
-		return productoConverter.entityToModel(p);
+			return productoConverter.entityToModel(p);
+		} else {
+			return null;
+		}
 	}
 
 	@Override
@@ -224,48 +229,61 @@ public class ProductoService implements IProductoService {
 			return null;
 		}
 	}
-	
-	public String generarSku(ProductoModel productoModel) {
-		
-		List<AtributosModel> atributos= productoModel.getProdAtributos();
-		String talle=null;
-		String color=null;
-		String sku=null;
-		String precio= String.valueOf(productoModel.getPrecio());
-		char ch1 = precio.charAt(0);
-		char ch2 = precio.charAt(precio.length()-1);
-		char [] a = { ch1 , ch2 };
 
-		for(AtributosModel at : atributos) {
-			if(at.getAtributo().equalsIgnoreCase("talle")) {
-				talle=at.getValor();
+	public String generarSku(ProductoModel productoModel) {
+	
+		String sku = null;
+		List<AtributosModel> atributos = productoModel.getProdAtributos();
+		if(atributos!=null) {
+		String talle = null;
+		String color = null;
+		String precio = String.valueOf(productoModel.getPrecio());
+		char ch1 = precio.charAt(0);
+		char ch2 = precio.charAt(precio.length() - 1);
+		char[] a = { ch1, ch2 };
+
+		for (AtributosModel at : atributos) {
+			if (at.getAtributo().equalsIgnoreCase("talle")) {
+				talle = at.getValor();
 			}
+		}
+
+		for (AtributosModel at : atributos) {
+			if (at.getAtributo().equalsIgnoreCase("color")) {
+				color = at.getValor();
 			}
-			
-			for(AtributosModel at : atributos) {
-				if(at.getAtributo().equalsIgnoreCase("color")) {
-					color=at.getValor();
-				}	
 		}
-		if(talle==null) {
-			talle="St";
+		if (talle == null) {
+			talle = "St";
 		}
-		if(color==null) {
-			color="NaC";
+		if (color == null) {
+			color = "NaC";
 		}
-		if(color==null&talle==null) {
+		if (color == null & talle == null) {
 			char ch3 = atributos.get(1).getAtributo().charAt(0);
 			char ch4 = atributos.get(1).getValor().charAt(0);
-			char [] b = { ch3 , ch4 };
-			 sku=String.valueOf(a)+talle+color+String.valueOf(b);
+			char[] b = { ch3, ch4 };
+			sku = String.valueOf(a) + talle + color + String.valueOf(b);
+
+		} else {
+			sku = String.valueOf(a) + talle + color;
+
+		}}else {
+			String precio = String.valueOf(productoModel.getPrecio());
+			char ch1 = precio.charAt(0);
+			char ch2 = precio.charAt(precio.length() - 1);
+			char ch3 = productoModel.getDescripcionCorta().charAt(1);
+			char ch4 = productoModel.getDescripcionCorta().charAt(2);
+			Random rand = new Random();
 			
-		}else {
-			 sku=String.valueOf(a)+talle+color;
-			
+			String random = String.valueOf(rand.nextInt());
+			char[] c = { ch1, ch2,ch3,ch4 };
+			sku = String.valueOf(c) + random;
 		}
-			
+
 		
-	return sku;	
+
+		return sku;
 	}
 
 }

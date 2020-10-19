@@ -36,7 +36,9 @@ public class AtributosService implements IAtributosService {
 	@Override
 	public AtributosModel insertOrUpdate(AtributosModel model) {
 		Atributos s= atributosRepository.save( atributosConverter.modelToEntity(model));
+		productoService.insertOrUpdate(model.getProducto());
 		return atributosConverter.entityToModel(s);
+		
 	}
 
 	@Override

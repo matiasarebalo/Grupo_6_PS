@@ -22,7 +22,7 @@ public interface IProductoRepository extends JpaRepository<Producto, Serializabl
 	@Query(nativeQuery=true,value="select * from producto where destacado = true and visible = true")
 	public List<Producto> findDestacados();
 	
-	@Query(nativeQuery=true,value="select * from producto where sku =(:sku)")
+	@Query(nativeQuery=true,value="select  * from producto where upper(sku) =(:sku)")
 	public Producto findBySku(String sku);
 	
 	@Query(nativeQuery=true,value="Select * from producto where sub_categoria_id=(:id) and visible = true")
