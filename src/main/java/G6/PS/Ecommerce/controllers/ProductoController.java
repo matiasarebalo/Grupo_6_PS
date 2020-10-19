@@ -537,12 +537,64 @@ public class ProductoController {
 			admin = true;
 		}
 		mAV.addObject("admin", admin);
-
+		int codigo=0;
 		ProductoModel articulo = productoService.listarId(id);
+		mAV.addObject("codigo", codigo);
+		mAV.addObject("prodId", articulo.getId());
+		
 		mAV.addObject("producto", articulo);
 		mAV.addObject("pedido", new PedidoModel());
 		return mAV;
 	}
+	
+	@PostMapping("/articulo/compra/codDescuento/{id}")
+	public ModelAndView descuento(@PathVariable("id") int id,@Valid @ModelAttribute("pedido") PedidoModel pedidoModel, BindingResult result,RedirectAttributes redirect) {
+		ModelAndView mAV = new ModelAndView(ViewRouteHelper.CHECKOUT);
+		// compruebo si se logueo el admin y en tal caso muestro el menu
+		// correspondiente, el resto de la pagina permanece igual
+		
+		
+		
+		String roleString = SecurityContextHolder.getContext().getAuthentication().getAuthorities().toString();
+		boolean admin = false;
+		if (roleString.equals("[ROLE_ADMIN]")) {
+			admin = true;
+		}
+		mAV.addObject("admin", admin);
+		
+		int codigo= Integer.parseInt(pedidoModel.getCodigoPromocion());
+		ProductoModel articulo = productoService.listarId(id);
+		if(this.esPrimo(codigo)) {
+			if(codigo%2==0) {
+				articulo.setPrecio(articulo.getPrecio()-(articulo.getPrecio()*5/100));
+			}else {
+				articulo.setPrecio(articulo.getPrecio()-(articulo.getPrecio()*10/100));
+			
+				mAV.addObject("producto", articulo);
+				mAV.addObject("pedido", pedidoModel);
+				
+			
+			}
+		
+		}else {
+			String mensaje="error";
+			mAV.addObject("message", mensaje);
+
+			mAV.addObject("producto", articulo);
+			mAV.addObject("pedido", new PedidoModel());
+	
+		}
+		
+		
+		
+		return mAV;
+
+		
+		
+		
+	
+	}
+	
 
 	@PostMapping("/articulo/{id}/compra/save")
 	public ModelAndView remitoSave(@PathVariable("id") int id, @Valid @ModelAttribute("pedido") PedidoModel pedidoModel, BindingResult result,RedirectAttributes redirect) {
@@ -584,6 +636,18 @@ public class ProductoController {
 
 		return mAV;
 		}
+	
+	 public boolean esPrimo(int numero) { 
+		int contador = 2;
+				boolean primo=true;
+
+		while ((primo) && (contador!=numero)){
+		  if (numero % contador == 0)
+		    primo = false;
+		  contador++;}
+		return primo;
+		}
+
 	}
 	
 
