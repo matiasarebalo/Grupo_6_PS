@@ -49,6 +49,7 @@ import G6.PS.Ecommerce.services.IEmbalajeService;
 import G6.PS.Ecommerce.services.IPedidoService;
 import G6.PS.Ecommerce.services.IProductoService;
 import G6.PS.Ecommerce.services.ISubCategoriaService;
+import G6.PS.Ecommerce.entities.Pedido;
 import G6.PS.Ecommerce.helpers.ExcelHelper;
 import G6.PS.Ecommerce.helpers.ViewRouteHelper;
 
@@ -549,7 +550,15 @@ public class ProductoController {
 		mAV.addObject("prodId", articulo.getId());
 		
 		mAV.addObject("producto", articulo);
-		mAV.addObject("pedido", new PedidoModel());
+		PedidoModel pedido = new PedidoModel();
+		EmbalajeModel embalaje = new EmbalajeModel();
+		pedido.setEmbalaje(embalaje);
+		mAV.addObject("pedido", pedido);
+
+		List<EmbalajeModel> embalajes = embalajeService.getAll();
+
+		mAV.addObject("embalajes", embalajes);
+
 		return mAV;
 	}
 	
@@ -583,8 +592,7 @@ public class ProductoController {
 			}
 		
 		}else {
-			String mensaje="error";
-			mAV.addObject("message", mensaje);
+			mAV.addObject("mensaje", true);
 
 			mAV.addObject("producto", articulo);
 			mAV.addObject("pedido", new PedidoModel());
@@ -629,7 +637,7 @@ public class ProductoController {
 		 	}
 		}
 
-		EmbalajeModel embalaje = embalajeService.listarId(1);
+		EmbalajeModel embalaje = embalajeService.listarId(pedidoModel.getEmbalaje().getId());
 		pedidoModel.setEmbalaje(embalaje);
 
 
