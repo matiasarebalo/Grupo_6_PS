@@ -16,4 +16,8 @@ public interface IAtributosRepository extends JpaRepository<Atributos, Serializa
     
     @Query(nativeQuery=true,value="Select * from atributos where producto_id=(:id)")
 	public List<Atributos> findByProducto(int id);
+
+
+
+
 }

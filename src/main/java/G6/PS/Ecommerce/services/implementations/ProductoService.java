@@ -15,6 +15,7 @@ import org.springframework.web.multipart.MultipartFile;
 import G6.PS.Ecommerce.converters.ProductoConverter;
 import G6.PS.Ecommerce.entities.Producto;
 import G6.PS.Ecommerce.helpers.ExcelHelper;
+import G6.PS.Ecommerce.models.AtributosModel;
 import G6.PS.Ecommerce.models.CategoriaModel;
 import G6.PS.Ecommerce.models.ProductoModel;
 import G6.PS.Ecommerce.models.SubCategoriaModel;
@@ -68,6 +69,7 @@ public class ProductoService implements IProductoService {
 
 	@Override
 	public ProductoModel insertOrUpdate(ProductoModel model) {
+		model.setSku(this.generarSku(model));
 		Producto p = productoRepository.save(productoConverter.modelToEntity(model));
 
 		return productoConverter.entityToModel(p);
@@ -221,6 +223,40 @@ public class ProductoService implements IProductoService {
 		} else {
 			return null;
 		}
+	}
+	
+	public String generarSku(ProductoModel productoModel) {
+		
+		List<AtributosModel> atributos= productoModel.getProdAtributos();
+		String talle=null;
+		String color=null;
+		
+		String precio= String.valueOf(productoModel.getPrecio());
+		char ch1 = precio.charAt(0);
+		char ch2 = precio.charAt(precio.length()-1);
+		char [] a = { ch1 , ch2 };
+
+		for(AtributosModel at : atributos) {
+			if(at.getAtributo().equalsIgnoreCase("talle")) {
+				talle=at.getValor();
+			}
+			}
+			
+			for(AtributosModel at : atributos) {
+				if(at.getAtributo().equalsIgnoreCase("color")) {
+					color=at.getValor();
+				}	
+		}
+		if(talle==null) {
+			talle="St";
+		}
+		if(color==null) {
+			color="NaC";
+		}
+		String sku=String.valueOf(a)+talle+color;
+		
+		
+	return sku;	
 	}
 
 }
