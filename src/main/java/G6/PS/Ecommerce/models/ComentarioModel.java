@@ -10,15 +10,17 @@ public class ComentarioModel {
 	@DateTimeFormat(pattern = "yyyy-MM-dd")
 	private Date fechaComentario;
 	private PedidoModel pedido;
+	private double valoracion;
 
 	public ComentarioModel() {}
 	
-	public ComentarioModel(int id, String comentario, Date fechaComentario, PedidoModel pedido) {
+	public ComentarioModel(int id, String comentario, Date fechaComentario, PedidoModel pedido, double valoracion) {
 		super();
 		this.id = id;
 		this.comentario = comentario;
 		this.fechaComentario = fechaComentario;
 		this.pedido = pedido;
+		this.valoracion = valoracion;
 	}
 	
 	public int getId() {
@@ -48,4 +50,13 @@ public class ComentarioModel {
 		this.pedido = pedido;
 	}
 
+	public double getValoracion() {
+		return valoracion;
+	}
+
+	public void setValoracion(double valoracion) {
+		this.valoracion = valoracion;
+	}
+
+	
 }

@@ -25,16 +25,18 @@ public class Comentario {
 	private Date fechaComentario;
 	@OneToOne
 	private Pedido pedido;
+	private double valoracion;
 
 	
 	public Comentario() {}
 	
-	public Comentario(int id, String comentario, Date fechaComentario, Pedido pedido) {
+	public Comentario(int id, String comentario, Date fechaComentario, Pedido pedido, double valoracion) {
 		super();
 		this.id = id;
 		this.comentario = comentario;
 		this.fechaComentario = fechaComentario;
 		this.pedido = pedido;
+		this.valoracion = valoracion;
 	}
 
 	public int getId() {
@@ -67,6 +69,14 @@ public class Comentario {
 
 	public void setPedido(Pedido pedido) {
 		this.pedido = pedido;
+	}
+
+	public double getValoracion() {
+		return valoracion;
+	}
+
+	public void setValoracion(double valoracion) {
+		this.valoracion = valoracion;
 	}
 
 	
