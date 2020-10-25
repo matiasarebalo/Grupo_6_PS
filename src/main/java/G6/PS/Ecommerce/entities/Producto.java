@@ -158,5 +158,16 @@ public class Producto {
 	public void setPedidos(List<Pedido> pedidos) {
 		this.pedidos = pedidos;
 	}
+	
+
+	@Override
+	public String toString() {
+		return "Producto [id=" + id + ", descripcionCorta=" + descripcionCorta + ", descripcionLarga="
+				+ descripcionLarga + ", subCategoria=" + subCategoria + ", sku=" + sku + ", urlImagen=" + urlImagen
+				+ ", precio=" + precio + ", destacado=" + destacado + ", prodAtributos=" + prodAtributos + ", visible="
+				+ visible + ", pedidos=" + pedidos + "]";
+	}
+	
+	
 
 }

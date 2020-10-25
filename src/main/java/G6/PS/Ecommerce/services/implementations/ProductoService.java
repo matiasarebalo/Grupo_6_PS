@@ -193,9 +193,9 @@ public class ProductoService implements IProductoService {
 			List<ProductoModel> productos = ExcelHelper.excelToProductos(file.getInputStream());
 			for (ProductoModel p : productos) {
 				// verifico que exista la categoria y la seteo o agrego la agrego
-				CategoriaModel cm = categoriaService.traerPorNombre(p.getSubCategoria().getCategoria().getCategoria());
-				if (cm != null) {
-					p.getSubCategoria().setCategoria(cm);
+				CategoriaModel c=categoriaService.traerPorNombre(p.getSubCategoria().getCategoria().getCategoria());
+				if (c != null) {
+					p.getSubCategoria().setCategoria(c);
 				} else {
 					categoriaService.insertOrUpdate(p.getSubCategoria().getCategoria());
 					p.getSubCategoria().setCategoria(
@@ -244,13 +244,13 @@ public class ProductoService implements IProductoService {
 
 		for (AtributosModel at : atributos) {
 			if (at.getAtributo().equalsIgnoreCase("talle")) {
-				talle = at.getValor();
+				talle = String.valueOf(at.getValor().charAt(0));
 			}
 		}
 
 		for (AtributosModel at : atributos) {
 			if (at.getAtributo().equalsIgnoreCase("color")) {
-				color = at.getValor();
+				color = String.valueOf(at.getValor().charAt(0)+at.getValor().charAt(1)+at.getValor().charAt(2));
 			}
 		}
 		if (talle == null) {
@@ -261,7 +261,7 @@ public class ProductoService implements IProductoService {
 		}
 		if (color == null & talle == null) {
 			char ch3 = atributos.get(1).getAtributo().charAt(0);
-			char ch4 = atributos.get(1).getValor().charAt(0);
+			char ch4 = atributos.get(1).getValor().charAt(1);
 			char[] b = { ch3, ch4 };
 			sku = String.valueOf(a) + talle + color + String.valueOf(b);
 

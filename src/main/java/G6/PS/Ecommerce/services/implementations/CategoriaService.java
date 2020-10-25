@@ -55,8 +55,11 @@ public class CategoriaService implements ICategoriaService{
 
 	@Override
 	public CategoriaModel traerPorNombre(String nombre) {
-		return 	categoriaConverter.entityToModel(categoriaRepository.findBynombre(nombre));
-		
+		Categoria c=categoriaRepository.findBynombre(nombre);
+		if(c!=null) {
+		return 	categoriaConverter.entityToModel(c);
+		}else
+		{return null;}
 		// TODO Auto-generated method stub
 		
 	}
