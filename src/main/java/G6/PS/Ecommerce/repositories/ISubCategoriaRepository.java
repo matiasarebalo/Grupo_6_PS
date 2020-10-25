@@ -14,7 +14,7 @@ public interface ISubCategoriaRepository extends JpaRepository<SubCategoria, Ser
 	
 	public abstract SubCategoria findById(int id);
 	
-	@Query(nativeQuery=true,value="select distinct * from subcategoria where subcategoria =(:nombre)")
+	@Query(nativeQuery=true,value="select distinct * from subcategoria where sub_categoria =(:nombre)")
 	public SubCategoria findBynombre(String nombre);
 	
 
