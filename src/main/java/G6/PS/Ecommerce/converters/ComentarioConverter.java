@@ -15,10 +15,10 @@ public class ComentarioConverter {
 	private PedidoConverter pedidoConverter;
 	
 	public ComentarioModel entityToModel(Comentario comentario) {
-		return new ComentarioModel(comentario.getId(), comentario.getComentario(), comentario.getFechaComentario(), pedidoConverter.entityToModel(comentario.getPedido()));
+		return new ComentarioModel(comentario.getId(), comentario.getComentario(), comentario.getFechaComentario(), pedidoConverter.entityToModel(comentario.getPedido()), comentario.getValoracion());
 	}
 	
 	public Comentario modelToEntity(ComentarioModel model) {
-		return new Comentario(model.getId(), model.getComentario(), model.getFechaComentario(), pedidoConverter.modelToEntity(model.getPedido()));
+		return new Comentario(model.getId(), model.getComentario(), model.getFechaComentario(), pedidoConverter.modelToEntity(model.getPedido()), model.getValoracion());
 	}
 }
