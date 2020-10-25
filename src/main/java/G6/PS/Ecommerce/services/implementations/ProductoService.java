@@ -18,11 +18,14 @@ import G6.PS.Ecommerce.entities.Producto;
 import G6.PS.Ecommerce.helpers.ExcelHelper;
 import G6.PS.Ecommerce.models.AtributosModel;
 import G6.PS.Ecommerce.models.CategoriaModel;
+import G6.PS.Ecommerce.models.PedidoModel;
 import G6.PS.Ecommerce.models.ProductoModel;
 import G6.PS.Ecommerce.models.SubCategoriaModel;
+import G6.PS.Ecommerce.repositories.IPedidoRepository;
 import G6.PS.Ecommerce.repositories.IProductoRepository;
 import G6.PS.Ecommerce.services.IAtributosService;
 import G6.PS.Ecommerce.services.ICategoriaService;
+import G6.PS.Ecommerce.services.IPedidoService;
 import G6.PS.Ecommerce.services.IProductoService;
 import G6.PS.Ecommerce.services.ISubCategoriaService;
 
@@ -44,6 +47,13 @@ public class ProductoService implements IProductoService {
 	@Qualifier("atributosService")
 	private IAtributosService atributosService;
 
+	@Autowired
+	@Qualifier("pedidoService")
+	private IPedidoService pedidoService;
+	
+	@Autowired
+	private IPedidoRepository pedidoRepository;
+	
 	@Autowired
 	@Qualifier("productoConverter")
 	private ProductoConverter productoConverter;
@@ -93,7 +103,10 @@ public class ProductoService implements IProductoService {
 	public String delete(int id) {
 
 		int sC = productoRepository.findById(id).getSubCategoria().getId();
-
+		
+		for (PedidoModel pm: pedidoService.getByProducto(id)) {
+			pedidoRepository.deleteById(pm.getId());
+		}
 		atributosService.deleteDependencies(id);
 		subCategoriaService.deleteDependencies(sC);
 		productoRepository.deleteById(id);
