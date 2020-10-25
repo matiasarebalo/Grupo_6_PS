@@ -48,6 +48,15 @@
         <h1 class="font-weight-light" th:text="${producto.descripcionCorta}"></h1>
         <p th:text="${producto.descripcionLarga}"></p>
         <p th:text="'$' + ${producto.precio}"></p>
+        <table>
+        <tr th:each="atributo:${atr}"> 
+        <td th:text="${atributo.valor}"> </td>
+        <td th:text="${atributo.atributo}"> </td>
+        
+        </tr>
+        
+        
+        </table>
         <a class="btn btn-primary" th:href="@{/productos/articulo/{id}/compra(id=${producto.id})}">Comprar Ahora</a>
       </div>
       <!-- /.col-md-4 -->

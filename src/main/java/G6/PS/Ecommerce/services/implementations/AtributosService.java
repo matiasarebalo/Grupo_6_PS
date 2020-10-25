@@ -10,6 +10,7 @@ import org.springframework.stereotype.Service;
 import G6.PS.Ecommerce.converters.AtributosConverter;
 import G6.PS.Ecommerce.entities.Atributos;
 import G6.PS.Ecommerce.models.AtributosModel;
+import G6.PS.Ecommerce.models.ProductoModel;
 import G6.PS.Ecommerce.repositories.IAtributosRepository;
 import G6.PS.Ecommerce.services.IAtributosService;
 import G6.PS.Ecommerce.services.IProductoService;
@@ -39,6 +40,17 @@ public class AtributosService implements IAtributosService {
 		productoService.insertOrUpdate(model.getProducto());
 		return atributosConverter.entityToModel(s);
 		
+	}
+	
+	@Override
+	public List<AtributosModel> saveAll(ProductoModel p) {
+		List<AtributosModel> list= new ArrayList<AtributosModel>();
+		for(AtributosModel m: p.getProdAtributos()) {
+		m.setProducto(p);
+		Atributos e= atributosRepository.save( atributosConverter.modelToEntity(m));
+		productoService.insertOrUpdate(m.getProducto());
+		list.add(atributosConverter.entityToModel(e));}
+		return list;
 	}
 
 	@Override

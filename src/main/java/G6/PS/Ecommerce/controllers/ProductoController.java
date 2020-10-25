@@ -317,8 +317,9 @@ public class ProductoController {
 		mAV.addObject("admin", admin);
 
 		ProductoModel articulo = productoService.listarId(id);
+		List<AtributosModel> aT= atributosService.getByProducto(id);
 		mAV.addObject("producto", articulo);
-		
+		mAV.addObject("atr",aT);
 		//List<ProductoModel> relacionados = productoService.findBySubCategoria(articulo.getSubCategoriaModel().getId());
 		
 		List<ProductoModel> relacionados = productoService.findRelacionados(articulo.getId(),articulo.getSubCategoria().getId());

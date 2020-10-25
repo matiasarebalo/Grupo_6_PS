@@ -69,7 +69,6 @@ public class ExcelHelper {
 
 				ProductoModel producto = new ProductoModel();
 
-				producto.setProdAtributos(atributos);
 
 				int cellIdx = 0;
 				while (cellsInRow.hasNext()) {
@@ -105,7 +104,7 @@ public class ExcelHelper {
 						break;
 					case 6:
 						aux= formatter.formatCellValue(currentCell);
-						producto.setDestacado(Boolean.getBoolean(aux));
+						producto.setVisible(currentCell.getBooleanCellValue());
 						break;
 					case 7:
 						aux = formatter.formatCellValue(currentCell);
@@ -119,35 +118,43 @@ public class ExcelHelper {
 						break;
 					case 9:
 						aux = formatter.formatCellValue(currentCell);
-						atr.setAtributo(aux);
+						atr.setValor(aux);
 						currentCell = cellsInRow.next();
 						aux = formatter.formatCellValue(currentCell);
 						atr.setAtributo(aux);
-					
+						atr.setProducto(producto);
+						atributos.add(atr);
+						
 						break;
 
 					case 10:
 						aux = formatter.formatCellValue(currentCell);
-						atr.setAtributo(aux);
+						atr.setValor(aux);
 						currentCell = cellsInRow.next();
 						aux = formatter.formatCellValue(currentCell);
 						atr.setAtributo(aux);
+						atr.setProducto(producto);
+						atributos.add(atr);
 						break;
 					case 11:
 						aux = formatter.formatCellValue(currentCell);
-						atr.setAtributo(aux);
+						atr.setValor(aux);
 						currentCell = cellsInRow.next();
 						aux = formatter.formatCellValue(currentCell);
 						atr.setAtributo(aux);
+						atr.setProducto(producto);
+						atributos.add(atr);
 						cellIdx++;
 						break;
 
 					case 12:
 						aux = formatter.formatCellValue(currentCell);
-						atr.setAtributo(aux);
+						atr.setValor(aux);
 						currentCell = cellsInRow.next();
 						aux = formatter.formatCellValue(currentCell);
 						atr.setAtributo(aux);
+						atr.setProducto(producto);
+						atributos.add(atr);
 						cellIdx++;
 						break;
 					default:
@@ -157,6 +164,7 @@ public class ExcelHelper {
 					cellIdx++;
 				}
 				System.out.println(producto.toString());
+				producto.setProdAtributos(atributos);						
 				productos.add(producto);
 			}
 

@@ -14,6 +14,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
 import G6.PS.Ecommerce.converters.ProductoConverter;
+import G6.PS.Ecommerce.entities.Atributos;
 import G6.PS.Ecommerce.entities.Producto;
 import G6.PS.Ecommerce.helpers.ExcelHelper;
 import G6.PS.Ecommerce.models.AtributosModel;
@@ -72,8 +73,16 @@ public class ProductoService implements IProductoService {
 	public ProductoModel insertOrUpdate(ProductoModel model) {
 		model.setSku(this.generarSku(model));
 		if (this.findBySku(model.getSku().toUpperCase()) == null) {
+			
+			
+			
 			Producto p = productoRepository.save(productoConverter.modelToEntity(model));
-
+			ProductoModel aux= productoConverter.entityToModel(p);
+			aux.setProdAtributos(model.getProdAtributos());
+			
+			
+			
+			atributosService.saveAll(aux);
 			return productoConverter.entityToModel(p);
 		} else {
 			return null;
@@ -212,6 +221,8 @@ public class ProductoService implements IProductoService {
 				// ahora reviso que el produco no exista por codigo sku
 				if (this.findBySku(p.getSku()) == null) {
 					this.insertOrUpdate(p);
+	//				atributosService.saveAll(p.getProdAtributos());
+					
 				}
 			}
 			return true;

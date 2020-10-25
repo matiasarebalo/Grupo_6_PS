@@ -4,6 +4,7 @@ import java.util.List;
 
 import G6.PS.Ecommerce.entities.Atributos;
 import G6.PS.Ecommerce.models.AtributosModel;
+import G6.PS.Ecommerce.models.ProductoModel;
 
 public interface IAtributosService {
     
@@ -18,4 +19,6 @@ public interface IAtributosService {
 	public void deleteDependencies(int id);
 
 	public List<AtributosModel> getByProducto(int id);
+
+	List<AtributosModel> saveAll(ProductoModel p);
 }
