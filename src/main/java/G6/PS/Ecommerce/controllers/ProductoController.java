@@ -487,7 +487,7 @@ public class ProductoController {
 
 		PedidoModel pedido = pedidoService.listarId(comentarioModel.getPedido().getId());
 		
-		if(pedido == null){
+		if((pedido == null) || (pedido.getProducto().getId() != id)){
 			redirect.addFlashAttribute("message", "Failed");
 			return "redirect:/productos/articulo/" + id;
 		}
