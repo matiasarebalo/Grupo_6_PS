@@ -45,9 +45,21 @@
       </div>
       <!-- /.col-lg-8 -->
       <div class="col-lg-5">
-        <h1 class="font-weight-light" th:text="${producto.descripcionCorta}"></h1>
+
+        <h1 class="font-weight-light text-uppercase" th:text="${producto.descripcionCorta}"></h1>
+
         <p th:text="${producto.descripcionLarga}"></p>
-        <p th:text="'$' + ${producto.precio}"></p>
+        
+        <div class="mr-3" th:text="'$' + ${producto.precio}"></div>
+
+        <table>
+          <tr>
+            <td>
+              <input id="input-3" name="input-3" th:value="${estrellas}" class="rating-loading">
+            </td>
+          </tr>
+        </table>
+
         <a class="btn btn-primary" th:href="@{/productos/articulo/{id}/compra(id=${producto.id})}">Comprar Ahora</a>
       </div>
       <!-- /.col-md-4 -->
@@ -63,20 +75,26 @@
 	
     <div class="row">
       <div th:each="producto : ${relacionados}" class="col-lg-4 col-md-6 mb-4">
+
         <div class="card h-100">
+
           <a th:href="@{/productos/articulo/{id}(id=${producto.id})}">
-            <img th:src="${producto.urlImagen}" class="card-img-top" alt=""></a>
-        <div class="card-body">
-          <h4 class="card-title">
-            <a th:text="${producto.descripcionCorta}" href="#"></a>
-          </h4>
-        <h5 th:text="${producto.precio}"></h5>
-          <p th:text="${producto.descripcionLarga}" class="card-text"></p>
-        </div>
-        <div class="card-footer">
-          <small class="text-muted">&#9733; &#9733; &#9733;
-            &#9733; &#9734;</small>
-        </div>
+            <img th:src="${producto.urlImagen}" class="card-img-top" alt="">
+          </a>
+
+            <div class="card-body">
+                  <h4 class="card-title">
+                    <a th:text="${producto.descripcionCorta}" href="#"></a>
+                  </h4>
+                <h5 th:text="${producto.precio}"></h5>
+                  <p th:text="${producto.descripcionLarga}" class="card-text"></p>
+            </div>
+            
+            <div class="card-footer">
+              <small class="text-muted">&#9733; &#9733; &#9733;
+                &#9733; &#9734;</small>
+            </div>
+
         </div>
       </div>
     </div>
@@ -112,8 +130,6 @@
      <!-- /.Review -->
       <a class="text-center w-100 d-block mt-4 font-weight-bold" href="#">Ver todos los comentarios</a>
     </div>
-
-
     
     <!-- Comentario form -->
     
@@ -204,6 +220,8 @@
 
     $(function(){                
       $('#star-rating').rating(); 
+      $('#input-3').rating({displayOnly: true, step: 0.5});
+
         });
 
 		$("#alert-target").show(function () {

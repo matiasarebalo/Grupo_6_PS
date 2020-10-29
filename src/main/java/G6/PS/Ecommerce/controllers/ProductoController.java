@@ -329,6 +329,14 @@ public class ProductoController {
 		List<ComentarioModel> comentarios = comentarioService.getByProducto(id);
 		mAV.addObject("comentarios", comentarios);
 
+		double estrellas = 0;
+		for (ComentarioModel c : comentarios) {
+			estrellas += c.getValoracion();
+		}
+		estrellas = estrellas / comentarios.size();
+
+		mAV.addObject("estrellas", estrellas);
+
 		return mAV;
 	}
 
