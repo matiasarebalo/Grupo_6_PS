@@ -49,6 +49,7 @@
         <h1 class="font-weight-light text-uppercase" th:text="${producto.descripcionCorta}"></h1>
 
         <p th:text="${producto.descripcionLarga}"></p>
+        <p th:text=" 'SKU: ' + ${producto.sku}"></p>
         
         <div class="mr-3" th:text="'$' + ${producto.precio}"></div>
 
@@ -86,7 +87,8 @@
                   <h4 class="card-title">
                     <a th:text="${producto.descripcionCorta}" href="#"></a>
                   </h4>
-                <h5 th:text="${producto.precio}"></h5>
+                <h5 th:text=" 'SKU: ' + ${producto.sku}"></h5>
+                <h5 th:text="'$' + ${producto.precio}"></h5>
                   <p th:text="${producto.descripcionLarga}" class="card-text"></p>
             </div>
             
@@ -205,8 +207,7 @@
   <!-- Footer -->
   <footer class="py-5 bg-dark">
     <div class="container">
-      <p class="m-0 text-center text-white">Copyright &copy; Your
-        Website 2020</p>
+      <p class="m-0 text-center text-white">El Deporte On-Line &copy; 2020</p>
     </div>
     <!-- /.container -->
   </footer>

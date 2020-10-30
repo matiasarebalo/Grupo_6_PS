@@ -72,6 +72,16 @@ public class SubCategoriaService implements ISubCategoriaService {
 		}
 		return subCategorias;
 	}
+	
+	
+	public List<SubCategoriaModel> getSubcategoriasBySubCategoria(int idSubCategoria) {
+		List<SubCategoriaModel> subCategorias = new ArrayList<SubCategoriaModel>();
+		List<SubCategoria> sub = subCategoriaRepository.findBySubCategoria(idSubCategoria);
+		for(SubCategoria s: sub) {
+			subCategorias.add(subCategoriaConverter.entityToModel(s));
+		}
+		return subCategorias;
+	}
 
 	@Override
 	public void deleteDependencies(int idSubcategoria) {
