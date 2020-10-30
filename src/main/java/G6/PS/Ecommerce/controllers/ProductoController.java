@@ -367,8 +367,8 @@ public class ProductoController {
 		if (categorias != null) {
 			mAV.addObject("categorias", categorias);
 		}
-
-		List<SubCategoriaModel> subCategorias = subCategoriaService.getAll();
+		List<SubCategoriaModel> subCategorias = subCategoriaService.getSubcategoriasByCategoria(id);
+		//List<SubCategoriaModel> subCategorias = subCategoriaService.getAll();
 		if (subCategorias != null) {
 			mAV.addObject("subcategorias", subCategorias);
 		}
@@ -416,8 +416,11 @@ public class ProductoController {
 			mAV.addObject("categorias", categorias);
 		}
 
-		
 		List<SubCategoriaModel> subCategorias = subCategoriaService.getAll();
+		//List<SubCategoriaModel> subCategorias = subCategoriaService.getSubcategoriasBySubCategoria(id);
+		//o
+		//SubCategoriaModel sub = subCategoriaService.listarId(id);
+		//List<SubCategoriaModel> subCategorias = sub.getCategoria().getSubcategoria();
 		if (subCategorias != null) {
 			mAV.addObject("subcategorias", subCategorias);
 		}
@@ -428,6 +431,7 @@ public class ProductoController {
 		int page = params.get("page") != null ? (Integer.valueOf(params.get("page").toString()) - 1) : 0;
 		PageRequest pageRequest = PageRequest.of(page, 3, Sort.by(atributo));
 		Page<ProductoModel> pageProducto = productoService.findBySubCategoria(pageRequest,id);
+			
 		int totalPage = pageProducto.getTotalPages();
 		if (totalPage > 0) {
 			List<Integer> pages = IntStream.rangeClosed(1, totalPage).boxed().collect(Collectors.toList());
@@ -442,6 +446,7 @@ public class ProductoController {
 		model.addAttribute("scat_id", id);
 		model.addAttribute("subcategoria_elegida", subCategoriaService.listarId(id));
 
+		
 		
 		
 		//paginacion end
