@@ -395,6 +395,7 @@ public class ProductoController {
 		model.addAttribute("prev", page);
 		model.addAttribute("last", totalPage);
 		model.addAttribute("list", pageProducto.getContent());
+		model.addAttribute("tam", pageProducto.getContent().size());
 		model.addAttribute("cat_id", id);
 		model.addAttribute("categoria_elegida", categoriaService.listarId(id));
 
@@ -440,11 +441,13 @@ public class ProductoController {
 			model.addAttribute("pages", pages);
 
 		}
+		
 		model.addAttribute("current", page + 1);
 		model.addAttribute("next", page + 2);
 		model.addAttribute("prev", page);
 		model.addAttribute("last", totalPage);
 		model.addAttribute("list", pageProducto.getContent());
+		model.addAttribute("tam", pageProducto.getContent().size());
 		model.addAttribute("scat_id", id);
 		model.addAttribute("subcategoria_elegida", subCategoriaService.listarId(id));
 		
