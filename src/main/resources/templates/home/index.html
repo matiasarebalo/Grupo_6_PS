@@ -124,6 +124,7 @@
 								<h4 class="card-title">
 									<a th:text="${producto.descripcionCorta}" href="#"></a>
 								</h4>
+								<h5 th:text=" 'SKU: ' + ${producto.sku}"></h5>
 								<h5 th:text="'$' + ${producto.precio}"></h5>
 								<p th:text="${producto.descripcionLarga}" class="card-text"></p>
 							</div>
