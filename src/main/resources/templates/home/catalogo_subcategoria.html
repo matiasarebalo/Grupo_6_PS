@@ -36,32 +36,34 @@
 
 			<nav class="navbar navbar-expand-md navbar-dark bg-dark">
 
-				<div class="navbar-collapse collapse flex-shrink-1 flex-grow-0 order-last" id="navbar7">
-					<ul class="navbar-nav">
-						<a> Categorias</a>
-						<li th:each="categoria : ${categorias}" class="nav-item"><a
-							class="nav-link" th:text=${categoria.categoria}
-							th:href="@{|/productos/categoria/?id=${categoria.id}|}">Categoria</a>
-						</li>
-					</ul>
-				</div>
+				<div class="text-light " style="margin: 0px 120px;"> Categorias</div>
+
+				<ul class="navbar-nav ">
+
+					<li th:each="categoria : ${categorias}" class="nav-item mr-4">
+						<a class="nav-link" th:text=${categoria.categoria.toUpperCase()} th:href="@{|/productos/categoria/?id=${categoria.id}|}"></a>
+					</li>
+				</ul>
 			</nav>
+		
 
 	<!-- Page Content -->
 	<div class="container mt-5">
 
 		<div class="row">
+
 			<div class="col-lg-3">
 
-				<h1 th:text=${subcategoria_elegida.subCategoria} class="my-4"></h1>
-				<div class="list-group" th:each="subcategoria : ${subcategorias}">
+				<h1 th:text=${subcategoria_elegida.categoria.categoria.toUpperCase()} class="my-4"></h1>
+				<h5 class="my-4">Subcategorias</h5>
+				<div class="list-group" th:each="subcategoria : ${subCategorias}">
 
 					<a th:text=${subcategoria.subCategoria} th:href="@{|/productos/subcategoria/?id=${subcategoria.id}|}" class="list-group-item">Category 1</a> 
 
 				</div>
 
 			</div>
-			
+
 			<div class="col-lg-9">
 				<header class="border-bottom mb-4 pb-3">
 					<div class="form-inline">
@@ -69,7 +71,7 @@
 						<!-- Order by -->
 						<div class="dropdown show mr-5">
 							<a class="btn btn-secondary dropdown-toggle" href="#" role="button" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-							  Dropdown link
+								Ordenar por
 							</a>
 						  
 							<div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
@@ -161,26 +163,30 @@
 
 		</div>
 		<!-- /.container -->
-	
+
 		<nav aria-label="Page navigation example">
 			<ul class="pagination justify-content-center">
 
 				<li class="page-item"
 					th:classappend="${prev == 0 ? 'disabled': '' }"><a
-					class="page-link" th:href="@{|/productos/subcategoria/?id=${scat_id}&page=${prev}|}">Anterior</a>
+					class="page-link"
+					th:href="@{|/productos/categoria/?id=${cat_id}&page=${prev}|}">Anterior</a>
 				</li>
 				<li class="page-item" th:each="page : ${pages}"
 					th:classappend="${current == page ? 'active': '' }"><a
-					class="page-link" th:href="@{|/productos/subcategoria/?id=${scat_id}&page=${page}|}"
+					class="page-link"
+					th:href="@{|/productos/categoria/?id=${cat_id}&page=${page}|}"
 					th:text="${page}"></a>
 				<li class="page-item"
 					th:classappend="${current == last ? 'disabled': '' }"><a
-					class="page-link" th:href="@{|/productos/subcategoria/?id=${scat_id}&page=${next}|}">Proxima</a>
+					class="page-link"
+					th:href="@{|/productos/categoria/?id=${cat_id}&page=${next}|}">Proxima</a>
 				</li>
 
 			</ul>
 		</nav>
-			
+
+
 	</div>
 
 	<!-- Footer -->
@@ -219,5 +225,3 @@
 </body>
 </th:block>
 </html>
-
-

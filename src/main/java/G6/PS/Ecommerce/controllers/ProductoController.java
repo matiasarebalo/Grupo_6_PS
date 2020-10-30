@@ -337,6 +337,11 @@ public class ProductoController {
 
 		mAV.addObject("estrellas", estrellas);
 
+		List<CategoriaModel> categorias = categoriaService.getAll();
+		if (categorias != null) {
+			mAV.addObject("categorias", categorias);
+		}
+
 		return mAV;
 	}
 
@@ -410,20 +415,17 @@ public class ProductoController {
 			admin = true;
 		}
 		
-		
 		List<CategoriaModel> categorias = categoriaService.getAll();
 		if (categorias != null) {
 			mAV.addObject("categorias", categorias);
 		}
 
-		List<SubCategoriaModel> subCategorias = subCategoriaService.getAll();
-		//List<SubCategoriaModel> subCategorias = subCategoriaService.getSubcategoriasBySubCategoria(id);
-		//o
-		//SubCategoriaModel sub = subCategoriaService.listarId(id);
-		//List<SubCategoriaModel> subCategorias = sub.getCategoria().getSubcategoria();
-		if (subCategorias != null) {
-			mAV.addObject("subcategorias", subCategorias);
-		}
+		SubCategoriaModel sub = subCategoriaService.listarId(id);
+
+		List<SubCategoriaModel> subCategorias = subCategoriaService.getSubcategoriasByCategoria(sub.getCategoria().getId());
+		mAV.addObject("subCategorias", subCategorias);
+
+		sub.getCategoria().getSubcategoria();
 
 		mAV.addObject("admin", admin);
 		
@@ -445,15 +447,8 @@ public class ProductoController {
 		model.addAttribute("list", pageProducto.getContent());
 		model.addAttribute("scat_id", id);
 		model.addAttribute("subcategoria_elegida", subCategoriaService.listarId(id));
-
 		
-		
-		
-		//paginacion end
-//		List<ProductoModel> productos = productoService.findByCategoria(id);
-//		if(productos != null) {
-//			mAV.addObject("productos", productos);
-//		}
+		mAV.addObject("subcategoria_elegida", subCategoriaService.listarId(id));
 		return mAV;
 	}
 
@@ -571,6 +566,11 @@ public class ProductoController {
 		List<EmbalajeModel> embalajes = embalajeService.getAll();
 
 		mAV.addObject("embalajes", embalajes);
+
+		List<CategoriaModel> categorias = categoriaService.getAll();
+		if (categorias != null) {
+			mAV.addObject("categorias", categorias);
+		}
 
 		return mAV;
 	}

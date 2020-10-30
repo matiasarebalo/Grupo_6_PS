@@ -36,44 +36,19 @@
 			
 			<nav th:if="${admin==false}" class="navbar navbar-expand-md navbar-dark bg-dark fixed-top"
 				 th:include="nav_user :: div"></nav>
-	
-
-				 <nav class="navbar navbar-expand-md navbar-dark bg-dark">
-    
     
 			<nav class="navbar navbar-expand-md navbar-dark bg-dark">
 
-			<div
-				class="navbar-collapse collapse flex-shrink-1 flex-grow-0 order-last"
-				id="navbar7">
-				<ul class="navbar-nav">
-												<a> Categorias</a>
-				
-					<li th:each="categoria : ${categorias}" class="nav-item"><a
-						class="nav-link" th:text=${categoria.categoria}
-						th:href="@{|/productos/categoria/?id=${categoria.id}|}">Categoria</a>
-					</li>
-				</ul>
-			</div>
-		</nav>
+				<div class="text-light " style="margin: 0px 120px;"> Categorias</div>
 
-		<nav class="navbar navbar-expand-md navbar-dark bg-dark">
-			<div
-				class="navbar-collapse collapse flex-shrink-1 flex-grow-0 order-last"
-				id="navbar7">
-				<ul class="navbar-nav">
-					<a> SubCategorias</a>
-					<li th:each="subcategoria : ${subcategorias}" class="nav-item">
-						<a class="nav-link" th:text=${subcategoria.subCategoria}
-						th:href="@{|/productos/subcategoria/?id=${subcategoria.id}|}">Subcategoria</a>
+				<ul class="navbar-nav ">
+
+					<li th:each="categoria : ${categorias}" class="nav-item mr-4">
+						<a class="nav-link" th:text=${categoria.categoria.toUpperCase()} th:href="@{|/productos/categoria/?id=${categoria.id}|}"></a>
 					</li>
 				</ul>
-			</div>
-		</nav>
+			</nav>
 					
-					
-					
-				</nav>
 	<!-- Page Content -->
 	<div class="container">
 
