@@ -46,6 +46,7 @@
 									<th class="cell100 column5">Precio</th>
 									<th class="cell100 column6">Editar</th>
 									<th class="cell100 column7">Eliminar</th>
+									<th class="cell100 ">Descuento</th>
 								</tr>
 							</thead>
 						</table>
@@ -60,15 +61,57 @@
 									<td th:text="${producto.subCategoria.subCategoria}" class="cell100 column3"></td>
 									<td th:text="${producto.descripcionCorta}" class="cell100 column4"></td>
 									<td th:text="${producto.precio}" class="cell100 column5"></td>
-									<td class="cell100 column7">
+									
+									<td class="cell100 column6">
 										<form th:action="@{/productos/editar/{id}(id=${producto.id})}" method="get" role="form">
 											<input class="icon-borrar" type="image" src="../../img/edit.png"  title="Editar" />
 										</form>
 									</td>
+
 									<td class="cell100 column7">
 										<form th:action="@{/productos/eliminar/{id}(id=${producto.id})}" method="get" role="form">
 											<input class="icon-borrar" type="image" src="../../img/borrar.svg"  title="Eliminar" />
 										</form>
+									</td>
+
+									<td class="cell100 column8">
+										<button type="button" class="btn btn-inverse" data-toggle="modal" data-target=".bd-example-modal-sm">
+											<i class="fas fa-percent"></i>
+										</button>
+										<!-- Small modal -->
+										
+										
+											<div class="modal fade bd-example-modal-sm" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel" aria-hidden="true">
+												<div class="modal-dialog modal-sm">
+													<div class="modal-content">
+														
+														<form class="form-inline" method="POST" th:action="@{/productos/descuento/{id}(id=${producto.id})}">
+
+														<div class="modal-header">
+														<h5 class="modal-title" id="exampleModalLabel">Ingrese el porcentaje del Descuento a realizar</h5>
+														<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+															<span aria-hidden="true">&times;</span>
+														</button>
+														</div>
+
+														<div class="modal-body">
+															
+															<div class="form-group">
+													
+
+																<div class="modal-footer">
+																<button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
+																<button type="submit" class="btn btn-primary">Enviar</button>
+																</div>
+													
+															</div>
+														</div>
+													</form>
+
+													</div>
+												</div>
+											</div>
+											
 									</td>
 								</tr>
 
@@ -81,6 +124,8 @@
 		</div>
 	</div>
 
+	
+	
 	<!-- Footer -->
 	<footer class="py-5 bg-dark">
 		<div class="container">

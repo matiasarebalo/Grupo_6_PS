@@ -176,7 +176,7 @@ th, td {
 }
 
 .column1 {
-  width: 8%;
+  width: 10%;
   padding-left: 40px;
 }
 
@@ -185,11 +185,11 @@ th, td {
 }
 
 .column3 {
-  width: 22%;
+  width: 13%;
 }
 
 .column4 {
-  width: 19%;
+  width: 13%;
 }
 
 .column5 {
@@ -204,8 +204,12 @@ th, td {
   width: 13%;
 }
 
-.icon-borrar {
+.column8 {
   width: 13%;
+}
+
+.icon-borrar {
+  width: 15%;
 }
 
 .table100-head th {
