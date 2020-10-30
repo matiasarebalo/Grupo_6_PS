@@ -15,21 +15,35 @@ LOCK TABLES `user_role` WRITE;
 INSERT INTO `user_role` VALUES (1,'2020-05-23 00:00:00.000000','ROLE_ADMIN','2020-05-23 00:00:00.000000',1),(2,'2020-05-30 13:28:24.436000','ROLE_GERENTE','2020-05-30 13:28:24.436000',2),(3,'2020-05-30 13:29:01.366000','ROLE_GERENTE','2020-05-30 13:29:01.366000',3),(4,'2020-05-30 13:30:48.143000','ROLE_GERENTE','2020-05-30 13:30:48.143000',4),(5,'2020-05-30 13:32:08.497000','ROLE_GERENTE','2020-05-30 13:32:08.497000',5),(6,'2020-05-30 13:32:53.008000','ROLE_GERENTE','2020-05-30 13:32:53.008000',6),(7,'2020-05-30 13:46:55.439000','ROLE_VENDEDOR','2020-05-30 13:46:55.440000',7),(8,'2020-05-30 13:48:21.732000','ROLE_VENDEDOR','2020-05-30 13:48:21.732000',8),(9,'2020-05-30 13:49:34.542000','ROLE_VENDEDOR','2020-05-30 13:49:34.542000',9),(10,'2020-05-30 13:51:14.525000','ROLE_VENDEDOR','2020-05-30 13:51:14.525000',10),(11,'2020-05-30 13:51:53.567000','ROLE_VENDEDOR','2020-05-30 13:51:53.567000',11),(12,'2020-05-30 13:55:07.053000','ROLE_VENDEDOR','2020-05-30 13:55:07.053000',12),(13,'2020-05-30 13:58:22.715000','ROLE_VENDEDOR','2020-05-30 13:58:22.715000',13),(14,'2020-05-30 13:59:06.478000','ROLE_VENDEDOR','2020-05-30 13:59:06.478000',14),(15,'2020-05-30 14:00:32.330000','ROLE_VENDEDOR','2020-05-30 14:00:32.330000',15),(16,'2020-05-30 14:02:41.024000','ROLE_VENDEDOR','2020-05-30 14:02:41.024000',16),(17,'2020-05-30 14:03:51.184000','ROLE_VENDEDOR','2020-05-30 14:03:51.185000',17),(18,'2020-05-30 14:04:24.627000','ROLE_VENDEDOR','2020-05-30 14:04:24.627000',18),(19,'2020-05-30 14:05:48.652000','ROLE_VENDEDOR','2020-05-30 14:05:48.652000',19),(20,'2020-05-30 14:07:32.501000','ROLE_VENDEDOR','2020-05-30 14:07:32.501000',20),(21,'2020-05-30 14:09:22.205000','ROLE_VENDEDOR','2020-05-30 14:09:22.205000',21);
 UNLOCK TABLES;
 
-insert into categoria values(11,"tecnologia");
-insert into categoria values(12,"deporte");
+INSERT INTO categoria VALUES (1, 'remera');
+INSERT INTO subcategoria VALUES (1, 'training', 1);
+INSERT INTO subcategoria VALUES (2, 'ciclismo', 1);
 
-insert into subcategoria values (12,"zapatillas",12);
-insert into subcategoria values (10,"remeras",12);
+INSERT INTO categoria VALUES (2, 'zapatilla');
+INSERT INTO subcategoria VALUES (3, 'running', 2);
+INSERT INTO subcategoria VALUES (4, 'urban', 2);
 
-insert into producto values (100, "zapatillas Adidas", "Zapatillas Runfalcon adidas", false, 5299,"asd","/img/zapatillas2.jpg",true, 12);
-insert into producto values (1102, "zapatillas running", "Zapatillas Runfalcon Running De Hombre", true, 3749,"asd","/img/zapatillas1.jpg", true , 12);
-insert into producto values (321, "remera nike", "Remera Nike Breathe Ss Hyper Dry", true, 3999,"asd","/img/remera1.jpg", true, 10);
-insert into producto values (12354, "Zapatillas court", "ZAPATILLAS VL COURT 2.0", true, 6499,"asd","/img/zapatillas3.jpg", true, 12);
-insert into embalaje values (1,16,12, 0.5, 50, 5);
-insert into embalaje values (2,28,15, 1, 100, 6.5);
-insert into embalaje values (3,27,22, 1.5, 150, 7.5);
-insert into embalaje values (4,32,20, 2, 200, 13);
-insert into pedido values(321803, 1, 12345, 3999, "Santa Barbara 213", "franco@gmail.com","Efectivo", "Franco Molina", 2, 321 );
+INSERT INTO producto VALUES (1,'REMERA ADIDAS 25/7 RISE UP N RUN PARLEY BLANCA','Esta Remera se ha confeccionado en un tejido suave y transpirable con hilo reciclado proveniente del plástico recogido en playas y zonas costeras antes de que llegue al océano.',true,4299,'40EM-18595490','/img/100020fl6818001-1.jpg',true,1);
+INSERT INTO producto VALUES (2,'REMERA UNDER ARMOUR TECH GRAPHIC MUJER LILA','La tecnología Heatgear es un tejido súper transpirable que absorbe el sudor y regula la temperatura del cuerpo para que te sientas más fresca, seca y ligera que nunca.',false,2799,'20EM-1000090102','/img/remera-under-armour-tech-graphic-mujer-lila-700021356282694-1.jpg',true,1);
+INSERT INTO producto VALUES (3,'REMERA UNDER ARMOUR SPORTSTYLE LEFT CHEST AZUL','La tecnología Heatgear es un tejido súper transpirable que absorbe el sudor y regula la temperatura del cuerpo para que te sientas más fresca, seca y ligera que nunca.',true,2799,'20EM1536513061','/img/remera-under-armour-sportstyle-left-chest-azul-700021354534438-1.jpg',true,1);
+INSERT INTO producto VALUES (4,'CASACA VAIRO RAVEN MUJER NEGRA','Lográ tus objetivos con la comodidad y el estilo único de VAIRO.',true,1719,'10AS-416757829','/img/715020222001017-1_1.jpg',true,2);
+INSERT INTO producto VALUES (5,'ZAPATILLA ADIDAS ADIZERO ADIOS 5 ROSA','Adopta la velocidad con estas zapatillas ADIDAS diseñadas para entrenar y competir rápidamente. Una parte superior de malla de peso pluma tiene un sistema de ajuste interno para un bloqueo con una sensación de apenas presencia.',true,15499,'10AP-505375209','/img/100010eg4667001-1.jpg',true,3);
+INSERT INTO producto VALUES (6,'ZAPATILLA ADIDAS RUNFALCON MUJER BLANCA','Una mediasuela liviana amortigua tus pasos, mientras la suela de caucho con agarre te proporciona tracción en superficies interiores o exteriores.',false,5799,'50AP760204175','/img/zapatilla-adidas-runfalcon-mujer-blanca-100010fw5142001-1.jpg',true,3);
+INSERT INTO producto VALUES (7,'ZAPATILLA ADIDAS VL COURT 2.0 NEGRA','Debido a la naturaleza de exclusiva calidad de la piel y el ante, podría ocurrir que en algunos casos el producto destiñera levemente, sobre todo en condiciones de humedad.',true,7199,'70AP342280525','/img/100010eg3965001-1.jpg',true,4);
+
+INSERT INTO atributos VALUES (1,'color','blanca',1);
+INSERT INTO atributos VALUES (2,'color','lila',2);
+INSERT INTO atributos VALUES (3,'color','azul',3);
+INSERT INTO atributos VALUES (4,'color','negra',4);
+INSERT INTO atributos VALUES (5,'color','rosa',5);
+INSERT INTO atributos VALUES (6,'color','blanca',6);
+INSERT INTO atributos VALUES (7,'color','negra',7);
+
+INSERT INTO embalaje values (1,16,12, 0.5, 50, 5);
+INSERT INTO embalaje values (2,28,15, 1, 100, 6.5);
+INSERT INTO embalaje values (3,27,22, 1.5, 150, 7.5);
+INSERT INTO embalaje values (4,32,20, 2, 200, 13);
+
 
 
 commit;
