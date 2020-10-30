@@ -23,10 +23,10 @@ public class Producto {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private int id;
 
-	@Column(name = "descripcionCorta", nullable = false, length = 20)
+	@Column(name = "descripcionCorta", nullable = false, length = 255)
 	private String descripcionCorta;
 
-	@Column(name = "descripcionLarga", nullable = false, length = 40)
+	@Column(name = "descripcionLarga", nullable = false, length = 255)
 	private String descripcionLarga;
 
 	@JsonManagedReference
