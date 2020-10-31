@@ -54,6 +54,11 @@ public class InicioController {
 			mAV.addObject("productos", productos);
 		}
 		
+		List<ProductoModel> productosPromocion = productoService.findEnPromocion();
+		if(productosPromocion!= null){
+			mAV.addObject("productosPromocion", productosPromocion);
+		}
+		
 		List<CategoriaModel> categorias = categoriaService.getAll();
 		if (categorias != null) {
 			mAV.addObject("categorias", categorias);

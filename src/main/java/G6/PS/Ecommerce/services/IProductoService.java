@@ -6,6 +6,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.web.multipart.MultipartFile;
 
+import G6.PS.Ecommerce.entities.Producto;
 import G6.PS.Ecommerce.models.ProductoModel;
 
 
@@ -40,4 +41,6 @@ public interface IProductoService {
 	Page<ProductoModel> findBySubCategoria(Pageable pageable,int id);
 	
 	public boolean saveAll(MultipartFile file);
+	
+	public List<ProductoModel> findEnPromocion();
 }

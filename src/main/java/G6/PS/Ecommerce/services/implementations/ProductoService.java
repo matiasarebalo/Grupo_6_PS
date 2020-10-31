@@ -151,6 +151,17 @@ public class ProductoService implements IProductoService {
 		}
 		return pM;
 	}
+	
+	public List<ProductoModel> findEnPromocion() {
+		List<Producto> productos = productoRepository.findEnPromocion();
+		List<ProductoModel> pM = new ArrayList<ProductoModel>();
+		for (Producto p : productos) {
+			ProductoModel pModel = productoConverter.entityToModel(p);
+			pModel.setProdAtributos(atributosService.getByProducto(pModel.getId()));
+			pM.add(calcularPrecioTachado(pModel));
+		}
+		return pM;
+	}
 
 	@Override
 	public List<ProductoModel> findDependency(int id) {
