@@ -546,7 +546,7 @@ public class ProductoController {
 	    }
 
 	@GetMapping("/articulo/{id}/compra")
-	public ModelAndView productoCompra(@PathVariable("id") int id) {
+	public ModelAndView productoCompra(@PathVariable("id") int id, RedirectAttributes redirect) {
 		ModelAndView mAV = new ModelAndView(ViewRouteHelper.CHECKOUT);
 		// compruebo si se logueo el admin y en tal caso muestro el menu
 		// correspondiente, el resto de la pagina permanece igual
@@ -582,9 +582,8 @@ public class ProductoController {
 	
 	@PostMapping("/articulo/compra/codDescuento/{id}")
 	public ModelAndView descuento(@PathVariable("id") int id,@Valid @ModelAttribute("pedido") PedidoModel pedidoModel, BindingResult result,RedirectAttributes redirect) {
+
 		ModelAndView mAV = new ModelAndView(ViewRouteHelper.CHECKOUT);
-		// compruebo si se logueo el admin y en tal caso muestro el menu
-		// correspondiente, el resto de la pagina permanece igual
 		
 		String roleString = SecurityContextHolder.getContext().getAuthentication().getAuthorities().toString();
 		boolean admin = false;
@@ -592,35 +591,60 @@ public class ProductoController {
 			admin = true;
 		}
 		mAV.addObject("admin", admin);
+
+		int codigo=0;
+		mAV.addObject("codigo", codigo);
 		
-		int codigo= Integer.parseInt(pedidoModel.getCodigoPromocion());
+		PedidoModel pedido = new PedidoModel();
+		EmbalajeModel embalaje = new EmbalajeModel();
+		pedido.setEmbalaje(embalaje);
+		
+
+		List<EmbalajeModel> embalajes = embalajeService.getAll();
+
+		mAV.addObject("embalajes", embalajes);
+
+		List<CategoriaModel> categorias = categoriaService.getAll();
+		if (categorias != null) {
+			mAV.addObject("categorias", categorias);
+		}
+		
+		int codigoVerif = Integer.parseInt(pedidoModel.getCodigoPromocion());
 		ProductoModel articulo = productoService.listarId(id);
-		if(this.esPrimo(codigo)) {
-			if(codigo%2==0) {
+
+		if(this.esPrimo(codigoVerif)) {
+			pedido.setCodigoPromocion(pedidoModel.getCodigoPromocion());
+			if(codigoVerif%2 == 0) 
+			{
 				articulo.setPrecio(articulo.getPrecio()-(articulo.getPrecio()*5/100));
-			}else {
-				articulo.setPrecio(articulo.getPrecio()-(articulo.getPrecio()*10/100));
-			
-				mAV.addObject("producto", articulo);
-				mAV.addObject("pedido", pedidoModel);
+			}
+			else{
+				articulo.setPrecio((articulo.getPrecio()-(articulo.getPrecio()*10/100)));
 			}
 		
 		}else {
 			mAV.addObject("mensaje", true);
-
-			mAV.addObject("producto", articulo);
-			mAV.addObject("pedido", new PedidoModel());
-	
 		}
-		
+		mAV.addObject("pedido", pedido);
+		mAV.addObject("prodId", articulo.getId());
+		mAV.addObject("producto", articulo);
+
 		return mAV;
 	
 	}
 	
 
 	@PostMapping("/articulo/{id}/compra/save")
-	public String remitoSave(@PathVariable("id") int id, @Valid @ModelAttribute("pedido") PedidoModel pedidoModel, BindingResult result,RedirectAttributes redirect)
+	public ModelAndView remitoSave(@PathVariable("id") int id, @Valid @ModelAttribute("pedido") PedidoModel pedidoModel, BindingResult result,RedirectAttributes redirect)
 			throws UnsupportedEncodingException, MessagingException {
+		ModelAndView mAV = new ModelAndView(ViewRouteHelper.CHECKOUT);
+
+		String roleString = SecurityContextHolder.getContext().getAuthentication().getAuthorities().toString();
+		boolean admin = false;
+		if (roleString.equals("[ROLE_ADMIN]")) {
+			admin = true;
+		}
+		mAV.addObject("admin", admin);
 
 		Map<String, Double> zonas = new HashMap<String, Double>();
 		zonas.put("GBA", 500.00);
@@ -635,21 +659,43 @@ public class ProductoController {
 				}
 		 	}
 		}
-
+		ProductoModel articulo = productoService.listarId(id);
 		EmbalajeModel embalaje = embalajeService.listarId(pedidoModel.getEmbalaje().getId());
 		pedidoModel.setEmbalaje(embalaje);
-
-
+		
 		pedidoModel.setCosto(valorZona + embalaje.getPrecio());
-
-		ProductoModel articulo = productoService.listarId(id);
 		pedidoModel.setProducto(articulo);
 		pedidoService.insertOrUpdate(pedidoModel);
 
-		mandarMailCompra(pedidoModel);
-		redirect.addFlashAttribute("message", "Success");
+		//resto descuento al precio del producto, segun codPromocion
 		
-		return "redirect:/";
+
+		if(pedidoModel.getCodigoPromocion() != null){
+			int codigoVerif = Integer.parseInt(pedidoModel.getCodigoPromocion());
+			if( codigoVerif%2 == 0) 
+			{
+				articulo.setPrecio(articulo.getPrecio()-(articulo.getPrecio()*5/100));
+			}
+			else{
+				articulo.setPrecio((articulo.getPrecio()-(articulo.getPrecio()*10/100)));
+			}
+		}
+
+		//mandarMailCompra(pedidoModel);
+		mAV.addObject("message", true);
+
+		mAV.addObject("prodId", articulo.getId());
+		articulo.setPrecio((float)pedidoModel.getCosto() + articulo.getPrecio());
+		mAV.addObject("producto", articulo);
+		mAV.addObject("pedido", pedidoModel);
+		List<CategoriaModel> categorias = categoriaService.getAll();
+		if (categorias != null) {
+			mAV.addObject("categorias", categorias);
+		}
+		List<EmbalajeModel> embalajes = embalajeService.getAll();
+
+		mAV.addObject("embalajes", embalajes);
+		return mAV;
 	}
 	
 	@GetMapping("/descuento/{id}")
@@ -693,15 +739,20 @@ public class ProductoController {
 		return mAV;
 	}
 
-	public boolean esPrimo(int numero) { 
-	int contador = 2;
-			boolean primo=true;
-
-	while ((primo) && (contador!=numero)){
-		if (numero % contador == 0)
-		primo = false;
-		contador++;}
-	return primo;
+	private boolean esPrimo(int numero) { 
+		Boolean esPrimoActual = true;
+		if(numero<2)
+		{
+			esPrimoActual = false;
+		}
+		else
+		{
+			for(int x=2; x*x<=numero; x++)
+			{
+				if( numero%x==0 ){esPrimoActual = false;break;}
+			}
+		}
+		return esPrimoActual;
 	}
 
 	private void mandarMailCompra(PedidoModel pedido)throws MessagingException, UnsupportedEncodingException{

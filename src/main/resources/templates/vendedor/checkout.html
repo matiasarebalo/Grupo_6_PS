@@ -48,7 +48,7 @@
 
         <div class="container mt-5">
             <a th:if="${mensaje}" id="alert-target"></a>
-
+            <a th:if="${message}" id="alert-success"></a>
             <div class="py-5 text-center">
                 <div class="row">
 
@@ -130,8 +130,8 @@
                                 <select class="custom-select d-block w-100" required th:field="*{embalaje.id}" 
                                 name="Embalaje" placeholder="Seleccione Embalaje" >	
 
-                                <option th:each="e : ${embalajes}"  th:value="${(e.id)}" th:text="'Peso  ' + ${e.peso}  + '  - Precio  '  + ${e.precio}"
-                                ></option>
+                                <option th:each="e : ${embalajes}"  th:value="${(e.id)}" th:text="'Peso  ' + ${e.peso}  + '  - Precio  '  + ${e.precio}">
+                                </option>
 
                             </select>
                                 <div class="invalid-feedback">
@@ -139,6 +139,10 @@
                                 </div>
                             </div>
                             <hr class="mb-4">
+
+                            <div  th:if="${pedido.codigoPromocion}" style="display: none;">
+                                <input type="text"  th:value="${(pedido.codigoPromocion)}" th:field="*{codigoPromocion}">
+                            </div>
 
                             <h4 class="mb-3">Pago</h4>
                         
@@ -246,6 +250,16 @@
     <!--===============================================================================================-->
     <script src="/vendor/bootstrap/js/popper.js"></script>
     <script src="/vendor/bootstrap/js/bootstrap.min.js"></script>
+    <!--===============================================================================================-->
+    <script src="/js/form-validation.js"></script>
+      <!--===============================================================================================-->
+     <!-- Bootstrap core JavaScript -->
+    <script src="/vendor/jquery/jquery.min.js"></script>
+    <script src="/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+
+
+    <script src="http://cdnjs.cloudflare.com/ajax/libs/jquery/latest/jquery.min.js"></script>
+    <script src="http://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/js/toastr.min.js"></script>
     <script>
         $('.js-pscroll').each(function(){
             var ps = new PerfectScrollbar(this);
@@ -282,23 +296,12 @@
         $("#alert-target").show(function () {
         toastr.error("Codigo de descuento erroneo")
         });
+
+        $("#alert-success").show(function () {
+			toastr.success("La compra se ha realizado correctamente")
+		});
     </script>
-    <!--===============================================================================================-->
-    <script src="/js/form-validation.js"></script>
-      <!--===============================================================================================-->
-     <!-- Bootstrap core JavaScript -->
-  <script src="/vendor/jquery/jquery.min.js"></script>
-  <script src="/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
-
-
-  <script src="http://cdnjs.cloudflare.com/ajax/libs/jquery/latest/jquery.min.js"></script>
-  <script src="http://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/js/toastr.min.js"></script>
-
-  <script>
-		$("#alert-target").show(function () {
-      toastr.error("Codigo de Descuento erroneo")
-      });    
-  </script>
+    
   
 
     </body>
