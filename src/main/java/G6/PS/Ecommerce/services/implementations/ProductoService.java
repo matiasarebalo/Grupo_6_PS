@@ -63,7 +63,8 @@ public class ProductoService implements IProductoService {
 		List<Producto> productos = productoRepository.findAll();
 		List<ProductoModel> pM = new ArrayList<ProductoModel>();
 		for (Producto p : productos) {
-			pM.add(productoConverter.entityToModel(p));
+			ProductoModel pModel = productoConverter.entityToModel(p);
+			pM.add(calcularPrecioTachado(pModel));
 		}
 		return pM;
 	}
@@ -96,7 +97,8 @@ public class ProductoService implements IProductoService {
 		if (producto == null) {
 			return null;
 		}
-		return productoConverter.entityToModel(producto);
+		ProductoModel pModel = productoConverter.entityToModel(producto);
+		return calcularPrecioTachado(pModel);
 	}
 
 	@Override
@@ -118,7 +120,8 @@ public class ProductoService implements IProductoService {
 		List<Producto> productos = productoRepository.findDestacados();
 		List<ProductoModel> pM = new ArrayList<ProductoModel>();
 		for (Producto p : productos) {
-			pM.add(productoConverter.entityToModel(p));
+			ProductoModel pModel = productoConverter.entityToModel(p);
+			pM.add(calcularPrecioTachado(pModel));
 		}
 		return pM;
 	}
@@ -127,7 +130,8 @@ public class ProductoService implements IProductoService {
 		List<Producto> productos = productoRepository.findBySubCategoria(id);
 		List<ProductoModel> pM = new ArrayList<ProductoModel>();
 		for (Producto p : productos) {
-			pM.add(productoConverter.entityToModel(p));
+			ProductoModel pModel = productoConverter.entityToModel(p);
+			pM.add(calcularPrecioTachado(pModel));
 		}
 		return pM;
 	}
@@ -136,7 +140,8 @@ public class ProductoService implements IProductoService {
 		List<Producto> productos = productoRepository.findRelacionados(id_articulo, id_sub);
 		List<ProductoModel> pM = new ArrayList<ProductoModel>();
 		for (Producto p : productos) {
-			pM.add(productoConverter.entityToModel(p));
+			ProductoModel pModel = productoConverter.entityToModel(p);
+			pM.add(calcularPrecioTachado(pModel));
 		}
 		return pM;
 	}
@@ -241,6 +246,13 @@ public class ProductoService implements IProductoService {
 		} else {
 			return null;
 		}
+	}
+
+	private ProductoModel calcularPrecioTachado(ProductoModel producto) {
+		if(producto.getDescuento() != 0){
+			producto.setPrecioTachado( producto.getPrecio() + ((producto.getPrecio()*producto.getDescuento())/100));
+		}
+		return producto;
 	}
 
 	public String generarSku(ProductoModel productoModel) {

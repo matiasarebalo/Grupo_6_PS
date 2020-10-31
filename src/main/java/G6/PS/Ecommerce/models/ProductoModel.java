@@ -17,13 +17,14 @@ public class ProductoModel {
 	private List<AtributosModel> prodAtributos;
 	private MultipartFile file;
 	private boolean visible;
-
-
+	private float descuento;
 	
+	private float precioTachado;
+
 	public ProductoModel() {}
 
 	public ProductoModel(int id, String descripcionCorta, String descripcionLarga, SubCategoriaModel subCategoria, String urlImagen, String sku,
-					float precio, boolean destacado, boolean visible) {
+					float precio, boolean destacado, boolean visible, float descuento) {
 		super();
 		this.id = id;
 		this.descripcionCorta = descripcionCorta;
@@ -34,6 +35,7 @@ public class ProductoModel {
 		this.precio = precio;
 		this.destacado = destacado;
 		this.visible = visible;
+		this.descuento = descuento;
 	}
 
 	public int getId() {
@@ -124,4 +126,21 @@ public class ProductoModel {
 		this.visible = visible;
 	}
 
+	public float getDescuento() {
+		return descuento;
+	}
+
+	public void setDescuento(float descuento) {
+		this.descuento = descuento;
+	}
+
+	public float getPrecioTachado() {
+		return precioTachado;
+	}
+
+	public void setPrecioTachado(float precioTachado) {
+		this.precioTachado = precioTachado;
+	}
+
+	
 }

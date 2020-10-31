@@ -30,4 +30,6 @@ public class ViewRouteHelper {
 	
 	public final static String CHECKOUT = "vendedor/checkout"; 
 
+	public final static String DESCUENTO = "vendedor/descuento"; 
+
 }

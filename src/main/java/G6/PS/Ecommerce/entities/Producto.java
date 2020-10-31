@@ -54,11 +54,13 @@ public class Producto {
 	@OneToMany(fetch = FetchType.LAZY, mappedBy = "producto")
 	private List<Pedido> pedidos;
 
+	private float descuento;
+
 	public Producto() {
 	}
 
 	public Producto(int id, String descripcionCorta, String descripcionLarga, SubCategoria subCategoria,
-			String urlImagen, String sku, float precio, boolean destacado, boolean visible) {
+			String urlImagen, String sku, float precio, boolean destacado, boolean visible, float descuento ) {
 		super();
 		this.id = id;
 		this.descripcionCorta = descripcionCorta;
@@ -69,6 +71,7 @@ public class Producto {
 		this.precio = precio;
 		this.destacado = destacado;
 		this.visible = visible;
+		this.descuento = descuento;
 	}
 
 	public int getId() {
@@ -158,8 +161,15 @@ public class Producto {
 	public void setPedidos(List<Pedido> pedidos) {
 		this.pedidos = pedidos;
 	}
-	
 
+	public float getDescuento() {
+		return descuento;
+	}
+
+	public void setDescuento(float descuento) {
+		this.descuento = descuento;
+	}
+	
 	@Override
 	public String toString() {
 		return "Producto [id=" + id + ", descripcionCorta=" + descripcionCorta + ", descripcionLarga="
@@ -167,7 +177,5 @@ public class Producto {
 				+ ", precio=" + precio + ", destacado=" + destacado + ", prodAtributos=" + prodAtributos + ", visible="
 				+ visible + ", pedidos=" + pedidos + "]";
 	}
-	
-	
 
 }

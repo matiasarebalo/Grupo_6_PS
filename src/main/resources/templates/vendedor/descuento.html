@@ -90,8 +90,36 @@
 		</div>
 	</div>
 
-	
-	
+		<div class="modal hide fade" id="myModal">
+			<div class="modal-dialog" role="document">
+				<div class="modal-content">
+						<div class="modal-header">
+						<h5 class="modal-title">Ingrese Descuento a realizar</h5>
+						<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+							<span aria-hidden="true">&times;</span>
+						</button>
+						</div>
+
+						<div class="modal-body">
+
+							<form  method="get" role="form" th:object="${prod}" th:action="@{/productos/descuentoRealizado/{id}(id=${prod.id})}">
+								<div class="form-group">
+									<label >Descuento %</label>
+									<input type="number" name="descuento" th:field="*{descuento}" min="0" max="99">
+								</div>
+
+								<div class="modal-footer">
+									<button type="submit" class="btn btn-primary">Enviar</button>
+									<button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
+								</div>
+							</form>
+						</div>
+
+						
+				</div>
+			</div>
+		</div>
+
 	<!-- Footer -->
 	<footer class="py-5 bg-dark">
     <div class="container">
@@ -117,7 +145,10 @@
 				ps.update();
 			})
 		});
-			
+		
+		$(window).on('load',function(){
+			$('#myModal').modal('show');
+		});
 		
 	</script>
 <!--===============================================================================================-->

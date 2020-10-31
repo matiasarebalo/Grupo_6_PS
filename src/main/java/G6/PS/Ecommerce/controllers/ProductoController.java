@@ -272,7 +272,6 @@ public class ProductoController {
 			e.printStackTrace();
 		}
 		productoModel.setUrlImagen("/img/" + foto.getOriginalFilename());
-		// TODO Codigo SKU
 		productoModel.setSubCategoria(subCategoriaService.listarId(productoModel.getSubCategoria().getId()));
 		ProductoModel pM=	productoService.insertOrUpdate(productoModel);
 		if(pM!=null) {	
@@ -307,8 +306,6 @@ public class ProductoController {
 	@GetMapping("/articulo/{id}")
 	public ModelAndView productoUnico(@PathVariable("id") int id) {
 		ModelAndView mAV = new ModelAndView(ViewRouteHelper.ARTICULO_UNICO);
-		// compruebo si se logueo el admin y en tal caso muestro el menu
-		// correspondiente, el resto de la pagina permanece igual
 		String roleString = SecurityContextHolder.getContext().getAuthentication().getAuthorities().toString();
 		boolean admin = false;
 		if (roleString.equals("[ROLE_ADMIN]")) {
@@ -319,8 +316,6 @@ public class ProductoController {
 		ProductoModel articulo = productoService.listarId(id);
 		mAV.addObject("producto", articulo);
 		
-		//List<ProductoModel> relacionados = productoService.findBySubCategoria(articulo.getSubCategoriaModel().getId());
-		
 		List<ProductoModel> relacionados = productoService.findRelacionados(articulo.getId(),articulo.getSubCategoria().getId());
 		mAV.addObject("relacionados", relacionados);
 		ComentarioModel comentarioModel = new ComentarioModel();
@@ -328,7 +323,7 @@ public class ProductoController {
 
 		List<ComentarioModel> comentarios = comentarioService.getByProducto(id);
 		mAV.addObject("comentarios", comentarios);
-
+		
 		double estrellas = 0;
 		for (ComentarioModel c : comentarios) {
 			estrellas += c.getValoracion();
@@ -399,10 +394,10 @@ public class ProductoController {
 		model.addAttribute("categoria_elegida", categoriaService.listarId(id));
 
 		//paginacion end
-//		List<ProductoModel> productos = productoService.findByCategoria(id);
-//		if(productos != null) {
-//			mAV.addObject("productos", productos);
-//		}
+		//		List<ProductoModel> productos = productoService.findByCategoria(id);
+		//		if(productos != null) {
+		//			mAV.addObject("productos", productos);
+		//		}
 		return mAV;
 	}
 
@@ -581,8 +576,6 @@ public class ProductoController {
 		// compruebo si se logueo el admin y en tal caso muestro el menu
 		// correspondiente, el resto de la pagina permanece igual
 		
-		
-		
 		String roleString = SecurityContextHolder.getContext().getAuthentication().getAuthorities().toString();
 		boolean admin = false;
 		if (roleString.equals("[ROLE_ADMIN]")) {
@@ -600,8 +593,6 @@ public class ProductoController {
 			
 				mAV.addObject("producto", articulo);
 				mAV.addObject("pedido", pedidoModel);
-				
-			
 			}
 		
 		}else {
@@ -611,14 +602,8 @@ public class ProductoController {
 			mAV.addObject("pedido", new PedidoModel());
 	
 		}
-		
-		
-		
-		return mAV;
 
-		
-		
-		
+		return mAV;
 	
 	}
 	
@@ -662,19 +647,60 @@ public class ProductoController {
 		pedidoService.insertOrUpdate(pedidoModel);
 
 		return mAV;
-		}
-	
-	 public boolean esPrimo(int numero) { 
-		int contador = 2;
-				boolean primo=true;
-
-		while ((primo) && (contador!=numero)){
-		  if (numero % contador == 0)
-		    primo = false;
-		  contador++;}
-		return primo;
-		}
-
 	}
+	
+	@GetMapping("/descuento/{id}")
+	public ModelAndView paginaDescuento(Model model, @PathVariable("id") int id, RedirectAttributes redirect) {
+		ModelAndView mAV = new ModelAndView(ViewRouteHelper.DESCUENTO);
+
+		String roleString = SecurityContextHolder.getContext().getAuthentication().getAuthorities().toString();
+		boolean admin = false;
+		if (roleString.equals("[ROLE_ADMIN]")) {
+			admin = true;
+		}
+		mAV.addObject("admin", admin);
+
+		List<ProductoModel> productos = productoService.getAll();
+		mAV.addObject("productos", productos);
+		 
+		mAV.addObject("prod", productoService.listarId(id));
+		return mAV;
+	}
+
+	@GetMapping("/descuentoRealizado/{id}")
+	public ModelAndView descuentoRealizado(Model model, @PathVariable("id") int id, @Valid @ModelAttribute("producto") ProductoModel productoModel, RedirectAttributes redirect) {
+		ModelAndView mAV = new ModelAndView(ViewRouteHelper.DESCUENTO);
+
+		String roleString = SecurityContextHolder.getContext().getAuthentication().getAuthorities().toString();
+		boolean admin = false;
+		if (roleString.equals("[ROLE_ADMIN]")) {
+			admin = true;
+		}
+		mAV.addObject("admin", admin);
+
+		ProductoModel producto = productoService.listarId(id);
+		producto.setPrecio( producto.getPrecio() - ((producto.getPrecio()*productoModel.getDescuento())/100) );	
+		producto.setDescuento(productoModel.getDescuento());
+		productoService.insertOrUpdate(producto);
+		List<ProductoModel> productos = productoService.getAll();
+
+		mAV.addObject("productos", productos);
+		 
+		mAV.addObject("prod", productoModel);
+		return mAV;
+	}
+
+	public boolean esPrimo(int numero) { 
+	int contador = 2;
+			boolean primo=true;
+
+	while ((primo) && (contador!=numero)){
+		if (numero % contador == 0)
+		primo = false;
+		contador++;}
+	return primo;
+	}
+
+}
 	
 
