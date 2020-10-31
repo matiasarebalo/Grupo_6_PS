@@ -165,7 +165,8 @@ public class ProductoService implements IProductoService {
 		List<Producto> productos = productoRepository.findBydescripcionCortaContainingIgnoreCase(producto);
 		List<ProductoModel> pM = new ArrayList<ProductoModel>();
 		for (Producto p : productos) {
-			pM.add(productoConverter.entityToModel(p));
+			ProductoModel pModel = productoConverter.entityToModel(p);
+			pM.add(calcularPrecioTachado(pModel));
 		}
 		return pM;
 	}
@@ -174,7 +175,8 @@ public class ProductoService implements IProductoService {
 		List<Producto> productos = productoRepository.findByCategoria(id);
 		List<ProductoModel> pM = new ArrayList<ProductoModel>();
 		for (Producto p : productos) {
-			pM.add(productoConverter.entityToModel(p));
+			ProductoModel pModel = productoConverter.entityToModel(p);
+			pM.add(calcularPrecioTachado(pModel));
 		}
 		return pM;
 	}
@@ -185,7 +187,7 @@ public class ProductoService implements IProductoService {
 		Page<ProductoModel> pages = productos.map(new Function<Producto, ProductoModel>() {
 			public ProductoModel apply(Producto producto) {
 				ProductoModel model = productoConverter.entityToModel(producto);
-				return model;
+				return calcularPrecioTachado(model);
 			}
 		});
 
@@ -198,7 +200,7 @@ public class ProductoService implements IProductoService {
 		Page<ProductoModel> pages = productos.map(new Function<Producto, ProductoModel>() {
 			public ProductoModel apply(Producto producto) {
 				ProductoModel model = productoConverter.entityToModel(producto);
-				return model;
+				return calcularPrecioTachado(model);
 			}
 		});
 
