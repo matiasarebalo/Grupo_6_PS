@@ -20,10 +20,7 @@
 
 <!-- Custom styles for this template -->
 <link href="css/shop-homepage.css" rel="stylesheet">
-
-<link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.2.0/css/font-awesome.min.css" rel="stylesheet">
-
-
+<link href="https://fonts.googleapis.com/css2?family=Fira+Sans+Condensed:ital,wght@1,600&display=swap" rel="stylesheet">
 
 
 
@@ -43,8 +40,8 @@
 
 				<ul class="navbar-nav ">
 
-					<li th:each="categoria : ${categorias}" class="nav-item mr-4">
-						<a class="nav-link" th:text=${categoria.categoria.toUpperCase()} th:href="@{|/productos/categoria/?id=${categoria.id}|}"></a>
+					<li th:each="categoria : ${categorias}" class="nav-item mr-4 text-capitalize">
+						<a class="nav-link" th:text=${categoria.categoria} th:href="@{|/productos/categoria/?id=${categoria.id}|}"></a>
 					</li>
 				</ul>
 			</nav>

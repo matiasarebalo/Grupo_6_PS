@@ -11,6 +11,7 @@
 
   <title>Small Business - Start Bootstrap Template</title>
 
+  <link href="https://fonts.googleapis.com/css2?family=Fira+Sans+Condensed:ital,wght@1,600&display=swap" rel="stylesheet">
   <!-- Bootstrap core CSS -->
   <link href="/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
 
@@ -24,13 +25,13 @@
 
 </head>
 
-<body>
+<body class="p-0 m-0">
 
   <!-- Navigation  user o admin segun corresponda-->
-  <nav th:if="${admin==true}" class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top"
+  <nav th:if="${admin==true}" class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top m-0" style="border-radius: 0px;" 
   th:include="nav_admin :: div"></nav>
 
-  <nav th:if="${admin==false}" class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top"
+  <nav th:if="${admin==false}" class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top m-0"
     th:include="nav_user :: div"></nav>
 
   <nav class="navbar navbar-expand-md navbar-dark bg-dark">
@@ -39,8 +40,8 @@
 
     <ul class="navbar-nav ">
 
-      <li th:each="categoria : ${categorias}" class="nav-item mr-4">
-        <a class="nav-link" th:text=${categoria.categoria.toUpperCase()} th:href="@{|/productos/categoria/?id=${categoria.id}|}"></a>
+      <li th:each="categoria : ${categorias}" class="nav-item mr-4 text-capitalize">
+        <a class="nav-link" th:text=${categoria.categoria} th:href="@{|/productos/categoria/?id=${categoria.id}|}"></a>
       </li>
     </ul>
   </nav>
@@ -56,19 +57,27 @@
         <img th:src="${producto.urlImagen}" class="img-fluid rounded mb-4 mb-lg-0" >
       </div>
       <!-- /.col-lg-8 -->
-      <div class="col-lg-5">
+      <div class="col-lg-5 ">
 
-        <h1 class="font-weight-light text-uppercase" th:text="${producto.descripcionCorta}"></h1>
-
-        <p th:text="${producto.descripcionLarga}"></p>
-        <p th:text=" 'SKU: ' + ${producto.sku}"></p>
+        <h1 class="font-weight-light text-uppercase mb-4" th:text="${producto.descripcionCorta}"></h1>
         
+        <h5 class="mb-4 lead" th:text=" 'SKU: ' + ${producto.sku}"></h5 >
         <div class="mr-3">
-          <span class="mr-3" th:text="'$' + ${producto.precio}"></span>
+          <span class="mr-3 font-weight-bold display-4" th:text="'$' + ${producto.precio}"></span>
           <span class="ml-5 text-danger" style="text-decoration: line-through;" th:if="${producto.descuento != 0}"th:text="'$' + ${producto.precioTachado}"></span>
         </div>
 
-        <table>
+        <hr/>
+        
+        <table class="mb-3">
+          <tr th:each="atr : ${producto.prodAtributos}">
+            <td class="pr-5 pb-2 text-capitalize lead" th:text="${atr.atributo } + ':'"></td>
+            <td class="pr-5 pb-2 text-capitalize lead" th:text="${atr.valor}"></td>
+          </tr>
+        </table>
+        <hr/>
+
+        <table class="mb-5">
           <tr>
             <td>
               <input id="input-3" name="input-3" th:value="${estrellas}" class="rating-loading">
@@ -76,9 +85,14 @@
           </tr>
         </table>
 
-        <a class="btn btn-primary" th:href="@{/productos/articulo/{id}/compra(id=${producto.id})}">Comprar Ahora</a>
+        <a class="btn btn-primary btn-lg" th:href="@{/productos/articulo/{id}/compra(id=${producto.id})}">Comprar Ahora</a>
       </div>
       <!-- /.col-md-4 -->
+      <h3 >Descripcion:</h3>
+      <h3 class="m-0 lead" th:text="${producto.descripcionLarga}"></h3>
+      
+      
+
     </div>
     <!-- /.row -->
 

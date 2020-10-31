@@ -196,6 +196,7 @@
 .rating-xs .caption {
     font-size: 12px;
 }
-body {
-    padding: 0px;
+
+.navbar {
+    border-radius: 0px;
 }

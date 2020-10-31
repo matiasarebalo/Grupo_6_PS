@@ -64,7 +64,9 @@ public class ProductoService implements IProductoService {
 		List<ProductoModel> pM = new ArrayList<ProductoModel>();
 		for (Producto p : productos) {
 			ProductoModel pModel = productoConverter.entityToModel(p);
+			pModel.setProdAtributos(atributosService.getByProducto(pModel.getId()));
 			pM.add(calcularPrecioTachado(pModel));
+			
 		}
 		return pM;
 	}
@@ -98,6 +100,7 @@ public class ProductoService implements IProductoService {
 			return null;
 		}
 		ProductoModel pModel = productoConverter.entityToModel(producto);
+		pModel.setProdAtributos(atributosService.getByProducto(id));
 		return calcularPrecioTachado(pModel);
 	}
 
@@ -121,6 +124,7 @@ public class ProductoService implements IProductoService {
 		List<ProductoModel> pM = new ArrayList<ProductoModel>();
 		for (Producto p : productos) {
 			ProductoModel pModel = productoConverter.entityToModel(p);
+			pModel.setProdAtributos(atributosService.getByProducto(pModel.getId()));
 			pM.add(calcularPrecioTachado(pModel));
 		}
 		return pM;
@@ -131,6 +135,7 @@ public class ProductoService implements IProductoService {
 		List<ProductoModel> pM = new ArrayList<ProductoModel>();
 		for (Producto p : productos) {
 			ProductoModel pModel = productoConverter.entityToModel(p);
+			pModel.setProdAtributos(atributosService.getByProducto(pModel.getId()));
 			pM.add(calcularPrecioTachado(pModel));
 		}
 		return pM;
@@ -141,6 +146,7 @@ public class ProductoService implements IProductoService {
 		List<ProductoModel> pM = new ArrayList<ProductoModel>();
 		for (Producto p : productos) {
 			ProductoModel pModel = productoConverter.entityToModel(p);
+			pModel.setProdAtributos(atributosService.getByProducto(pModel.getId()));
 			pM.add(calcularPrecioTachado(pModel));
 		}
 		return pM;
@@ -166,6 +172,7 @@ public class ProductoService implements IProductoService {
 		List<ProductoModel> pM = new ArrayList<ProductoModel>();
 		for (Producto p : productos) {
 			ProductoModel pModel = productoConverter.entityToModel(p);
+			pModel.setProdAtributos(atributosService.getByProducto(pModel.getId()));
 			pM.add(calcularPrecioTachado(pModel));
 		}
 		return pM;
@@ -176,6 +183,7 @@ public class ProductoService implements IProductoService {
 		List<ProductoModel> pM = new ArrayList<ProductoModel>();
 		for (Producto p : productos) {
 			ProductoModel pModel = productoConverter.entityToModel(p);
+			pModel.setProdAtributos(atributosService.getByProducto(pModel.getId()));
 			pM.add(calcularPrecioTachado(pModel));
 		}
 		return pM;
@@ -187,6 +195,7 @@ public class ProductoService implements IProductoService {
 		Page<ProductoModel> pages = productos.map(new Function<Producto, ProductoModel>() {
 			public ProductoModel apply(Producto producto) {
 				ProductoModel model = productoConverter.entityToModel(producto);
+				model.setProdAtributos(atributosService.getByProducto(model.getId()));
 				return calcularPrecioTachado(model);
 			}
 		});
@@ -200,6 +209,7 @@ public class ProductoService implements IProductoService {
 		Page<ProductoModel> pages = productos.map(new Function<Producto, ProductoModel>() {
 			public ProductoModel apply(Producto producto) {
 				ProductoModel model = productoConverter.entityToModel(producto);
+				model.setProdAtributos(atributosService.getByProducto(model.getId()));
 				return calcularPrecioTachado(model);
 			}
 		});
