@@ -18,6 +18,7 @@ public class ProductoModel {
 	private MultipartFile file;
 	private boolean visible;
 	private float descuento;
+	private boolean promocion;
 	
 	private float precioTachado;
 
@@ -38,6 +39,22 @@ public class ProductoModel {
 		this.descuento = descuento;
 	}
 
+	public ProductoModel(int id, String descripcionCorta, String descripcionLarga, SubCategoriaModel subCategoria, String urlImagen, String sku,
+			float precio, boolean destacado, boolean visible, float descuento, boolean promocion) {
+		super();
+		this.id = id;
+		this.descripcionCorta = descripcionCorta;
+		this.descripcionLarga = descripcionLarga;
+		this.subCategoria = subCategoria;
+		this.sku = sku;
+		this.urlImagen = urlImagen;
+		this.precio = precio;
+		this.destacado = destacado;
+		this.visible = visible;
+		this.descuento = descuento;
+		this.promocion = promocion;
+	}
+	
 	public int getId() {
 		return id;
 	}
@@ -140,6 +157,14 @@ public class ProductoModel {
 
 	public void setPrecioTachado(float precioTachado) {
 		this.precioTachado = precioTachado;
+	}
+
+	public boolean isPromocion() {
+		return promocion;
+	}
+
+	public void setPromocion(boolean promocion) {
+		this.promocion = promocion;
 	}
 
 	

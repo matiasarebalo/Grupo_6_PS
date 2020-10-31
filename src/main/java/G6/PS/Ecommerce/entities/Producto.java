@@ -55,6 +55,9 @@ public class Producto {
 	private List<Pedido> pedidos;
 
 	private float descuento;
+	
+	@Column(name = "promocion")
+	private boolean promocion;
 
 	public Producto() {
 	}
@@ -72,6 +75,22 @@ public class Producto {
 		this.destacado = destacado;
 		this.visible = visible;
 		this.descuento = descuento;
+	}
+	
+	public Producto(int id, String descripcionCorta, String descripcionLarga, SubCategoria subCategoria,
+			String urlImagen, String sku, float precio, boolean destacado, boolean visible, float descuento, boolean promocion ) {
+		super();
+		this.id = id;
+		this.descripcionCorta = descripcionCorta;
+		this.descripcionLarga = descripcionLarga;
+		this.subCategoria = subCategoria;
+		this.sku = sku;
+		this.urlImagen = urlImagen;
+		this.precio = precio;
+		this.destacado = destacado;
+		this.visible = visible;
+		this.descuento = descuento;
+		this.promocion = promocion;
 	}
 
 	public int getId() {
@@ -170,6 +189,16 @@ public class Producto {
 		this.descuento = descuento;
 	}
 	
+	
+	
+	public boolean isPromocion() {
+		return promocion;
+	}
+
+	public void setPromocion(boolean promocion) {
+		this.promocion = promocion;
+	}
+
 	@Override
 	public String toString() {
 		return "Producto [id=" + id + ", descripcionCorta=" + descripcionCorta + ", descripcionLarga="
