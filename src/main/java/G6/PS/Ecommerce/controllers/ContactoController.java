@@ -28,7 +28,6 @@ public class ContactoController {
         ModelAndView mAV = new ModelAndView(ViewRouteHelper.FORM_CONTACT);
 
         String roleString = SecurityContextHolder.getContext().getAuthentication().getAuthorities().toString();
-        System.out.println(roleString);
 
         boolean admin = false;
         if (roleString.equals("[ROLE_ADMIN]")) {
@@ -42,7 +41,7 @@ public class ContactoController {
     public ModelAndView submitContacto(HttpServletRequest request)
             throws MessagingException, UnsupportedEncodingException {
 
-        ModelAndView mAV = new ModelAndView(ViewRouteHelper.INDEX);
+        ModelAndView mAV = new ModelAndView( "redirect:/");
         String roleString = SecurityContextHolder.getContext().getAuthentication().getAuthorities().toString();
         System.out.println(roleString);
 

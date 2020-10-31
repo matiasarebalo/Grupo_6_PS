@@ -20,8 +20,9 @@
 
 <!-- Custom styles for this template -->
 <link href="css/shop-homepage.css" rel="stylesheet">
+<link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.2.0/css/font-awesome.min.css" rel="stylesheet">
 <link href="https://fonts.googleapis.com/css2?family=Fira+Sans+Condensed:ital,wght@1,600&display=swap" rel="stylesheet">
-
+<link rel="stylesheet" href="http://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/css/toastr.min.css">
 
 
 </head>
@@ -48,6 +49,8 @@
 					
 	<!-- Page Content -->
 	<div class="container">
+
+		<a th:if="${message}" id="alert-target"></a>
 
 		<div class="row">
 
@@ -133,6 +136,7 @@
 	<!-- Bootstrap core JavaScript -->
 	<script src="vendor/jquery/jquery.min.js"></script>
 	<script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+	<script src="http://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/js/toastr.min.js"></script>
 	
 	<script language="JavaScript" type="text/javascript">
 		$(document).ready(function(){
@@ -140,6 +144,11 @@
 			interval: 2000
 		  })
 		});    
+
+		$("#alert-target").show(function () {
+			toastr.success("La compra se ha realizado correctamente")
+		});    
+
 	  </script>
 
 

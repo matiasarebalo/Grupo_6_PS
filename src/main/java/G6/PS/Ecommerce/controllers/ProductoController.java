@@ -13,13 +13,14 @@ import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
+import java.io.UnsupportedEncodingException;
 
+import javax.mail.MessagingException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
-import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -49,9 +50,12 @@ import G6.PS.Ecommerce.services.IEmbalajeService;
 import G6.PS.Ecommerce.services.IPedidoService;
 import G6.PS.Ecommerce.services.IProductoService;
 import G6.PS.Ecommerce.services.ISubCategoriaService;
-import G6.PS.Ecommerce.entities.Pedido;
 import G6.PS.Ecommerce.helpers.ExcelHelper;
 import G6.PS.Ecommerce.helpers.ViewRouteHelper;
+import javax.mail.internet.MimeMessage;
+import org.springframework.mail.javamail.JavaMailSender;
+import org.springframework.mail.javamail.MimeMessageHelper;
+import org.springframework.mail.javamail.MimeMessageHelper;
 
 @Controller
 @RequestMapping("/productos")
@@ -86,6 +90,9 @@ public class ProductoController {
 	@Autowired
 	@Qualifier("embalajeService")
 	private IEmbalajeService embalajeService;
+
+	@Autowired
+    private JavaMailSender mailSender;
 
 	@GetMapping("/editar/{id}")
 	public ModelAndView editCategoria(@PathVariable("id") int id) {
@@ -569,7 +576,7 @@ public class ProductoController {
 		if (categorias != null) {
 			mAV.addObject("categorias", categorias);
 		}
-
+		
 		return mAV;
 	}
 	
@@ -605,24 +612,15 @@ public class ProductoController {
 			mAV.addObject("pedido", new PedidoModel());
 	
 		}
-
+		
 		return mAV;
 	
 	}
 	
 
 	@PostMapping("/articulo/{id}/compra/save")
-	public ModelAndView remitoSave(@PathVariable("id") int id, @Valid @ModelAttribute("pedido") PedidoModel pedidoModel, BindingResult result,RedirectAttributes redirect) {
-		ModelAndView mAV = new ModelAndView(ViewRouteHelper.CHECKOUT);
-		// compruebo si se logueo el admin y en tal caso muestro el menu
-		// correspondiente, el resto de la pagina permanece igual
-		
-		String roleString = SecurityContextHolder.getContext().getAuthentication().getAuthorities().toString();
-		boolean admin = false;
-		if (roleString.equals("[ROLE_ADMIN]")) {
-			admin = true;
-		}
-		mAV.addObject("admin", admin);
+	public String remitoSave(@PathVariable("id") int id, @Valid @ModelAttribute("pedido") PedidoModel pedidoModel, BindingResult result,RedirectAttributes redirect)
+			throws UnsupportedEncodingException, MessagingException {
 
 		Map<String, Double> zonas = new HashMap<String, Double>();
 		zonas.put("GBA", 500.00);
@@ -645,11 +643,13 @@ public class ProductoController {
 		pedidoModel.setCosto(valorZona + embalaje.getPrecio());
 
 		ProductoModel articulo = productoService.listarId(id);
-		mAV.addObject("producto", articulo);
 		pedidoModel.setProducto(articulo);
 		pedidoService.insertOrUpdate(pedidoModel);
 
-		return mAV;
+		mandarMailCompra(pedidoModel);
+		redirect.addFlashAttribute("message", "Success");
+		
+		return "redirect:/";
 	}
 	
 	@GetMapping("/descuento/{id}")
@@ -704,6 +704,32 @@ public class ProductoController {
 	return primo;
 	}
 
+	private void mandarMailCompra(PedidoModel pedido)throws MessagingException, UnsupportedEncodingException{
+
+        String firstName = pedido.getNombre_apellido();
+        String email = pedido.getEmail();
+		double costo = pedido.getCosto();
+		int nroPedido = pedido.getId();
+		String producto = pedido.getProducto().getDescripcionCorta();
+		
+
+        MimeMessage messageSend = mailSender.createMimeMessage();
+        MimeMessageHelper helper = new MimeMessageHelper(messageSend);
+
+        String mailSubject = firstName + " "  + "le notificamos la confirmacion de su compra";
+        String mailContent = "<p><b>Enviado por:</b>" + " " +  "El Deporte On-line" + "</p>";
+		mailContent += "<p><b>Email:</b>" + " " +  email + "</p>";
+		mailContent += "<p><b>Producto:</b>" + " " +  producto + "</p>";
+        mailContent += "<p><b>Precio total:</b>" + " $" +  costo + "</p>";
+		mailContent += "<p><b>EL PAGO POR TU COMPRA REALIZADA EN NUESTRO NEGOCIO, CUYO NÚMERO DE PEDIDO ES " + nroPedido + ", FUE CONFIRMADO. PRONTO ENVIAREMOS TU PEDIDO.</b>"+ "</p>";
+
+        helper.setFrom("el.deporte.online.g6@gmail.com", "El Deporte Online");
+        helper.setTo(email);
+        helper.setSubject(mailSubject);
+        helper.setText(mailContent, true);
+
+        mailSender.send(messageSend);
+	}
 }
 	
 
