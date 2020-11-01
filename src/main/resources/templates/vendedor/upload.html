@@ -1,27 +1,111 @@
-<!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org">
-<head>
-    <title>Spring Boot & Thymeleaf File Upload</title>
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css">
-</head>
-<body>
+<!doctype html>
+<html lang="en">
+<!-- con esto no tira advertencias de th: -->
+<th:block xmlns:th="http://www.thymeleaf.org">
+    <head>
+            <title>Finalizar Compra</title>
+            <meta charset="UTF-8">
+            <meta name="viewport" content="width=device-width, initial-scale=1">
+        <!--===============================================================================================-->
+            <link rel="stylesheet" type="text/css" href="/vendor/bootstrap/css/bootstrap.min.css">
+        <!--===============================================================================================-->
+            <link rel="stylesheet" type="text/css" href="/fonts/font-awesome-4.7.0/css/font-awesome.min.css">
+        <!--===============================================================================================-->
+            <link rel="stylesheet" type="text/css" href="/css/form-validation.css">
+            <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.1/css/all.css" integrity="sha384-50oBUHEmvpQ+1lW4y57PTFmhCaXp0ML5d60M1M7uH2+nqUivzIebhndOJK28anvf" crossorigin="anonymous">
+            
+            <link rel="stylesheet" href="http://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/css/toastr.min.css">
 
-<section class="my-5">
-    <div class="container">
-        <div class="row">
-            <div class="col-md-8 mx-auto">
-                <h2>Upload File Example</h2>
-                <p th:text="${message}" th:if="${message ne null}" class="alert alert-primary"></p>
-                <form method="post" th:action="@{/productos/upload}" enctype="multipart/form-data">
-                    <div class="form-group">
-                        <input type="file" name="file" class="form-control-file">
+    </head>
+
+    <body>
+                <!-- Navigation  user o admin segun corresponda-->
+        <nav th:if="${admin==true}" class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top"
+        th:include="nav_admin :: div"></nav>
+
+        <nav th:if="${admin==false}" class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top"
+            th:include="nav_user :: div"></nav>
+            
+        <div class="container mt-5"> 
+            <div class="row">
+                <div class="my-5 mt-5">
+                    <h3 class="display-4 mt-5 mb-5">Descarge el template vacio, cargue productos al excel y suba el archivo.</h3>
+                    <div class="container">
+                        <div class="row">
+                            <div class="col-sm mx-auto">
+
+                                <h4>Descargar template vacio</h4>
+                                <p th:text="${message}" th:if="${message ne null}" class="alert alert-primary"></p>
+                                <div>
+                                    <form method="get" th:action="@{/productos/template}" enctype="multipart/form-data">
+                                        <button type="submit" class="btn btn-primary">Descargar</button>
+                                    </form>
+                                </div>
+                                
+                            </div>
+
+                            <div class="col-sm mx-auto">
+
+                                <h4>Seleccionar Archivo de Carga Excel</h2>
+                                <p th:text="${message}" th:if="${message ne null}" class="alert alert-primary"></p>
+                                <form method="post" th:action="@{/productos/upload}" enctype="multipart/form-data">
+                                    <div class="form-group">
+                                        <input type="file" name="file" class="form-control-file">
+                                    </div>
+                                    <button type="submit" class="btn btn-primary">Subir Archivo </button>
+                                </form>
+                            </div>
+                            
+                        </div>
+                        
                     </div>
-                    <button type="submit" class="btn btn-primary">Upload File</button>
-                </form>
+                </div>
             </div>
+            
         </div>
-    </div>
-</section>
 
-</body>
+    </body>
+
+    <!-- Footer -->
+    <footer class="py-5 bg-dark">
+        <div class="container">
+        <p class="m-0 text-center text-white">El Deporte On-Line &copy; 2020</p>
+        </div>
+    <!-- /.container -->
+  </footer>
+
+    <!--===============================================================================================-->	
+    <script src="/vendor/jquery/jquery-3.2.1.min.js"></script>
+    <!--===============================================================================================-->
+    <script src="/vendor/bootstrap/js/popper.js"></script>
+    <script src="/vendor/bootstrap/js/bootstrap.min.js"></script>
+    <!--===============================================================================================-->
+    <script src="/js/form-validation.js"></script>
+      <!--===============================================================================================-->
+     <!-- Bootstrap core JavaScript -->
+    <script src="/vendor/jquery/jquery.min.js"></script>
+    <script src="/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+
+
+    <script src="http://cdnjs.cloudflare.com/ajax/libs/jquery/latest/jquery.min.js"></script>
+    <script src="http://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/js/toastr.min.js"></script>
+    <script>
+        $('.js-pscroll').each(function(){
+            var ps = new PerfectScrollbar(this);
+
+            $(window).on('resize', function(){
+                ps.update();
+            })
+        });
+            
+        $(document).ready(function(){
+            $('.check').click(function() {
+                $('.check').not(this).prop('checked', false);
+            });
+        });
+    </script>
+    
+  
+
+    </body>
 </html>

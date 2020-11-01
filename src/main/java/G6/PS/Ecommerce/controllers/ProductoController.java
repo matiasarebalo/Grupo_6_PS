@@ -2,6 +2,7 @@ package G6.PS.Ecommerce.controllers;
 
 import java.io.File;
 import java.io.IOException;
+import java.io.InputStream;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
@@ -14,6 +15,7 @@ import java.util.Map;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 import java.io.UnsupportedEncodingException;
+import java.net.URLConnection;
 
 import javax.mail.MessagingException;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -24,6 +26,7 @@ import org.springframework.data.domain.Sort;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.util.FileCopyUtils;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
@@ -53,9 +56,15 @@ import G6.PS.Ecommerce.services.ISubCategoriaService;
 import G6.PS.Ecommerce.helpers.ExcelHelper;
 import G6.PS.Ecommerce.helpers.ViewRouteHelper;
 import javax.mail.internet.MimeMessage;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.mail.javamail.MimeMessageHelper;
+import java.io.BufferedInputStream;
+import java.io.File;
+import java.io.FileInputStream;
 
 @Controller
 @RequestMapping("/productos")
@@ -759,7 +768,7 @@ public class ProductoController {
 
         String firstName = pedido.getNombre_apellido();
         String email = pedido.getEmail();
-		double costo = pedido.getCosto();
+		double costo = pedido.getProducto().getPrecio() + pedido.getCosto();
 		int nroPedido = pedido.getId();
 		String producto = pedido.getProducto().getDescripcionCorta();
 		
@@ -780,6 +789,43 @@ public class ProductoController {
         helper.setText(mailContent, true);
 
         mailSender.send(messageSend);
+	}
+
+	@RequestMapping("/template")
+	public void downloadExcelTemplate(HttpServletRequest request, HttpServletResponse response) throws IOException {
+
+		StringBuilder stringBuilder = new StringBuilder();
+		stringBuilder.append(Paths.get("")
+        .toAbsolutePath()
+        .toString());
+		stringBuilder.append(File.separator);		
+		stringBuilder.append("src");
+		stringBuilder.append(File.separator);
+		stringBuilder.append("main");
+		stringBuilder.append(File.separator);
+		stringBuilder.append("resources");
+		stringBuilder.append(File.separator);
+		stringBuilder.append("template.xlsx");
+
+		File file = new File(stringBuilder.toString());
+		if (file.exists()) {
+
+			String mimeType = URLConnection.guessContentTypeFromName(file.getName());
+			if (mimeType == null) {
+				mimeType = "application/octet-stream";
+			}
+
+			response.setContentType(mimeType);
+
+			response.setHeader("Content-Disposition", String.format("inline; filename=\"" + file.getName() + "\""));
+
+			response.setContentLength((int) file.length());
+
+			InputStream inputStream = new BufferedInputStream(new FileInputStream(file));
+
+			FileCopyUtils.copy(inputStream, response.getOutputStream());
+
+		}
 	}
 }
 	
