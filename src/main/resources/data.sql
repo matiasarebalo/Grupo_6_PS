@@ -30,21 +30,31 @@ INSERT INTO producto VALUES (4,'CASACA VAIRO RAVEN MUJER NEGRA','Lográ tus obje
 INSERT INTO producto VALUES (5,'ZAPATILLA ADIDAS ADIZERO ADIOS 5 ROSA','Adopta la velocidad con estas zapatillas ADIDAS diseñadas para entrenar y competir rápidamente. Una parte superior de malla de peso pluma tiene un sistema de ajuste interno para un bloqueo con una sensación de apenas presencia.',0,true,15499,false,'10AP-505375209','/img/100010eg4667001-1.jpg',true,3);
 INSERT INTO producto VALUES (6,'ZAPATILLA ADIDAS RUNFALCON MUJER BLANCA','Una mediasuela liviana amortigua tus pasos, mientras la suela de caucho con agarre te proporciona tracción en superficies interiores o exteriores.',0,false,5799,false,'50AP760204175','/img/zapatilla-adidas-runfalcon-mujer-blanca-100010fw5142001-1.jpg',true,3);
 INSERT INTO producto VALUES (7,'ZAPATILLA ADIDAS VL COURT 2.0 NEGRA','Debido a la naturaleza de exclusiva calidad de la piel y el ante, podría ocurrir que en algunos casos el producto destiñera levemente, sobre todo en condiciones de humedad.',0,true,7199,false,'70AP342280525','/img/100010eg3965001-1.jpg',true,4);
+INSERT INTO producto VALUES (8, 'ZAPATILLAS DE LONA ATHIX','Debido a la naturaleza de exclusiva calidad de la piel y el ante, podría ocurrir que en algunos casos el producto destiñera levemente, sobre todo en condiciones de humedad.',0,false,5199,true,'50AP-54984836','/img/Slider_Home_con_Athix_classics_lona.jpg',false,4);
+INSERT INTO producto VALUES (9, 'ZAPATILLA REEBOK SPEED BREEZE 2.0 GRIS','Este calzado de running para hombre viene con un exterior de malla abierto y transpirable en áreas más afectadas por el sudor.',0,false,7299,true,'70StNaC','/img/21.44.46.jpeg',false,3);
 
 INSERT INTO atributos VALUES (1,'color','blanca',1);
-INSERT INTO atributos VALUES (2,'color','lila',2);
-INSERT INTO atributos VALUES (3,'color','azul',3);
-INSERT INTO atributos VALUES (4,'color','negra',4);
-INSERT INTO atributos VALUES (5,'color','rosa',5);
-INSERT INTO atributos VALUES (6,'color','blanca',6);
-INSERT INTO atributos VALUES (7,'color','negra',7);
+INSERT INTO atributos VALUES (2,'talle','M',1);
+INSERT INTO atributos VALUES (3,'color','lila',2);
+INSERT INTO atributos VALUES (4,'talle','S',2);
+INSERT INTO atributos VALUES (5,'color','azul',3);
+INSERT INTO atributos VALUES (6,'talle','L',3);
+INSERT INTO atributos VALUES (7,'color','negra',4);
+INSERT INTO atributos VALUES (8,'talle','S',4);
+INSERT INTO atributos VALUES (9,'color','rosa',5);
+INSERT INTO atributos VALUES (10,'talle','37',5);
+INSERT INTO atributos VALUES (11,'color','blanca',6);
+INSERT INTO atributos VALUES (12,'talle','36',6);
+INSERT INTO atributos VALUES (13,'color','negra',7);
+INSERT INTO atributos VALUES (14,'talle','41',7);
+INSERT INTO atributos VALUES (15,'talle','39',8);
+INSERT INTO atributos VALUES (16,'color','gris',9);
+INSERT INTO atributos VALUES (17,'talle', '41',9);
 
 INSERT INTO embalaje values (1,16,12, 0.5, 50, 5);
 INSERT INTO embalaje values (2,28,15, 1, 100, 6.5);
 INSERT INTO embalaje values (3,27,22, 1.5, 150, 7.5);
 INSERT INTO embalaje values (4,32,20, 2, 200, 13);
-
-
 
 commit;
 

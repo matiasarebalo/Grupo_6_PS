@@ -42,7 +42,7 @@ public interface IProductoRepository extends JpaRepository<Producto, Serializabl
 	@Query(nativeQuery=true,value="select * from producto p where p.sub_categoria_id  = (:id) and visible = true")
 	Page<Producto> findPageBySubCategoria(Pageable pageable,int id);
 
-	@Query(nativeQuery=true,value="Select * from producto where promocion = true and visible = true")
+	@Query(nativeQuery=true,value="Select * from producto where promocion = true")
 	public List<Producto> findEnPromocion();
 	
 	
