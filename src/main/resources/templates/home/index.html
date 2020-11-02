@@ -29,13 +29,13 @@
 
 <body>
 	<!-- Navigation  user o admin segun corresponda-->
-			<nav th:if="${admin==true}" class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top"
+			<nav th:if="${admin==true}" class="navbar navbar-expand-lg navbar-dark fixed-top" style="background-color: #023E8A;"
 				 th:include="nav_admin :: div"></nav>
 			
-			<nav th:if="${admin==false}" class="navbar navbar-expand-md navbar-dark bg-dark fixed-top"
+			<nav th:if="${admin==false}" class="navbar navbar-expand-md navbar-dark fixed-top" style="background-color: #023E8A;"
 				 th:include="nav_user :: div"></nav>
     
-			<nav class="navbar navbar-expand-md navbar-dark bg-dark">
+			<nav class="navbar navbar-expand-md navbar-dark" style="background-color: #0077B6;">
 
 				<div class="text-light " style="margin: 0px 120px;"> Categorias</div>
 
@@ -55,38 +55,6 @@
 		<div class="row">
 
 			<div>
-
-				<!--  div id="carouselExampleIndicators" class="carousel slide my-4" data-ride="carousel">
-					<ol class="carousel-indicators">
-						<li data-target="#carouselExampleIndicators" data-slide-to="0"
-							class="active"></li>
-						<li th:each = "prod : ${productosPromocion}" data-target="#carouselExampleIndicators" data-slide-to="0"
-							class=""></li>
-					</ol>
-					<div class="carousel-inner" role="listbox">
-
-						<div class="carousel-item active">
-							<img class="d-block w-100" src="/img/skate.jpg" >
-						</div>
-
-						<div th:each = "prod : ${productosPromocion}" class="carousel-item">
-							
-							<img class="d-block img-fluid" th:src="${prod.urlImagen}" alt="">
-							
-						</div>
-					</div>
-
-					<a class="carousel-control-prev" href="#carouselExampleIndicators"
-						role="button" data-slide="prev"> <span
-						class="carousel-control-prev-icon" aria-hidden="true"></span> <span
-						class="sr-only">Previous</span>
-					</a> 
-					<a class="carousel-control-next" href="#carouselExampleIndicators"
-						role="button" data-slide="next"> <span
-						class="carousel-control-next-icon" aria-hidden="true"></span> <span
-						class="sr-only">Next</span>
-					</a>
-				</div-->
 				
 				<div id="carouselExampleIndicators" class="carousel slide my-4" data-ride="carousel">
 					<ol class="carousel-indicators">
@@ -159,7 +127,7 @@
 	<!-- /.container -->
 
 	<!-- Footer -->
-	<footer class="py-5 bg-dark">
+	<footer class="py-5" style="background-color: #023E8A;">
     <div class="container">
       <p class="m-0 text-center text-white">El Deporte On-Line &copy; 2020</p>
     </div>
